@@ -9,6 +9,7 @@
 const Discord = require("discord.js");
 const schedule = require('node-schedule');
 const config = require("./config_hall.json");
+//const model = require('./model');
 const sql_data = {
   host: 'localhost',
   user: 'root',
@@ -16,6 +17,8 @@ const sql_data = {
   database: 'bot_discord_2',
   connectTimeout: 50000000
 };
+
+
 
 // Database sync-mysql
 var mysqlsyn = require('sync-mysql');
