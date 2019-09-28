@@ -102,30 +102,30 @@ client.on("message", async message => {
     //Che non sia il bot
     if(message.author.bot) return;
 
-    if (message.member.nickname) {
-        if (message.member.nickname.indexOf("(") === -1 && message.member.nickname.indexOf(")" === -1 )) {
-            var id_user_nickname = message.member.id;
-            var embed = new Discord.RichEmbed()
-            .setAuthor(getSetting('isabel_head_message_standard'))
-            .setTitle('Purtroppo il tuo soprannome non è scritto correttamente per questa Gilda.')
-            .setColor(0xFF8000)
-            .setDescription(getSetting('isabel_message_nickname'))
-            .setFooter(getSetting('isabel_footer_message_standard'))
-            client.users.get(id_user_nickname).send({embed});
-        }
-    } else {
-        var user_name = message.member.user.username;
-        if (user_name.indexOf("(") === -1 && user_name.indexOf(")" === -1 )) {
-            var id_user_nickname = message.member.id;
-            var embed = new Discord.RichEmbed()
-            .setAuthor(getSetting('isabel_head_message_standard'))
-            .setTitle('Purtroppo il tuo nome non è valido per questa Gilda.')
-            .setColor(0xFF8000)
-            .setDescription(getSetting('isabel_message_no_nickname'))
-            .setFooter(getSetting('isabel_footer_message_standard'))
-            client.users.get(id_user_nickname).send({embed});
-        }
-    }
+    // if (message.member.nickname) {
+    //     if (message.member.nickname.indexOf("(") === -1 && message.member.nickname.indexOf(")" === -1 )) {
+    //         var id_user_nickname = message.member.id;
+    //         var embed = new Discord.RichEmbed()
+    //         .setAuthor(getSetting('isabel_head_message_standard'))
+    //         .setTitle('Purtroppo il tuo soprannome non è scritto correttamente per questa Gilda.')
+    //         .setColor(0xFF8000)
+    //         .setDescription(getSetting('isabel_message_nickname'))
+    //         .setFooter(getSetting('isabel_footer_message_standard'))
+    //         client.users.get(id_user_nickname).send({embed});
+    //     }
+    // } else {
+    //     var user_name = message.member.user.username;
+    //     if (user_name.indexOf("(") === -1 && user_name.indexOf(")" === -1 )) {
+    //         var id_user_nickname = message.member.id;
+    //         var embed = new Discord.RichEmbed()
+    //         .setAuthor(getSetting('isabel_head_message_standard'))
+    //         .setTitle('Purtroppo il tuo nome non è valido per questa Gilda.')
+    //         .setColor(0xFF8000)
+    //         .setDescription(getSetting('isabel_message_no_nickname'))
+    //         .setFooter(getSetting('isabel_footer_message_standard'))
+    //         client.users.get(id_user_nickname).send({embed});
+    //     }
+    // }
     
     if (message.content.includes('Grande gesto')) {
         message.channel.send("Hei " + message.member.user + " graaaaaaande geeeeesto!");
