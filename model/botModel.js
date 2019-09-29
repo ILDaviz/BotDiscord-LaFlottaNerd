@@ -1,15 +1,14 @@
 'user strict';
 
-var sql = require('./db.js');
+var sql = require('./model/db.js');
 
 
 var BotModel = function () {
     //Costructor
 };
 /**
- * Shape is an abstract base class. It is defined simply
- * to have something to inherit from for geometric
- * subclasses
+ * Seleziona tutti gli settaggi
+ * @param { function } result
  */
 BotModel.selectSettings = function (result) {
     sql.query("SELECT * FROM settings", function (err, res) {
@@ -23,6 +22,11 @@ BotModel.selectSettings = function (result) {
         }
     });
 };
+/**
+ * Seleziona un determinato settaggio
+ * @param { int } id_settings
+ * @param { function } result
+ */
 BotModel.selectSettingValue = function (id_settings, result) {
     sql.query("SELECT * FROM settings WHERE id_settings = '" + id_settings + "'", function (err, res) {
 
@@ -36,6 +40,11 @@ BotModel.selectSettingValue = function (id_settings, result) {
         }
     });
 };
+/**
+ * Elimina un settaggio
+ * @param { int } id_settings
+ * @param { function } result
+ */
 BotModel.deleteSetting = function (id_settings, result) {
     sql.query("DELETE FROM settings WHERE id_settings = '" + id_settings + "'", function (err, res) {
 

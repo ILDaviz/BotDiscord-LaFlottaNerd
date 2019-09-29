@@ -8,8 +8,8 @@
 // Opzioni e sett
 var Discord = require("discord.js");
 var schedule = require('node-schedule');
-var config = require("./config_hall.json");
-var botModel = require('./botModel');
+var config = require("./config/config_hall.json");
+var botModel = require('./model/botModel');
 
 // Avvio del bot Hall
 const client = new Discord.Client();
@@ -63,9 +63,7 @@ client.on("message", async message => {
     var embed = new Discord.RichEmbed()
       .setAuthor('Hall9000')
       .setTitle('Sistema di gestione utenti automatizzato')
-      // Set the color of the embed
       .setColor(0xFFFF)
-      // Set the main content of the embed
       .setDescription('Tutti i comandi sotto stanti sono avviabili solo da un utente Admin, Moderatore, Developer o da Hall')
       .addField("+kick <@nomeutente> <scrivi il motivo>", 'Elimina un utente')
       .addField("+ban <@nomeutente> <scrivi il motivo>", 'Banna un utente')
@@ -533,11 +531,9 @@ client.on("message", async message => {
 }); //Fine messaggi.
 
 /**
- * 
- * Funzioni
- * 
+ * Crea un log che stamperà su discord
+ * @param { string } note 
  */
-
 function log(note){
   var embed = new Discord.RichEmbed()
   .setTitle('-- LOG --')
@@ -545,9 +541,10 @@ function log(note){
   .setDescription(note)
   client.channels.get(config.channel_log).send({embed});
 }
-
+/**
+ * Pulisce gli utenti che non sono più presenti dal database su discord
+ */
 function cleenDatabase() {
-  //Controlla l'integrità del database eliminado gli elementi non più esistenti.
   botModel.selectUsers(function(err,res){
     for (let i = 0; i < res.length; i++) {
       const id_discord = res[i].id_discord;
@@ -559,16 +556,11 @@ function cleenDatabase() {
     }
   });
 }
-
 /**
- * Tool per il ban degli utenti se non attivi.
+ * Porta a zero i contatori negativi
  */
-function scriptBanUsers(){
-  
-  log("Processo di ban start");
-
-  botModel.selectUsers(function(err,res){
-    //Porta a zero i contatori negativi
+function zeroValoriNegativi() {
+  botModel.selectUsers(function (err, res) {
     for (var i = res.length - 1; i >= 0; i--) {
       var id_discord = res[i].id_discord;
       var n_message_getUsers = res[i].messages;
@@ -582,19 +574,22 @@ function scriptBanUsers(){
       }
     }
   });
-
-  //Controlla se gli utenti hanno una attività 0 avvia il timer
+}
+/**
+ * Controlla se gli utenti hanno una attività 0 avvia il timer
+ */
+function aggiuntaTimerDiNonAttivita() {
   var guilds = client.guilds.array();
   for (let i = 0; i < guilds.length; i++) {
     client.guilds.get(guilds[i].id).fetchMembers().then(r => {
       r.members.array().forEach(r => {
         const id_discord = r.user.id;
         //Controlla se è presente in lista bianca
-        botModel.selectUserWhiteList(id_discord,function (err, res){
+        botModel.selectUserWhiteList(id_discord, function (err, res) {
           if (res.length === 0) {
             //Evita il bot 1 di Discord
             if (id_discord > 1 && id_discord !== config.bot_id_1 && id_discord !== config.bot_id_2 && id_discord !== config.bot_id_3 && id_discord !== config.bot_id_4) {
-              botModel.selectUser(id_discord, function(err,res){
+              botModel.selectUser(id_discord, function (err, res) {
                 if (res.length > 0) {
                   var presences = res[0].presences;
                   var last_check = res[0].last_check;
@@ -618,19 +613,21 @@ function scriptBanUsers(){
       });
     });
   }
-
-  //Ciclo Gestione avvisi se passati 6 giorni
-  botModel.selectNotifiedUsers(function(err,res){
+}
+/**
+ * Ciclo Gestione avvisi se passati 6 giorni
+ */
+function passaggioSeiGiorniPostConteggio() {
+  botModel.selectNotifiedUsers(function (err, res) {
     if (res.length > 0) {
       for (var i = res.length - 1; i >= 0; i--) {
         var notified = res[i].notified;
-        var notified_id_discord = res[i].id_discord;
+        const id_discord = res[i].id_discord;
         var last_check = res[i].last_check;
         if (notified == 0) {
           if (last_check !== null) {
-            botModel.selectUserWhiteList(notified_id_discord,function(err,res){
+            botModel.selectUserWhiteList(id_discord, function (err, res) {
               if (res.length === 0) {
-                var id_discord = res[0].id_discord;
                 client.users.get(id_discord).send(config.meg_pban);
                 botModel.updateUserNotified(id_discord, function (err, res) { });
                 botModel.updateUserLastCheck(id_discord, function (err, res) { });
@@ -641,12 +638,16 @@ function scriptBanUsers(){
       }
     }
   });
-
-  botModel.selectDeadUsers(function(err,res){
+}
+/**
+ * Ciclo di espulsione
+ */
+function cicloDiEspulsione() {
+  botModel.selectDeadUsers(function (err, res) {
     if (res.length > 0) {
       for (var i = res.length - 1; i >= 0; i--) {
         const id_discord = res[i].id_discord;
-        botModel.selectUserWhiteList(id_discord, function(err,res){
+        botModel.selectUserWhiteList(id_discord, function (err, res) {
           if (res.length === 0) {
             var guild = client.guilds.get("532184361068527646");
             var member = guild.members.get(id_discord);
@@ -657,15 +658,22 @@ function scriptBanUsers(){
       }
     }
   });
-
+}
+/**
+ * Tool per il ban degli utenti se non attivi.
+ */
+function scriptBanUsers() {
+  log("Processo di ban start");
+  zeroValoriNegativi();
+  aggiuntaTimerDiNonAttivita();
+  passaggioSeiGiorniPostConteggio();
+  cicloDiEspulsione();
   log("Processo di ban end");
 }
-
-
 /**
  * Resetta e sottrae i punti giornalieri.
  */
-function resetCountDay(){
+function resetCountDay() {
   botModel.selectUsers(function(err,res){
     //Togliere i punti o le presenze
     for (var i = res.length - 1; i >= 0; i--) {
@@ -714,11 +722,11 @@ function resetCountDay(){
   });
 }
 
-/**
+/**************************************************************************************************
  * Eventi registrati.
+ **************************************************************************************************
  * Aggiunge il punto presenza e i punti messaggi. Se l'utente non inserito nel database lo aggiunge.
  */
-
 client.on('raw', event => {
   //console.log('\nRaw event data:\n', event);
   if (event.t === 'PRESENCE_UPDATE') {
