@@ -60,6 +60,23 @@ client.on('guildMemberRemove', member => {
  */
 
 client.on("message", async message => {
+    if (command === 'help') {
+        var embed = new Discord.RichEmbed()
+            .setAuthor('Ciao io sono LadyIsabel')
+            .setTitle('Ho molte funzioni utili per la gilda')
+            .setColor(0xFF0000)
+            .setDescription('Usa questi comandi per entrare nella sezione dedicata!')
+            .addField("!help_giochi", 'Interagisci con me un sacco di giochi disponibili')
+            .addField("!help_classifiche", 'Le classifiche della gilda, giornaliere e totali')
+            .addField("!help_mh", 'I comandi dedicati a monster hunter!')
+            .addField("!help_gilda", 'Non sai come muoverti o non sai come fare? Ti consiglio io!')
+            .addField("!help_utility", 'Lista di comandi utili e meno..')
+            .setFooter('Quando scrivi un comadno non serve scrivere i siboli < e > servono solo a farti capire come strutturare il comando.')
+        message.channel.send({ embed });
+    }
+});
+
+client.on("message", async message => {
 
     //Se l'utente ha superato un determinato livello.
     asyncCall(message.author.id, message.channel.id);
@@ -83,7 +100,7 @@ client.on("message", async message => {
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
-    if(command === 'help') {
+    if(command === 'help_old') {
         var embed = new Discord.RichEmbed()
         .setAuthor('Ciao io sono LadyIsabel')
         .setTitle('Ho molte funzioni utili per la gilda')
