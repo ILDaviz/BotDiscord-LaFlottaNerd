@@ -54,6 +54,23 @@ client.on('guildMemberRemove', member => {
 });
 
 client.on("message", async message => {
+    if (message.author.bot) return;
+    if (message.content.indexOf(config.prefix) !== 0) return;
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+    asyncCall(message.author.id, message.channel.id);
+    if (Censunre(message.content)) {
+        message.channel.send("Hei " + message.member.user + " :rage:! Per piacere smettila di imprecare, alla prossima ti banno!");
+    }
+});
+
+client.on("message", async message => {
+    if (message.author.bot) return;
+    if (message.content.indexOf(config.prefix) !== 0) return;
+
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+
     if (command === 'help') {
         var embed = new Discord.RichEmbed()
             .setAuthor('Ciao io sono LadyIsabel')
@@ -73,15 +90,8 @@ client.on("message", async message => {
 
 client.on("message", async message => {
 
-    //Se l'utente ha superato un determinato livello.
-    asyncCall(message.author.id, message.channel.id);
-
     //Che non sia il bot
     if(message.author.bot) return;
-
-    if (Censunre(message.content)) {
-        message.channel.send("Hei " + message.member.user + " :rage:! Per piacere smettila di imprecare, alla prossima ti banno!");
-    }
 
     if(message.content.indexOf(config.prefix) !== 0) return;
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
