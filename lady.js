@@ -53,12 +53,6 @@ client.on('guildMemberRemove', member => {
     channel.send(`No Perché!!! L'utente ${member} ha lasciato il server..:sob:`);
 });
 
-/**
- * 
- * Avvio controllo Messaggi
- * 
- */
-
 client.on("message", async message => {
     if (command === 'help') {
         var embed = new Discord.RichEmbed()
@@ -66,11 +60,12 @@ client.on("message", async message => {
             .setTitle('Ho molte funzioni utili per la gilda')
             .setColor(0xFF0000)
             .setDescription('Usa questi comandi per entrare nella sezione dedicata!')
-            .addField("!help_giochi", 'Interagisci con me un sacco di giochi disponibili')
+            .addField("!help_giochi_bot", 'Interagisci con me un sacco di giochi disponibili')
             .addField("!help_classifiche", 'Le classifiche della gilda, giornaliere e totali')
-            .addField("!help_mh", 'I comandi dedicati a monster hunter!')
-            .addField("!help_gilda", 'Non sai come muoverti o non sai come fare? Ti consiglio io!')
+            .addField("!help_mhw", 'I comandi dedicati a Monster Hunter World!')
+            .addField("!help_gilda", 'Non sai cosa fare o non sai come fare? Ti consiglio io!')
             .addField("!help_utility", 'Lista di comandi utili e meno..')
+            .addField("!donazione", 'Ti piacciono i Bot di questa gilda? Offrimi un caffé!')
             .setFooter('Quando scrivi un comadno non serve scrivere i siboli < e > servono solo a farti capire come strutturare il comando.')
         message.channel.send({ embed });
     }
@@ -83,14 +78,6 @@ client.on("message", async message => {
 
     //Che non sia il bot
     if(message.author.bot) return;
-    
-    if (message.content.includes('Grande gesto')) {
-        message.channel.send("Hei " + message.member.user + " graaaaaaande geeeeesto!");
-    }
-
-    if (message.content.includes('grande gesto')) {
-        message.channel.send("Hei " + message.member.user + " graaaaaaande geeeeesto!");
-    }
 
     if (Censunre(message.content)) {
         message.channel.send("Hei " + message.member.user + " :rage:! Per piacere smettila di imprecare, alla prossima ti banno!");
