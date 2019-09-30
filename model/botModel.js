@@ -1,6 +1,6 @@
 'user strict';
 
-var sql = require('./model/db.js');
+var sql = require('./db.js');
 
 
 var BotModel = function () {
@@ -110,6 +110,19 @@ BotModel.selectUser = function (id_discord, result) {
         }
     });
 };
+BotModel.insertUser = function (id_discord, result) {
+    sql.query("SET sql_mode = 'NO_ZERO_DATE'; INSERT INTO users (id_discord, messages) VALUES ('" + id_discord +"', 0)", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, JSON.parse(JSON.stringify(res)));
+
+        }
+    });
+};
 BotModel.deleteUser = function (id_discord, result) {
     sql.query("DELETE FROM users WHERE id_discord = '" + id_discord + "'", function (err, res) {
 
@@ -123,6 +136,20 @@ BotModel.deleteUser = function (id_discord, result) {
         }
     });
 };
+BotModel.selectLivelUser = function (messages, result) {
+    sql.query("SELECT * FROM level WHERE step = '" + messages + "'", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, JSON.parse(JSON.stringify(res)));
+
+        }
+    });
+};
+
 BotModel.insertUser = function (id_discord, result) {
     sql.query("INSERT INTO users (id_discord, messages) VALUES ('" + id_discord + "', 0)", function (err, res) {
 
@@ -448,5 +475,121 @@ BotModel.updatePointPresenceDayReaction = function (id_discord, result) {
         }
     });
 }
+BotModel.selectMentionBot = function (id_discord, result) {
+    sql.query("SELECT bot_mention AS bot_mention FROM users WHERE id_discord = '" + id_discord +"'", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, JSON.parse(JSON.stringify(res)));
+
+        }
+    });
+}
+BotModel.updateMentionBot = function (id_discord, result) {
+    sql.query("UPDATE users SET bot_mention = bot_mention + 1 WHERE id_discord = '" + id_discord +"'", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, res);
+
+        }
+    });
+}
+BotModel.selectMonser = function (id_monster, result) {
+    sql.query("SELECT name FROM monster WHERE id_monster = '" + id_monster +"'", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, JSON.parse(JSON.stringify(res)));
+
+        }
+    });
+}
+BotModel.seletTopListMessageAllTime = function (id_monster, result) {
+    sql.query("SELECT * FROM `users` ORDER BY `users`.`messages` DESC LIMIT 10", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, JSON.parse(JSON.stringify(res)));
+
+        }
+    });
+}
+BotModel.seletTopListMessageDay = function (id_monster, result) {
+    sql.query("SELECT * FROM `users` ORDER BY `users`.`messages_day` DESC LIMIT 10", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, JSON.parse(JSON.stringify(res)));
+
+        }
+    });
+}
+/**
+ * Seleziona tutti i testi dal database
+ * @param { function } result
+ */
+BotModel.selectStringTexts = function (result) {
+    sql.query("SELECT * FROM string_text", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, JSON.parse(JSON.stringify(res)));
+        }
+    });
+};
+/**
+ * Inserisci un testi dal database
+ * @param { string } tag di riferimento
+ * @param { string } string il testo 
+ * @param { function } result
+ */
+BotModel.insertStringText = function (tag,string,bot,result) {
+    sql.query("INSERT INTO`string_text`( `tag`, `string`, `bot`) VALUES('" + tag + "','" + string + "','" + bot + "')", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, res);
+        }
+    });
+};
+/**
+ * Elimina un testo dal database
+ * @param { number } id_string_text riferimento del testo
+ * @param { function } result
+ */
+BotModel.deleteStringText = function (id_string_text, result) {
+    sql.query("DELETE FROM`string_text` WHERE id_string_text = '" + id_string_text + "'", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, res);
+        }
+    });
+};
 
 module.exports = BotModel;

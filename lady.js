@@ -1,29 +1,20 @@
 /*
-*   Bot LadyIsabel per Discord versione 2.4
+**********************************************************************
+*   Bot LADYISABEL
 *   @Davidgalet
 *   www.davidev.it
 *   lady.js
-*
+**********************************************************************
 */
 
-// Opzioni e sett
 const Discord = require("discord.js");
 const schedule = require('node-schedule');
 const config = require("./config_lady.json");
-const sql_data = {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'bot_discord_2'
-};
-
-// Database sync-mysql
-var MySql = require('sync-mysql');
-var connection = new MySql(sql_data);
+const botModel = require('./model/botModel');
+const functionBot = require('./functionBot.js');
 
 // Avvio del bot LadyIsabel
 const client = new Discord.Client();
-
 client.on("ready", () => {
     console.log(`Bot Ladyisabel online.`); 
     client.user.setActivity(`Doki Doki literature club`);
@@ -33,32 +24,6 @@ client.on('error', (err) => {
     console.log(err.message);
 });
 
-/**
- *  Avvio scheduli cron.
- */
-
-schedule.scheduleJob('0 9 * * *', function(){
-    getServiceMessage();
-});
-
-schedule.scheduleJob('0 13 * * *', function(){
-    getServiceMessage();
-});
-
-
-schedule.scheduleJob('0 17 * * *', function(){
-    getServiceMessage();
-});
-
-schedule.scheduleJob('0 21 * * *', function(){
-    getServiceMessage();
-});
-
-//Avvio check integrità in log
-setInterval(cron, 3600000 ); // Ora 3600000
-function cron(){
-    log('Bot Lady Operativo');
-}
 
 // Crea un evento se l'utente entra nella gilda.
 client.on('guildMemberAdd', member => {
@@ -101,31 +66,6 @@ client.on("message", async message => {
 
     //Che non sia il bot
     if(message.author.bot) return;
-
-    // if (message.member.nickname) {
-    //     if (message.member.nickname.indexOf("(") === -1 && message.member.nickname.indexOf(")" === -1 )) {
-    //         var id_user_nickname = message.member.id;
-    //         var embed = new Discord.RichEmbed()
-    //         .setAuthor(getSetting('isabel_head_message_standard'))
-    //         .setTitle('Purtroppo il tuo soprannome non è scritto correttamente per questa Gilda.')
-    //         .setColor(0xFF8000)
-    //         .setDescription(getSetting('isabel_message_nickname'))
-    //         .setFooter(getSetting('isabel_footer_message_standard'))
-    //         client.users.get(id_user_nickname).send({embed});
-    //     }
-    // } else {
-    //     var user_name = message.member.user.username;
-    //     if (user_name.indexOf("(") === -1 && user_name.indexOf(")" === -1 )) {
-    //         var id_user_nickname = message.member.id;
-    //         var embed = new Discord.RichEmbed()
-    //         .setAuthor(getSetting('isabel_head_message_standard'))
-    //         .setTitle('Purtroppo il tuo nome non è valido per questa Gilda.')
-    //         .setColor(0xFF8000)
-    //         .setDescription(getSetting('isabel_message_no_nickname'))
-    //         .setFooter(getSetting('isabel_footer_message_standard'))
-    //         client.users.get(id_user_nickname).send({embed});
-    //     }
-    // }
     
     if (message.content.includes('Grande gesto')) {
         message.channel.send("Hei " + message.member.user + " graaaaaaande geeeeesto!");
@@ -300,20 +240,20 @@ client.on('raw', event => {
         }
     }
 });
-
 /**
- * 
- * Funzioni
- * 
+ * Crea un log che stamperà su discord
+ * @param { string } note 
  */
-function log(note){
+function log(note) {
     var embed = new Discord.RichEmbed()
-    .setTitle('-- LOG --')
-    .setColor(0xFFFF)
-    .setDescription(note)
-    client.channels.get(config.channel_log).send({embed});
+        .setTitle('-- LOG --')
+        .setColor(0xFFFF)
+        .setDescription(note)
+    client.channels.get(config.channel_log).send({ embed });
 }
-
+/**
+ * Stampa il messaggio di servizio
+ */
 function getServiceMessage(){
     if (getSetting('service_message') == 1) {
         var frasi = getFrasi();
@@ -328,7 +268,11 @@ function getServiceMessage(){
         }
     }
 }
-
+/**
+ * Stampa il messaggio del livello se aumentato.
+ * @param {*} id_discord riferimento id discord
+ * @param {*} message_chanel_id il canale dove ha scritto l'utente il messaggio di passaggio
+ */
 async function asyncCall(id_discord, message_chanel_id) {
     var liv_usr = getUser(id_discord);
     if (liv_usr.length > 0) {
@@ -340,210 +284,20 @@ async function asyncCall(id_discord, message_chanel_id) {
         }
     }
 }
-
-function getRispose(id){
-    if ( id == 1 ) {
-        return "Per quanto posso vedere, sì";
-    } else if ( id == 2 ) {
-        return "È certo";        
-    } else if ( id == 3 ) {
-        return "È decisamente così";
-    } else if ( id == 4 ) {
-        return "Molto probabilmente";
-    } else if ( id == 5 ) {
-        return "Le prospettive sono buone";
-    } else if ( id == 6 ) {
-        return "Le mie fonti indicano di sì";
-    } else if ( id == 7 ) {
-        return "Senza alcun dubbio";
-    } else if ( id == 8 ) {
-        return "Sì";
-    } else if ( id == 9 ) {
-        return "Sì, senza dubbio";
-    } else if ( id == 10 ) {
-        return "Ci puoi contare";
-    } else if ( id == 11 ) {
-        return "È difficile rispondere, prova di nuovo";
-    } else if ( id == 12 ) {
-        return "Rifai la domanda più tardi";
-    } else if ( id == 13 ) {
-        return "Meglio non risponderti adesso";
-    } else if ( id == 14 ) {
-        return "Non posso predirlo ora";
-    } else if ( id == 15 ) {
-        return "Concentrati e rifai la domanda";
-    } else if ( id == 16 ) {
-        return "Non ci contare";
-    } else if ( id == 17 ) {
-        return "La mia risposta è no";
-    } else if ( id == 18 ) {
-        return "Le mie fonti dicono di no";
-    } else if ( id == 19 ) {
-        return "Le prospettive non sono buone";
-    } else if ( id == 20 ) {
-        return "Molto incerto";
-    } else {
-        return "Mi puoi rifare la domanda, non ho capito..";   
-    }
-}
-
-function Censunre(str) {
-    var lista_bestemmie = ["dio cane","diocane","porcodio","porco dio"];
-    var arrayLength = lista_bestemmie.length;
-    var status = 0;
-    for (var i = 0; i < arrayLength; i++) {
-        var pattern = new RegExp(lista_bestemmie[i],'i');
-        if(pattern.test(str)) {
-            status += 1;
-        }
-    }
-    if(status >= 1 ) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function getGradoCacciatore(livel){
-    var name = "";
-    if (livel >= 10 && livel < 30 ){
-        name = "Novizio LIV I";
-    } else if (livel >= 30 && livel < 50 ){
-        name = "Novizio LIV II";
-    } else if (livel >= 50 && livel < 100 ){
-        name = "Novizio LIV III";
-    } else if (livel >= 100 && livel < 200 ){
-        name = "Apprendista LIV I";
-    } else if (livel >= 200 && livel < 300 ){
-        name = "Apprendista LIV II";
-    } else if (livel >= 300 && livel < 400 ){
-        name = "Apprendista LIV III";
-    } else if (livel >= 400 && livel < 500 ){
-        name = "Felyne Lavapiatti LIV I";
-    } else if (livel >= 500 && livel < 600 ){
-        name = "Felyne Lavapiatti LIV II";
-    } else if (livel >= 600 && livel < 750 ){
-        name = "Felyne Lavapiatti LIV III";
-    } else if (livel >= 750 && livel < 1000 ){
-        name = "Felyne Alchimista";
-    } else if (livel >= 1000 && livel < 1250 ){
-        name = "Felyne Guaritore";
-    } else if (livel >= 1250 && livel < 1500 ){
-        name = "Mercante di ossa";
-    } else if (livel >= 1500 && livel < 1750 ){
-        name = "Mercante di spezie";
-    } else if (livel >= 1750 && livel < 2000 ){
-        name = "Mercante di gemme";
-    } else if (livel >= 2000 && livel < 2250 ){
-        name = "Forgiatore Novizio";
-    } else if (livel >= 2250 && livel < 2500 ){
-        name = "Forgiatore Apprendista";
-    } else if (livel >= 2500 && livel < 2750 ){
-        name = "Forgiatore Mastro";
-    } else if (livel >= 2750 && livel < 3000 ){
-        name = "Assistente Incapace";
-    } else if (livel >= 3000 && livel < 3250 ){
-        name = "Assistente Esperto";
-    } else if (livel >= 3250 && livel < 3500 ){
-        name = "Soldato Imbranato";
-    } else if (livel >= 3500 && livel < 3750 ){
-        name = "Soldato Spavaldo";
-    } else if (livel >= 3750 && livel < 4000 ){
-        name = "Soldato Romantico";
-    } else if (livel >= 4000 && livel < 4250 ){
-        name = "Soldato Elite";
-    } else if (livel >= 4250 && livel < 4500 ){
-        name = "Amico della quinta";
-    } else if (livel >= 4500 && livel < 4750 ){
-        name = "Baby Drago";
-    } else if (livel >= 4750 && livel < 5000 ){
-        name = "Drago Spavaldo";
-    } else if (livel >= 5000 && livel < 5250 ){
-        name = "Drago Imperatore";
-    } else if (livel >= 5250 && livel < 5500 ){
-        name = "Spacca Draghi";
-    } else if (livel >= 5500 && livel < 5750 ){
-        name = "Sterminatore di draghi";
-    } else if (livel >= 5750 ){
-        name = "Stella di zaffiro";
-    }
-    return name;
-}
-
 /**
- * 
- * Model Estrazione dati
- * 
+ * Messaggi di servizio
  */
-function getMentionsBot(id_discord){
-    const result = connection.query("SELECT bot_mention AS bot_mention FROM users WHERE id_discord = '"+ id_discord +"'");
-    return result[0].bot_mention;
-}
-
-function addMentionsBot(id_discord){
-    connection.query("UPDATE users SET bot_mention = bot_mention + 1 WHERE id_discord = '"+ id_discord +"'");
-}
-
-function getSetting(name){
-    const result = connection.query("SELECT value AS value FROM settings WHERE name = '"+ name +"'");
-    return decodeURIComponent(result[0].value);
-}
-
-function usersList(id_discord){
-    const result = connection.query("SELECT * FROM users WHERE id_discord = '"+ id_discord +"'");
-    return result;
-}
-
-function addUser(id_discord){
-    connection.query("SET sql_mode = 'NO_ZERO_DATE'");
-    connection.query("INSERT INTO users (id_discord, messages) VALUES ("+ id_discord +", 0)");
-}
-
-function deleteUser(id_discord){
-    connection.query("DELETE FROM users WHERE id_discord = '" + id_discord + "'");
-}
-
-function getMonster(id_monster){
-    const result = connection.query("SELECT name FROM monster WHERE id_monster = '"+ id_monster +"'");
-    return result;
-}
-
-function getTopListMessageAllTime(){
-    const result = connection.query("SELECT * FROM `users` ORDER BY `users`.`messages` DESC LIMIT 10");
-    return result;
-}
-
-function getTopListMessageDay(){
-    const result = connection.query("SELECT * FROM `users` ORDER BY `users`.`messages_day` DESC LIMIT 10");
-    return result;
-}
-
-function getFrasi(){
-    const result = connection.query("SELECT * FROM messages ");
-    return result;
-}
-
-function getUser(id_discord) {
-    var result = connection.query("SELECT * FROM users WHERE id_discord = '" + id_discord + "'");
-    return result;
-}
-
-function getLivelUser(messages) {
-    var result = connection.query("SELECT * FROM level WHERE step = '" + messages + "'");
-    return result;
-}
-
-function resetRoleCounter(id_discord) {
-    connection.query("UPDATE users SET rule_selected  = 0 WHERE id_discord = '" + id_discord + "'");
-}
-
-function addRoleCounter(id_discord) {
-    connection.query("UPDATE users SET rule_selected  = rule_selected  + 1 WHERE id_discord = '" + id_discord + "'");
-}
-
-function users(id_discord) {
-    var result = connection.query("SELECT * FROM users WHERE id_discord = '" + id_discord + "'");
-    return result;
-}
+schedule.scheduleJob('0 9 * * *', function () {
+    getServiceMessage();
+});
+schedule.scheduleJob('0 13 * * *', function () {
+    getServiceMessage();
+});
+schedule.scheduleJob('0 17 * * *', function () {
+    getServiceMessage();
+});
+schedule.scheduleJob('0 21 * * *', function () {
+    getServiceMessage();
+});
 
 client.login(config.token);

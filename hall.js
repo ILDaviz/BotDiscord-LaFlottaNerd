@@ -1,21 +1,23 @@
 /*
-*   Bot HALL9000 Discord versione 2.1
+**********************************************************************
+*   Bot HALL9000
 *   @Davidgalet
 *   www.davidev.it
 *   hall.js
+**********************************************************************
 */
 
-// Opzioni e sett
-var Discord = require("discord.js");
-var schedule = require('node-schedule');
-var config = require("./config/config_hall.json");
-var botModel = require('./model/botModel');
+const Discord = require("discord.js");
+const schedule = require('node-schedule');
+const config = require("./config/config_hall.json");
+const botModel = require('./model/botModel');
+const botFunction = require('./botFunction');
 
 // Avvio del bot Hall
 const client = new Discord.Client();
 client.on("ready", () => {
   console.log(`Bot Hall9000 online`); 
-  client.user.setActivity(`ILDikozzo è brutto`);
+  client.user.setActivity(`fare il dittatore`);
 });
 // Stamapa errori
 client.on('error', (err) => {
@@ -43,8 +45,9 @@ client.on("message", async message => {
       .setDescription('Tutti i comandi sotto stanti sono dei sotto gruppi entra in uno di questi per avere maggiori dettagli')
       .setColor(0xFFFF)
       .addField("+help_moderation","Mostra tutti i comandi di moderazione")
-      .addField("+help_settings", "Mostra tutti i comandi settings")
-      .addField("+help_frasilady","Mostra tutte le impostaizoni e settaggi dei messaggi")
+      .addField("+help_settings", "Mostra tutti i per modificare le impostazioni")
+      .addField("+help_testi_bot", "Mostra i comandi per modificare i testi del bot corrispettivo.")
+      .addField("+help_frasi_servizio","Mostra i comandi per modificare i messaggi di servizio")
       .addField("+help_utility", "Mostra altri comandi di utilità")
     message.channel.send({ embed });
   }
@@ -59,10 +62,104 @@ client.on("message", async message => {
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
+  if (command === 'help_testi_bot') {
+    var embed = new Discord.RichEmbed()
+      .setAuthor('Hall9000')
+      .setTitle('Sezione dedicata ai testi dei bot')
+      .setColor(0xFFFF)
+      .setDescription('Tutti i comandi sotto stanti sono avviabili solo da un utente Admin, Developer, I tag devono essere scritti senza spazzi es. testo_titolo_desc')
+      .addField("+add_frase_ladyisabel <tag> <scrivi il testo>", 'Aggiunge un testo al bot LadyIsabel')
+      .addField("+add_frase_hall <tag> <scrivi il testo>", 'Aggiunge un testo al bot Hall')
+      .addField("+add_frase_bifrost <tag> <scrivi il testo>", 'Aggiunge un testo al bot Bifrost')
+      .addField("+get_testi", 'Mostra la lista di tutti i testi')
+      .addField("+delete_testo <id_testo>", 'Elimina un testo specifico')
+      .addField("+reset_cache", "Resetta la cache del testo, da avviare solo dopo aver apportato le modifiche.")
+    message.channel.send({ embed });
+  }
+
+  if (command === "add_frase_ladyisabel") {
+    if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
+      return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
+    let tag = args[0];
+    let value = args.slice(1).join(' ');
+    let frase = encodeURIComponent(value);
+    botModel.insertStringText(tag, frase, 'ladyisabel', function (err, res) { });
+    message.channel.send('Testo di ladyisabel aggiunto con successo');
+  }
+
+  if (command === "add_frase_hall") {
+    if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
+      return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
+    let tag = args[0];
+    let value = args.slice(1).join(' ');
+    let frase = encodeURIComponent(value);
+    botModel.insertStringText(tag, frase, 'hall', function (err, res) { });
+    message.channel.send('Testo di hall aggiunto con successo');
+  }
+
+  if (command === "add_frase_bifrost") {
+    if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
+      return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
+    let tag = args[0];
+    let value = args.slice(1).join(' ');
+    let frase = encodeURIComponent(value);
+    botModel.insertStringText(tag, frase, 'bifrost', function (err, res) { });
+    message.channel.send('Testo di bifrost aggiunto con successo');
+  }
+
+  if (command === "get_testi") {
+    if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
+      return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
+    botModel.selectStringTexts(function (err, res) {
+      if (res.length === 0) {
+        return message.reply("Mi dispiace, ma non ci sono testi.");
+      }
+      let text = ''
+      for (let index = 0; index < res.length; index++) {
+        let id_string_text = res[index].id_string_text;
+        let tag = res[index].tag;
+        let bot = res[index].bot;
+        text += "id: " + id_string_text + " // tag: " + tag + " // bot: " + bot + "\n";
+      }
+      message.channel.send(text);
+    });
+  }
+
+  if (command === "delete_testo") {
+    if (!message.member.roles.some(r => ["Developer"].includes(r.name)))
+      return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
+    let id_string_text = args[0];
+    botModel.deleteStringText(id_string_text, function (err, res) { });
+    message.channel.send('Testo eliminato');
+  }
+
+  if (command === "reset_cache") {
+    if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
+      return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
+    botFunction.resetCacheText(function(err, res) {
+      if (res == true) {
+        message.channel.send('Processo completato');
+      } else {
+        message.channel.send('Processo NON completato');
+      }
+    });
+  }
+
+});
+
+/**
+ **********************************************************************
+ *  Blocco di moderazione help_moderation
+ */
+client.on("message", async message => {
+  if (message.content.indexOf(config.prefix) !== 0) return;
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+
   if (command === 'help_moderation') {
     var embed = new Discord.RichEmbed()
       .setAuthor('Hall9000')
-      .setTitle('Sistema di gestione utenti automatizzato')
+      .setTitle('Sezione deditata alla parte di moderazione')
       .setColor(0xFFFF)
       .setDescription('Tutti i comandi sotto stanti sono avviabili solo da un utente Admin, Moderatore, Developer o da Hall')
       .addField("+kick <@nomeutente> <scrivi il motivo>", 'Elimina un utente')
@@ -268,7 +365,7 @@ client.on("message", async message => {
   if (command === 'help_settings') {
     var embed = new Discord.RichEmbed()
       .setAuthor('Hall9000')
-      .setTitle('Sistema di gestione utenti automatizzato')
+      .setTitle('Sistema di gestione dei settings')
       // Set the color of the embed
       .setColor(0xFFFF)
       // Set the main content of the embed
@@ -359,23 +456,23 @@ client.on("message", async message => {
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   
-  if (command === 'help_frasilady') {
+  if (command === 'help_frasi_servizio') {
     var embed = new Discord.RichEmbed()
     .setAuthor('Hall9000')
-    .setTitle('Sistema di gestione utenti automatizzato')
+    .setTitle('Sezione deditata alle frasi di servizio')
     // Set the color of the embed
     .setColor(0xFFFF)
     // Set the main content of the embed
     .setDescription('Tutti i comandi sotto stanti sono avviabili solo da un utente Admin, Moderatore, Developer o da Hall')
-    .addField("+addfslady <frase>", 'Aggiungi una frase di servizio a LadyIsabel')
-    .addField("+getfslady", 'Lista frasi di servizio LadyIsabel')
-    .addField("+delfslady <id frase>", 'Elimina una frase di servizio')
-    .addField("+stafslady <id frase> <stato (attivo o nonattivo)>", 'Elimina una frase')
+    .addField("+add_frase <frase>", 'Aggiungi una frase di servizio a LadyIsabel')
+    .addField("+list_frasi", 'Lista frasi di servizio LadyIsabel')
+    .addField("+delete_frase <id frase>", 'Elimina una frase di servizio')
+    .addField("+status_frase <id frase> <stato (attivo o nonattivo)>", 'Elimina una frase')
     .setFooter('Quando scrivi un comadno non serve scrivere i siboli < e > servono solo a farti capire come strutturare il comando')
     message.channel.send({embed});
   }
 
-  if(command === "addfslady") {
+  if (command === "add_frase") {
     if(!message.member.roles.some(r=>["Admin", "Moderatori", "Developer"].includes(r.name)) )
         return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
     var frase = escape(args.join(" "));
@@ -383,7 +480,7 @@ client.on("message", async message => {
     message.channel.send('Frase inserita');
   }
 
-  if(command === "getfslady") {
+  if (command === "list_frasi") {
     if(!message.member.roles.some(r=>["Admin", "Moderatori", "Developer"].includes(r.name)) )
         return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
     botModel.selectMessageLadyisabel(function(err,res){
@@ -417,7 +514,7 @@ client.on("message", async message => {
     });
   }
 
-  if(command === "delfslady") {
+  if (command === "delete_frase") {
     if(!message.member.roles.some(r=>["Admin", "Moderatori", "Developer"].includes(r.name)) )
         return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
     var id_messaggio = args.join(" ");
@@ -425,7 +522,7 @@ client.on("message", async message => {
     message.channel.send('Frase di servizio eliminata');
   }
 
-  if(command === "stafslady") {
+  if (command === "status_frase") {
     if(!message.member.roles.some(r=>["Admin", "Moderatori", "Developer"].includes(r.name)) )
         return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
     var id_messaggio = args[0];
@@ -451,7 +548,6 @@ client.on("message", async message => {
   if (command === 'help_utility') {
     var embed = new Discord.RichEmbed()
       .setAuthor('Hall9000')
-      .setTitle('Sistema di gestione utenti automatizzato')
       // Set the color of the embed
       .setColor(0xFFFF)
       // Set the main content of the embed
@@ -516,11 +612,8 @@ client.on("message", async message => {
           const id_discord = res[i].id_discord;
           botModel.selectUserWhiteList(id_discord, function (err, res) {
             if (res.length === 0) {
-              console.log('fuori');
               var guild = client.guilds.get("532184361068527646");
-              var member = guild.members.get(id_discord);
-              member.kick().then((member) => {
-              }).catch(console.log(error));
+              guild.members.get(id_discord).kick();
             }
           });
         }
@@ -650,9 +743,7 @@ function cicloDiEspulsione() {
         botModel.selectUserWhiteList(id_discord, function (err, res) {
           if (res.length === 0) {
             var guild = client.guilds.get("532184361068527646");
-            var member = guild.members.get(id_discord);
-            member.kick().then((member) => {
-            }).catch(console.log(error));
+            guild.members.get(id_discord).kick();
           }
         });
       }
