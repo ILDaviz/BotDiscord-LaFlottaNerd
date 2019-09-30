@@ -50,7 +50,7 @@ client.on('guildMemberRemove', member => {
         deleteUser(member.id);
     }
     if (!channel) return;
-    channel.send(`No Perché!!! L'utente ${member} ha lasciato il server..:sob:`);
+    channel.send("No Perché!!! L'utente <@" + member.id + "> ha lasciato il server..:sob:");
 });
 
 client.on("message", async message => {
