@@ -28,7 +28,7 @@ exports.conf = {
     name: "Start",
     fullcmd: "start",
     alias: "start",
-    description: "Il comando per iniziare ad usarmi!",
+    description: "Il comando per iniziare ad usarmi! :stuck_out_tongue_winking_eye: ",
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

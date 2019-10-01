@@ -1,3 +1,5 @@
+'user strict';
+
 const fs = require('fs');
 let cmds = {};
 

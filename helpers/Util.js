@@ -4,10 +4,14 @@ const botModel = require('../helpers/Models');
 const fs = require('fs');
 const bot = require('../bot')
 
-exports.checkIfUserIsBot = function (id_discord){
+exports.checkIfUserIsBot = id_discord => {
     let guild = bot.guilds.get('532184361068527646');
-    let itsbot = guild.member(id_discord).user.bot;
-    return itsbot;
+    let itsbot = guild.member(id_discord).user;
+    if (itsbot) {
+        return itsbot.bot;
+    } else {
+        return false;
+    }
 };
 
 exports.cleenDatabase = function () {
@@ -22,7 +26,23 @@ exports.cleenDatabase = function () {
     });
 }
 
-exports.zeroValoriNegativi = function (){
+exports.asyncCall = async function(id_discord, message_chanel_id) {
+    const mci = message_chanel_id;
+    const id = id_discord;
+    botModel.selectUser(id_discord, function (err, res) {
+        if (res.length > 0) {
+            const n_messages = res.map(a => a.messages);
+            botModel.selectLivelUser(n_messages, function (err, res) {
+                if (res.length > 0) {
+                    let result = getGradoCacciatore(n_messages);
+                    bot.channels.get(mci).send("Ciao <@" + id + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " **; Sei stato proprio un buon cacciatore :kissing_heart:");
+                }
+            });
+        }
+    });
+}
+
+exports.zeroValoriNegativi = () => {
     botModel.selectUsers(function (err, res) {
         for (let i = res.length - 1; i >= 0; i--) {
             let id_discord = res[i].id_discord;
@@ -39,7 +59,7 @@ exports.zeroValoriNegativi = function (){
     });
 }
 
-exports.aggiuntaTimerDiNonAttivita = function(){
+exports.aggiuntaTimerDiNonAttivita = () => {
     let guilds = client.guilds.array();
     for (let i = 0; i < guilds.length; i++) {
         client.guilds.get(guilds[i].id).fetchMembers().then(r => {
@@ -76,7 +96,7 @@ exports.aggiuntaTimerDiNonAttivita = function(){
     }
 }
 
-exports.passaggioSeiGiorniPostConteggio = function(){
+exports.passaggioSeiGiorniPostConteggio = () => {
     botModel.selectNotifiedUsers(function (err, res) {
         if (res.length > 0) {
             for (let i = res.length - 1; i >= 0; i--) {
@@ -99,7 +119,7 @@ exports.passaggioSeiGiorniPostConteggio = function(){
     });
 }
 
-exports.cicloDiEspulsione = function(){
+exports.cicloDiEspulsione = () => {
     botModel.selectDeadUsers(function (err, res) {
         if (res.length > 0) {
             for (let i = res.length - 1; i >= 0; i--) {
@@ -115,7 +135,7 @@ exports.cicloDiEspulsione = function(){
     });
 }
 
-exports.resetCountDay = function(){
+exports.resetCountDay = () => {
     botModel.selectUsers(function (err, res) {
         //Togliere i punti o le presenze
         for (let i = res.length - 1; i >= 0; i--) {
@@ -164,7 +184,7 @@ exports.resetCountDay = function(){
     });
 }
 
-exports.getGradoCacciatore = function(livel){
+exports.getGradoCacciatore = livel => {
     var name = "";
     if (livel >= 10 && livel < 30) {
         name = "Novizio LIV I";
@@ -229,7 +249,7 @@ exports.getGradoCacciatore = function(livel){
     }
     return name;
 };
-exports.censure = function(str) {
+exports.censure = str => {
     var lista_bestemmie = ["dio cane", "diocane", "porcodio", "porco dio"];
     var arrayLength = lista_bestemmie.length;
     var status = 0;
@@ -245,7 +265,7 @@ exports.censure = function(str) {
         return false;
     }
 };
-exports.getRispose = function(){
+exports.getRispose = () => {
     let id = Math.floor(Math.random() * 20) + 1;
     if (id == 1) {
         return "Per quanto posso vedere, sì";
