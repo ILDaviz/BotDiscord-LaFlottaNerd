@@ -1,6 +1,6 @@
 'user strict';
 
-const sql = require('./Db.js');
+const sql = require('./helpers/Db.js');
 
 /**
  * Estrattore di dati dal database
