@@ -7,7 +7,7 @@ module.exports = bot;
 require('./events/onMessage');
 require('./events/onError');
 require('./helpers/loadcommands').load();
-bot.login('574167112642330634');
+bot.login('NTc0MTY3MTEyNjQyMzMwNjM0.XZNqhA.z1DCVZfWBos-pOPfpYLPzOhA18A');
 
 bot.conf = {
 	prefix: '^',

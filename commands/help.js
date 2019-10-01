@@ -14,7 +14,7 @@ exports.run = async (message, bot) => {
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Available commands`)
+        .setTitle(`Ecco tutti gli Help disponibili`)
         .setDescription(msg);
 
     message.channel.send(emb);
@@ -24,7 +24,7 @@ exports.conf = {
     name: "Help",
     fullcmd: "help",
     alias: "cmds",
-    description: "Show available commands",
+    description: "mostra tutti i comandi disponibili",
     timer: 300,
     tokenCost: 0
 };
