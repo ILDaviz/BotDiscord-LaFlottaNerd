@@ -1,5 +1,3 @@
-let botToken = require('./config').botToken;
-
 "use strict";
 
 const Discord = require('discord.js');
@@ -9,7 +7,7 @@ module.exports = bot;
 require('./events/onMessage');
 require('./events/onError');
 require('./helpers/loadcommands').load();
-bot.login(botToken);
+bot.login('574167112642330634');
 
 bot.conf = {
 	prefix: '^',
