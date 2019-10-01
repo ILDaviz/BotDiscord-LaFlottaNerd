@@ -10,9 +10,9 @@
 const Discord = require("discord.js");
 const schedule = require('node-schedule');
 const config = require("./config/config_hall.json");
-const botModel = require('./model/Models');
-const botUtil = require('./util/Util');
-const botCache = require('./util/Cache');
+const botModel = require('../helpers/Models');
+const botUtil = require('../helpers/Util');
+const botCache = require('../helpers/Cache');
 
 // Avvio del bot Hall
 const client = new Discord.Client();
