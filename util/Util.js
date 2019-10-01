@@ -1,10 +1,16 @@
 'user strict';
 
-const botModel = require('./model/botModel');
+const botModel = require('./model/Models');
 const fs = require('fs');
-
-class botFunction {
+/**
+ * Classe delle Utility
+ */
+class Util {
     constructor(){}
+    /**
+     * Stampa il livello cacciatore
+     * @param {Number} livel il livello del cacciatore in numero
+     */
     getGradoCacciatore(livel){
         var name = "";
         if (livel >= 10 && livel < 30) {
@@ -70,7 +76,11 @@ class botFunction {
         }
         return name;
     }
-    censunre(str) {
+    /**
+     * Questo script analizza il testo e ne cerca similitudini con le parole indicate.
+     * @param {String} str Testo da analizzare 
+     */
+    censure(str) {
         var lista_bestemmie = ["dio cane", "diocane", "porcodio", "porco dio"];
         var arrayLength = lista_bestemmie.length;
         var status = 0;
@@ -86,6 +96,9 @@ class botFunction {
             return false;
         }
     }
+    /**
+     * Da una risposta casuale (Gioco palla da otto)
+     */
     getRispose(){
         let id = Math.floor(Math.random() * 20) + 1;
         if (id == 1) {
@@ -132,50 +145,6 @@ class botFunction {
             return "Mi puoi rifare la domanda, non ho capito..";
         }
     }
-    resetCacheText(result){
-
-        fs.readFile('cacheString.json', function (err, content) {
-            if (err) {
-                result(err, false);
-            }
-            else {
-                botModel.selectStringTexts(function(err,res){
-                    if (err) {
-                        result(err, false);
-                    }
-                    else {
-                        var obj = {
-                            text: []
-                        };
-                        for (let i = 0; i < res.length; i++) {
-                            let tag = res[i].tag;
-                            let string = res[i].string;
-                            obj.text.push({ id_refer: tag, string: encodeURIComponent(string) });
-                        }
-                        fs.writeFile('cacheString.json', JSON.stringify(obj), function (err) {
-                            if (err) {
-                                result(err, false);
-                            }
-                            else {
-                                result(null, true);
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    }
-    selectCacheText (tag,bot) {
-        let jsonData = require('./cacheString.json');
-        for (let i = 0; i < jsonData.length; i++) {
-            let tag_list = jsonData[i].tag;
-            let string = jsonData[i].string;
-            let bot_list = jsonData[i].bot;
-            if (tag_list === tag && bot_list == bot ) {
-                return decodeURIComponent(string);
-            }
-        }
-    }
 }
 
-module.exports = botFunction;
+module.exports = Util;

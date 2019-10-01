@@ -9,7 +9,7 @@
 // Opzioni e sett
 const Discord = require("discord.js");
 const schedule = require('node-schedule');
-const config = require("./config_gin.json");
+const config = require("./config_gin.json.js");
 const sql_data = {
     host: 'localhost',
     user: 'root',

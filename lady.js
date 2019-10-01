@@ -10,8 +10,9 @@
 const Discord = require("discord.js");
 const schedule = require('node-schedule');
 const config = require("./config_lady.json");
-const botModel = require('./model/botModel');
-const functionBot = require('./functionBot.js');
+const botModel = require('./model/Models');
+const botUtil = require('./util/Util');
+const botCache = require('./util/Cache');
 
 // Avvio del bot LadyIsabel
 const client = new Discord.Client();
@@ -28,27 +29,24 @@ client.on('error', (err) => {
 // Crea un evento se l'utente entra nella gilda.
 client.on('guildMemberAdd', member => {
     const channel = member.guild.channels.find(ch => ch.name === 'welcome');
-    var users_list_1 = usersList(member.id);
+    let users_list_1 = usersList(member.id);
     if (users_list_1.length = 0) {
     addUser(member.id);
     }
     if (!channel) return;
-    var embed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
     .setAuthor(`Benvenuto nel server Discord de LA FLOTTA NERD!`)
-    .setTitle(getSetting('isabel_welcome_title_message'))
+    .setTitle(botUtil.selectCacheText('isabel_welcome_title_message','ladyisabel'))
     .setColor(0xFF8000)
-    .setDescription('Ciao' + member + ',' + getSetting('isabel_welcome_message'))
-    .setFooter(getSetting('isabel_footer_message_standard'))
+    .setDescription('Ciao' + member + ',' + botUtil.selectCacheText('isabel_welcome_message','ladyisabel'))
+    .setFooter(botUtil.selectCacheText('isabel_footer_message_standard','ladyisabel'))
     channel.send({embed});
 });
 
 // Crea se un utente se ne va.
 client.on('guildMemberRemove', member => {
     const channel = member.guild.channels.find(ch => ch.name === 'welcome');
-    var users_list_2 = usersList(member.id);
-    if (users_list_2.length > 0) {
-        deleteUser(member.id);
-    }
+    botModel.deleteUser(member.id,function(err,res){ });
     if (!channel) return;
     channel.send("No Perché!!! L'utente <@" + member.id + "> ha lasciato il server..:sob:");
 });
@@ -57,12 +55,32 @@ client.on("message", async message => {
     if (message.author.bot) return;
     if (message.content.indexOf(config.prefix) !== 0) return;
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
+    //const command = args.shift().toLowerCase();
     asyncCall(message.author.id, message.channel.id);
-    if (Censunre(message.content)) {
+    if (botUtil.censure(message.content)) {
         message.channel.send("Hei " + message.member.user + " :rage:! Per piacere smettila di imprecare, alla prossima ti banno!");
     }
 });
+/**
+ * Stampa il messaggio del livello se aumentato.
+ * @param {*} id_discord riferimento id discord
+ * @param {*} message_chanel_id il canale dove ha scritto l'utente il messaggio di passaggio
+ */
+async function asyncCall(id_discord, message_chanel_id) {
+    const mci = message_chanel_id; 
+    const id = id_discord;
+    botModel.selectUser(id_discord,function(err,res){
+        if (res.length > 0) {
+            const n_messages = res.map(a => a.messages);
+            botModel.selectLivelUser(n_messages,function(err,res){
+                if (res.length > 0) {
+                    let result = botUtil.getGradoCacciatore(n_messages);
+                    client.channels.get(mci).send("Ciao <@" + id + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " **; Sei stato proprio un buon cacciatore :kissing_heart:");
+                } 
+            });
+        }
+    });
+}
 
 client.on("message", async message => {
     if (message.author.bot) return;
@@ -72,7 +90,7 @@ client.on("message", async message => {
     const command = args.shift().toLowerCase();
 
     if (command === 'help') {
-        var embed = new Discord.RichEmbed()
+        let embed = new Discord.RichEmbed()
             .setAuthor('Ciao io sono LadyIsabel')
             .setTitle('Ho molte funzioni utili per la gilda')
             .setColor(0xFF0000)
@@ -94,11 +112,12 @@ client.on("message", async message => {
     if(message.author.bot) return;
 
     if(message.content.indexOf(config.prefix) !== 0) return;
+
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     if(command === 'help_old') {
-        var embed = new Discord.RichEmbed()
+        let embed = new Discord.RichEmbed()
         .setAuthor('Ciao io sono LadyIsabel')
         .setTitle('Ho molte funzioni utili per la gilda')
         .setColor(0xFF0000)
@@ -127,10 +146,12 @@ client.on("message", async message => {
     }
 
     if(command === "cosacaccio") {
-        var id_monster = Math.floor(Math.random() * 34);
-        var monster = getMonster(id_monster);
-        var name = monster.map(a => a.name);
-        await message.channel.send("Ciao " + message.member.user + "! Per me oggi dovresti cacciare un **" + name + "** ! :kissing_heart:");
+        let id_monster = Math.floor(Math.random() * 34);
+        botModel.selectMonster(id_monster,function(err,res){
+            let name = res.map(a => a.name);
+            await message.channel.send("Ciao " + message.member.user + "! Per me oggi dovresti cacciare un **" + name + "** ! :kissing_heart:");
+        });
+        
     }
 
     if(command === "say") {
@@ -142,58 +163,60 @@ client.on("message", async message => {
     }
 
     if(command === "livello") {
-        var livel_user = usersList(message.member.user.id);
         const m = await message.channel.send("Attendi..");
-        if(livel_user.length > 0){
-            var messages = livel_user.map(a => a.messages);
-            if ( messages < 10 ) {
-                m.edit("Ciao " + message.member.user + "! Purtroppo non hai scritto molto.. scrivi di più e sicuramente aumenterai il tuo punteggio! :kissing_heart:");
+        botModel.selectUser(message.member.user.id,function(err,res){
+            let messages = res.map(a => a.messages);
+            if(messages > 0){
+                if ( messages < 10 ) {
+                    m.edit("Ciao " + message.member.user + "! Purtroppo non hai scritto molto.. scrivi di più e sicuramente aumenterai il tuo punteggio! :kissing_heart:");
+                } else {
+                    m.edit("Ciao " + message.member.user + "! Ma sei fortissimo il tuo livello di partecipazione è di :** " + messages + " **; Il tuo grado è di:** " + botUtil.getGradoCacciatore(messages) + " **. Sei stato proprio bravo :kissing_heart:");
+                }
             } else {
-                m.edit("Ciao " + message.member.user + "! Ma sei fortissimo il tuo livello di partecipazione è di :** " + messages + " **; Il tuo grado è di:** " + getGradoCacciatore(messages) + " **. Sei stato proprio bravo :kissing_heart:");
+                m.edit("Ciao " + message.member.user + "! Purtroppo non hai scritto molto.. scrivi di più e sicuramente aumenterai il tuo punteggio! :kissing_heart:");
             }
-        } else {
-            m.edit("Ciao " + message.member.user + "! Purtroppo non hai scritto molto.. scrivi di più e sicuramente aumenterai il tuo punteggio! :kissing_heart:");
-        }
+        });
     }
 
     if(command === "ctop") {
-        var list_users_top = getTopListMessageAllTime();
-        var post = 10;
         const m = await message.channel.send("Attendi..");
-        var messages_text = "Eccola la classifica top 10:\n";
-        messages_text += "----------\n";
-        for (var i = list_users_top.length - 1; i >= 0; i--) {
-            var id_discord = list_users_top[i].id_discord;
-            var messages = list_users_top[i].messages;
-            messages_text += "Posizione: " + post + " - Nome <@" + id_discord + "> - messaggi:  " + messages + "\n";
-            var post = post - 1;
-        }
-        messages_text += "----------\n";
-        messages_text += "Ti sei posizionato bene?\n";
-        m.edit(messages_text);
+        botModel.seletTopListMessageAllTime(function(err,res){
+            var post = 10;
+            var messages_text = "Eccola la classifica top 10:\n";
+            messages_text += "----------\n";
+            for (let i = res.length - 1; i >= 0; i--) {
+                let id_discord = res[i].id_discord;
+                let messages = res[i].messages;
+                messages_text += "Posizione: " + post + " - Nome <@" + id_discord + "> - messaggi:  " + messages + "\n";
+                var post = post - 1;
+            }
+            messages_text += "----------\n";
+            messages_text += "Ti sei posizionato bene?\n";
+            m.edit(messages_text);
+        });
     }
 
     if(command === "dtop") {
-        var list_users_top = getTopListMessageDay();
-        var post = 10;
         const m = await message.channel.send("Attendi..");
-        var messages_text = "Eccola la classifica top 10:\n";
-        messages_text += "----------\n";
-        for (var i = list_users_top.length - 1; i >= 0; i--) {
-            var id_discord = list_users_top[i].id_discord;
-            var messages = list_users_top[i].messages_day;
-            messages_text += "Posizione: " + post + " - Nome <@" + id_discord + "> - messaggi:  " + messages + "\n";
-            var post = post - 1;
-        }
-        messages_text += "----------\n";
-        messages_text += "Ti sei posizionato bene?\n";
-        m.edit(messages_text);
+        botModel.seletTopListMessageDay(function(err,res){
+            var post = 10;
+            var messages_text = "Eccola la classifica top 10:\n";
+            messages_text += "----------\n";
+            for (let i = res.length - 1; i >= 0; i--) {
+                let id_discord = res[i].id_discord;
+                let messages = res[i].messages;
+                messages_text += "Posizione: " + post + " - Nome <@" + id_discord + "> - messaggi:  " + messages + "\n";
+                var post = post - 1;
+            }
+            messages_text += "----------\n";
+            messages_text += "Ti sei posizionato bene?\n";
+            m.edit(messages_text);
+        });
     }
 
     if (command === "pallaotto") {
-        var id_risposta = Math.floor(Math.random() * 20) + 1;
-        var risposta = getRispose(id_risposta);
-        var embed = new Discord.RichEmbed()
+        let risposta = botUtil.getRispose();
+        let embed = new Discord.RichEmbed()
         .setTitle('Il gioco della palla da otto')
         .setColor(0xFF0000)
         .setDescription('La mia risposta è.. '+risposta+'.')
@@ -201,7 +224,7 @@ client.on("message", async message => {
     }
 
     if (command === "infoserver") {
-        var text_message = "Server Nome: LA FLOTTA NERD\n";
+        let text_message = "Server Nome: LA FLOTTA NERD\n";
         text_message += "------\n";
         text_message += "Ci sono N° "+client.users.size+" utenti nel server.\n";
         text_message += "Ci sono N° "+client.channels.size+" canali nel server.\n";
@@ -225,32 +248,33 @@ client.on("message", async message => {
 client.on('raw', event => {
     //console.log('\nRaw event data:\n', event);
     if (event.t === 'MESSAGE_CREATE') {
-        var id_user = event.d.author.id;
-        var mentions = event.d.mentions;
-        var id_channel = event.d.channel_id;
+        const id_user = event.d.author.id;
+        let mentions = event.d.mentions;
+        let id_channel = event.d.channel_id;
         for (let index = 0; index < mentions.length; index++) {
-            var id_mention = mentions[index].id;
+            let id_mention = mentions[index].id;
             if(id_mention == config.bot_id_1 ){
-                var mentions = getMentionsBot(id_user);
-                if (mentions == 0) {
-                    client.channels.get(id_channel).send('<@'+ id_user +'> Sai che sono un Bot e non posso risponderti, per piacere non menzionarmi :D');
-                } else if ( mentions == 1 ) {
-                    client.channels.get(id_channel).send('<@'+ id_user +'> Per piacere smettila!');
-                } else if ( mentions == 2 ) {
-                    client.channels.get(id_channel).send('Hei!<@'+ id_user +'> Ho detto di smetterla!!!!!!!');
-                } else if ( mentions == 3 ) {
-                    client.channels.get(id_channel).send('<@'+ id_user +'> BASTAAAAAAAA!!!!!!!!!!!!!!!!!!!!!!');
-                } else if ( mentions == 4 ) {
-                    client.channels.get(id_channel).send('https://media1.tenor.com/images/da022ba3792e2486459abf1dc53864ec/tenor.gif?itemid=5641362');
-                } else if ( mentions == 7 ) {
-                    client.channels.get(id_channel).send('https://tenor.com/view/cant-hear-you-jim-carrey-gif-11229249');
-                } else if ( mentions == 9 ) {
-                    client.channels.get(id_channel).send('https://tenor.com/view/brave-merida-no-listen-ginger-gif-5528367');
-                } else {
-                    client.channels.get(id_channel).send('<@'+ id_user +'> Non ti parlo più...');
-                }
+                botModel.selectMentionBot(id_user,function(err,mentions){
+                    if (mentions == 0) {
+                        client.channels.get(id_channel).send('<@'+ id_user +'> Sai che sono un Bot e non posso risponderti, per piacere non menzionarmi :D');
+                    } else if ( mentions == 1 ) {
+                        client.channels.get(id_channel).send('<@'+ id_user +'> Per piacere smettila!');
+                    } else if ( mentions == 2 ) {
+                        client.channels.get(id_channel).send('Hei!<@'+ id_user +'> Ho detto di smetterla!!!!!!!');
+                    } else if ( mentions == 3 ) {
+                        client.channels.get(id_channel).send('<@'+ id_user +'> BASTAAAAAAAA!!!!!!!!!!!!!!!!!!!!!!');
+                    } else if ( mentions == 4 ) {
+                        client.channels.get(id_channel).send('https://media1.tenor.com/images/da022ba3792e2486459abf1dc53864ec/tenor.gif?itemid=5641362');
+                    } else if ( mentions == 7 ) {
+                        client.channels.get(id_channel).send('https://tenor.com/view/cant-hear-you-jim-carrey-gif-11229249');
+                    } else if ( mentions == 9 ) {
+                        client.channels.get(id_channel).send('https://tenor.com/view/brave-merida-no-listen-ginger-gif-5528367');
+                    } else {
+                        client.channels.get(id_channel).send('<@'+ id_user +'> Non ti parlo più...');
+                    }
+                });
             }
-            addMentionsBot(id_user);
+            botModel.updateMentionBot(id_user,function(err,res){});
         }
     }
 });
@@ -259,7 +283,7 @@ client.on('raw', event => {
  * @param { string } note 
  */
 function log(note) {
-    var embed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
         .setTitle('-- LOG --')
         .setColor(0xFFFF)
         .setDescription(note)
@@ -269,32 +293,16 @@ function log(note) {
  * Stampa il messaggio di servizio
  */
 function getServiceMessage(){
-    if (getSetting('service_message') == 1) {
-        var frasi = getFrasi();
+    if (getSettingTag('service_message') == 1) {
+        let frasi = getFrasi();
         for (let index = 0; index < frasi.length; index++) {
             message = unescape(frasi[index].message);
             log('Bot Ledy Messaggio di servizio inviato;');
-            var embed = new Discord.RichEmbed()
+            let embed = new Discord.RichEmbed()
             .setTitle('Messaggio di servizio! :nerd: ')
             .setColor(0xFF0000)
             .setDescription(message)
             client.channels.find(ch => ch.name === '4-chiacchiere').send({embed});
-        }
-    }
-}
-/**
- * Stampa il messaggio del livello se aumentato.
- * @param {*} id_discord riferimento id discord
- * @param {*} message_chanel_id il canale dove ha scritto l'utente il messaggio di passaggio
- */
-async function asyncCall(id_discord, message_chanel_id) {
-    var liv_usr = getUser(id_discord);
-    if (liv_usr.length > 0) {
-        var messages = liv_usr.map(a => a.messages);
-        var livel_users = getLivelUser(messages);
-        if (livel_users.length > 0) {
-            var result = await getGradoCacciatore(messages);
-            client.channels.get(message_chanel_id).send("Ciao <@" + id_discord + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " **; Sei stato proprio un buon cacciatore :kissing_heart:");
         }
     }
 }

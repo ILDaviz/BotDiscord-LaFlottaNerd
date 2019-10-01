@@ -10,8 +10,9 @@
 const Discord = require("discord.js");
 const schedule = require('node-schedule');
 const config = require("./config/config_hall.json");
-const botModel = require('./model/botModel');
-const botFunction = require('./botFunction');
+const botModel = require('./model/Models');
+const botUtil = require('./util/Util');
+const botCache = require('./util/Cache');
 
 // Avvio del bot Hall
 const client = new Discord.Client();
@@ -39,7 +40,7 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'help') {
-    var embed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
       .setAuthor('Hall9000')
       .setTitle('Sistema di gestione utenti automatizzato')
       .setDescription('Tutti i comandi sotto stanti sono dei sotto gruppi entra in uno di questi per avere maggiori dettagli')
@@ -63,7 +64,7 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'help_testi_bot') {
-    var embed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
       .setAuthor('Hall9000')
       .setTitle('Sezione dedicata ai testi dei bot')
       .setColor(0xFFFF)
@@ -136,7 +137,7 @@ client.on("message", async message => {
   if (command === "reset_cache") {
     if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
       return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-    botFunction.resetCacheText(function(err, res) {
+    botCache.resetCacheText(function(err, res) {
       if (res == true) {
         message.channel.send('Processo completato');
       } else {
@@ -157,7 +158,7 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'help_moderation') {
-    var embed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
       .setAuthor('Hall9000')
       .setTitle('Sezione deditata alla parte di moderazione')
       .setColor(0xFFFF)
@@ -194,8 +195,7 @@ client.on("message", async message => {
   
     let reason = args.slice(1).join(' ');
     if (!reason) reason = "Nessuna ragione";
-    var member_id = member.id;
-    botModel.deleteUser(member_id, function(err,res){ });
+    botModel.deleteUser(member.id, function(err,res){ });
     await member.kick(reason)
       .catch(error => message.reply(`Mi dispiace ${message.author} non ho potuto espellerlo perché : ${error}`));
     message.reply(`${member.user.tag} utente espulso da ${message.author.tag} perché: ${reason}`);
@@ -285,9 +285,9 @@ client.on("message", async message => {
     message.channel.send("Processo in corso..(Attendere fino al completamento del comdando.)");
     botModel.selectUserWhiteList(function(err,res){
       if (res.length > 0) {
-        for (var i = res.length - 1; i >= 0; i--) {
-          var id_discord_wl = res[i].id_discord;
-          var n_message_wl = res[i].tag;
+        for (let i = res.length - 1; i >= 0; i--) {
+          let id_discord_wl = res[i].id_discord;
+          let n_message_wl = res[i].tag;
           message.channel.send("Utente id: " + id_discord_wl + " // <@" + id_discord_wl + "> -- Nome tag: " + n_message_wl + " ;\n");
         }
         message.channel.send("Comando completato");
@@ -303,18 +303,18 @@ client.on("message", async message => {
     const m = await message.channel.send("Attendi..");
     botModel.selectUsersInToGrave(function(err, res){
       if (res.length > 0) {
-        var text_itg_message = "**STATO UTENTI NON ATTIVI NEL SERVER**\r";
-        var n_utenti_notificati = 0;
-        var n_utenti_non_notificati = 0;
+        let text_itg_message = "**STATO UTENTI NON ATTIVI NEL SERVER**\r";
+        let n_utenti_notificati = 0;
+        let n_utenti_non_notificati = 0;
         for (let i = 0; i < res.length; i++) {
-          var notified = res[i].notified;
+          let notified = res[i].notified;
           if (notified === 1) {
             n_utenti_notificati += 1;
           } else {
             n_utenti_non_notificati += 1;
           }
         }
-        var total_list_user_grave = n_utenti_notificati + n_utenti_non_notificati;
+        let total_list_user_grave = n_utenti_notificati + n_utenti_non_notificati;
         text_itg_message += "Utenti totali in lista nera: " + total_list_user_grave + "\n";
         text_itg_message += ":red_circle: Utenti notificati: " + n_utenti_notificati + "\n";
         text_itg_message += ":bulb: Utenti non notificati: " + n_utenti_non_notificati + "\n";
@@ -363,7 +363,7 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'help_settings') {
-    var embed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
       .setAuthor('Hall9000')
       .setTitle('Sistema di gestione dei settings')
       // Set the color of the embed
@@ -382,9 +382,9 @@ client.on("message", async message => {
   if (command === "add_setting") {
     if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
       return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-    var name = args[0];
-    var value = args.slice(1).join(' ');
-    var frase = encodeURIComponent(value);
+    let name = args[0];
+    let value = args.slice(1).join(' ');
+    let frase = encodeURIComponent(value);
     botModel.insertSetting(name, frase, function (err, res) { });
     message.channel.send('Settaggio aggiunto');
   }
@@ -392,7 +392,7 @@ client.on("message", async message => {
   if (command === "delete_setting") {
     if (!message.member.roles.some(r => ["Developer"].includes(r.name)))
       return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-    var id_setting = args[0];
+    let id_setting = args[0];
     botModel.deleteSetting(id_setting, function (err, res) { });
     message.channel.send('Settaggio eliminato');
   }
@@ -400,9 +400,9 @@ client.on("message", async message => {
   if (command === "update_setting") {
     if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
       return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-    var id_setting = args[0];
-    var value = args.slice(1).join(' ');
-    var sett = encodeURIComponent(value)
+    let id_setting = args[0];
+    let value = args.slice(1).join(' ');
+    let sett = encodeURIComponent(value)
     botModel.updateSetting(id_setting, sett, function (err, res) { });
     message.channel.send('Settaggio aggiornato');
   }
@@ -410,14 +410,14 @@ client.on("message", async message => {
   if (command === "get_setting_value") {
     if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
       return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-    var id_setting = args[0];
+    let id_setting = args[0];
     botModel.selectSettingValue(id_setting, function (err, res) {
       if (res.length === 0) {
         return message.reply("Mi dispiace, ma non ci sono settaggi.");
       }
 
-      var value = res[0].value;
-      var frase = decodeURIComponent(value);
+      let value = res[0].value;
+      let frase = decodeURIComponent(value);
       message.channel.send(frase);
 
     });
@@ -430,14 +430,14 @@ client.on("message", async message => {
       if (res.length === 0) {
         return message.reply("Mi dispiace, ma non ci sono settaggi.");
       }
-        var text = ''
+        let text = ''
       for (let index = 0; index < res.length; index++) {
-        var id_settings = res[index].id_settings;
-        var name = res[index].name;
+        let id_settings = res[index].id_settings;
+        let name = res[index].name;
           text += "id:" + id_settings + " name:" + name + "\n";
         }
 
-        var embed = new Discord.RichEmbed()
+        let embed = new Discord.RichEmbed()
           .setTitle('Settaggio:')
           .setColor(0xFFFF)
           .addField("settings disponibili:", text)
@@ -457,7 +457,7 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
   
   if (command === 'help_frasi_servizio') {
-    var embed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
     .setAuthor('Hall9000')
     .setTitle('Sezione deditata alle frasi di servizio')
     // Set the color of the embed
@@ -475,7 +475,7 @@ client.on("message", async message => {
   if (command === "add_frase") {
     if(!message.member.roles.some(r=>["Admin", "Moderatori", "Developer"].includes(r.name)) )
         return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-    var frase = escape(args.join(" "));
+    let frase = escape(args.join(" "));
     botModel.insertMessageLadyisabel(frase, function (err, res) { });
     message.channel.send('Frase inserita');
   }
@@ -489,12 +489,12 @@ client.on("message", async message => {
       }
 
       for (let index = 0; index < res.length; index++) {
-        var id_message = res[index].id_message;
-        var frase = res[index].message;
+        let id_message = res[index].id_message;
+        let frase = res[index].message;
         frase = unescape(frase);
-        var status = res[index].status;
+        let status = res[index].status;
         if (status === 0) {
-          var embed = new Discord.RichEmbed()
+          let embed = new Discord.RichEmbed()
             .setTitle('Frasi di servizio')
             .setColor(0xFFFF)
             .addField("Id Frase:", id_message)
@@ -502,7 +502,7 @@ client.on("message", async message => {
             .addField("Stato:", 'Non attivo')
           message.channel.send({ embed });
         } else {
-          var embed = new Discord.RichEmbed()
+          let embed = new Discord.RichEmbed()
             .setTitle('Frasi di servizio')
             .setColor(0xFFFF)
             .addField("Id Frase:", id_message)
@@ -517,7 +517,7 @@ client.on("message", async message => {
   if (command === "delete_frase") {
     if(!message.member.roles.some(r=>["Admin", "Moderatori", "Developer"].includes(r.name)) )
         return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-    var id_messaggio = args.join(" ");
+    let id_messaggio = args.join(" ");
     botModel.deleteMessageLadyisabel(id_messaggio, function (err, res) { });
     message.channel.send('Frase di servizio eliminata');
   }
@@ -525,8 +525,8 @@ client.on("message", async message => {
   if (command === "status_frase") {
     if(!message.member.roles.some(r=>["Admin", "Moderatori", "Developer"].includes(r.name)) )
         return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-    var id_messaggio = args[0];
-    var status = args.slice(1).join(' ');
+    let id_messaggio = args[0];
+    let status = args.slice(1).join(' ');
     if (status === 'attivo') {
       botModel.updateStatusMessageLadyisabel(id_messaggio, 1, function (err, res) { });
     } else {
@@ -546,7 +546,7 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 
   if (command === 'help_utility') {
-    var embed = new Discord.RichEmbed()
+    let embed = new Discord.RichEmbed()
       .setAuthor('Hall9000')
       // Set the color of the embed
       .setColor(0xFFFF)
@@ -575,8 +575,8 @@ client.on("message", async message => {
     }).map(member => {
       return member.user.username;
     });
-    var numbers_user = 0;
-    for (var i = membersWithRole.length - 1; i >= 0; i--) {
+    let numbers_user = 0;
+    for (let i = membersWithRole.length - 1; i >= 0; i--) {
       numbers_user = numbers_user + 1;
     }
     let embed = new Discord.RichEmbed({
@@ -608,11 +608,11 @@ client.on("message", async message => {
       return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
     botModel.selectDeadUsers(function (err, res) {
       if (res.length > 0) {
-        for (var i = res.length - 1; i >= 0; i--) {
+        for (let i = res.length - 1; i >= 0; i--) {
           const id_discord = res[i].id_discord;
           botModel.selectUserWhiteList(id_discord, function (err, res) {
             if (res.length === 0) {
-              var guild = client.guilds.get("532184361068527646");
+              let guild = client.guilds.get("532184361068527646");
               guild.members.get(id_discord).kick();
             }
           });
@@ -628,7 +628,7 @@ client.on("message", async message => {
  * @param { string } note 
  */
 function log(note){
-  var embed = new Discord.RichEmbed()
+  let embed = new Discord.RichEmbed()
   .setTitle('-- LOG --')
   .setColor(0xFFFF)
   .setDescription(note)
@@ -654,14 +654,14 @@ function cleenDatabase() {
  */
 function zeroValoriNegativi() {
   botModel.selectUsers(function (err, res) {
-    for (var i = res.length - 1; i >= 0; i--) {
-      var id_discord = res[i].id_discord;
-      var n_message_getUsers = res[i].messages;
+    for (let i = res.length - 1; i >= 0; i--) {
+      let id_discord = res[i].id_discord;
+      let n_message_getUsers = res[i].messages;
       if (n_message_getUsers < 0) {
         botModel.updateZeroMessage(id_discord, function (err, res) { });
         botModel.updateZeroPresence(id_discord, function (err, res) { });
       }
-      var n_message_presentes = res[i].presences;
+      let n_message_presentes = res[i].presences;
       if (n_message_presentes < 0) {
         botModel.updateZeroPresence(id_discord, function (err, res) { });
       }
@@ -672,7 +672,7 @@ function zeroValoriNegativi() {
  * Controlla se gli utenti hanno una attività 0 avvia il timer
  */
 function aggiuntaTimerDiNonAttivita() {
-  var guilds = client.guilds.array();
+  let guilds = client.guilds.array();
   for (let i = 0; i < guilds.length; i++) {
     client.guilds.get(guilds[i].id).fetchMembers().then(r => {
       r.members.array().forEach(r => {
@@ -684,8 +684,8 @@ function aggiuntaTimerDiNonAttivita() {
             if (id_discord > 1 && id_discord !== config.bot_id_1 && id_discord !== config.bot_id_2 && id_discord !== config.bot_id_3 && id_discord !== config.bot_id_4) {
               botModel.selectUser(id_discord, function (err, res) {
                 if (res.length > 0) {
-                  var presences = res[0].presences;
-                  var last_check = res[0].last_check;
+                  let presences = res[0].presences;
+                  let last_check = res[0].last_check;
                   if (presences == 0) {
                     //Controlla l'ultimo check se non settato lo setta!
                     if (last_check == null) {
@@ -713,10 +713,10 @@ function aggiuntaTimerDiNonAttivita() {
 function passaggioSeiGiorniPostConteggio() {
   botModel.selectNotifiedUsers(function (err, res) {
     if (res.length > 0) {
-      for (var i = res.length - 1; i >= 0; i--) {
-        var notified = res[i].notified;
+      for (let i = res.length - 1; i >= 0; i--) {
+        let notified = res[i].notified;
         const id_discord = res[i].id_discord;
-        var last_check = res[i].last_check;
+        let last_check = res[i].last_check;
         if (notified == 0) {
           if (last_check !== null) {
             botModel.selectUserWhiteList(id_discord, function (err, res) {
@@ -738,11 +738,11 @@ function passaggioSeiGiorniPostConteggio() {
 function cicloDiEspulsione() {
   botModel.selectDeadUsers(function (err, res) {
     if (res.length > 0) {
-      for (var i = res.length - 1; i >= 0; i--) {
+      for (let i = res.length - 1; i >= 0; i--) {
         const id_discord = res[i].id_discord;
         botModel.selectUserWhiteList(id_discord, function (err, res) {
           if (res.length === 0) {
-            var guild = client.guilds.get("532184361068527646");
+            let guild = client.guilds.get("532184361068527646");
             guild.members.get(id_discord).kick();
           }
         });
@@ -767,11 +767,11 @@ function scriptBanUsers() {
 function resetCountDay() {
   botModel.selectUsers(function(err,res){
     //Togliere i punti o le presenze
-    for (var i = res.length - 1; i >= 0; i--) {
+    for (let i = res.length - 1; i >= 0; i--) {
 
-      var id_discord = res[i].id_discord;
-      var messages = res[i].messages;
-      var messages_day = res[i].messages_day;
+      let id_discord = res[i].id_discord;
+      let messages = res[i].messages;
+      let messages_day = res[i].messages_day;
 
       if (messages_day == 0) {
         if (messages > 0) {
@@ -783,8 +783,8 @@ function resetCountDay() {
         }
       }
 
-      var presences = res[i].presences;
-      var presence_day = res[i].presence_day;
+      let presences = res[i].presences;
+      let presence_day = res[i].presence_day;
 
       if (presence_day == 0) {
         if (presences > 0) {
@@ -799,13 +799,13 @@ function resetCountDay() {
 
     botModel.updateResetPresenceCount(function(err,res){ });
 
-    for (var i = res.length - 1; i >= 0; i--) {
-      var id_discord_getUsers = res[i].id_discord;
-      var n_message_getUsers = res[i].messages;
+    for (let i = res.length - 1; i >= 0; i--) {
+      let id_discord_getUsers = res[i].id_discord;
+      let n_message_getUsers = res[i].messages;
       if (n_message_getUsers < 0) {
         botModel.updateZeroMessage(id_discord_getUsers, function (err, res) { });
       }
-      var n_message_presentes = res[i].presences;
+      let n_message_presentes = res[i].presences;
       if (n_message_presentes < 0) {
         botModel.updateZeroPresence(id_discord_getUsers, function (err, res) { });
       }
@@ -815,13 +815,12 @@ function resetCountDay() {
 
 /**************************************************************************************************
  * Eventi registrati.
- **************************************************************************************************
  * Aggiunge il punto presenza e i punti messaggi. Se l'utente non inserito nel database lo aggiunge.
  */
 client.on('raw', event => {
   //console.log('\nRaw event data:\n', event);
   if (event.t === 'PRESENCE_UPDATE') {
-    var user_id_discod = event.d.user.id;
+    let user_id_discod = event.d.user.id;
     if (event.d.guild_id == '532184361068527646' && event.d.status == 'online') {
       if(user_id_discod !== config.bot_id_1 && user_id_discod !== config.bot_id_2 && user_id_discod !== config.bot_id_3 && user_id_discod !== config.bot_id_4){
         //Controlla se l'utente è presente nel database
@@ -837,7 +836,7 @@ client.on('raw', event => {
     }
   }
   if (event.t === 'MESSAGE_CREATE') {
-    var user_id_discod = event.d.author.id;
+    let user_id_discod = event.d.author.id;
     if (event.d.guild_id == '532184361068527646') {
       if(user_id_discod !== config.bot_id_1 && user_id_discod !== config.bot_id_2 && user_id_discod !== config.bot_id_3 && user_id_discod !== config.bot_id_4){
         //Controlla se l'utente è presente nel database
@@ -855,7 +854,7 @@ client.on('raw', event => {
     }
   }
   if (event.t === 'MESSAGE_REACTION_ADD') {
-    var user_id_discod = event.d.user_id;
+    let user_id_discod = event.d.user_id;
     if (event.d.guild_id == '532184361068527646') {
       if(user_id_discod !== config.bot_id_1 && user_id_discod !== config.bot_id_2 && user_id_discod !== config.bot_id_3 && user_id_discod !== config.bot_id_4){
         //Controlla se l'utente è presente nel database
