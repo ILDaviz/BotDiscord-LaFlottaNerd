@@ -1,7 +1,168 @@
 'user strict';
 
-const botModel = require('./helpers/Models');
+const botModel = require('../helpers/Models');
 const fs = require('fs');
+const bot = require('../bot')
+
+exports.checkIfUserIsBot = function (id_discord){
+    let guild = bot.guilds.get('532184361068527646');
+    let itsbot = guild.member(id_discord).user.bot;
+    return itsbot;
+};
+
+exports.cleenDatabase = function () {
+    botModel.selectUsers(function (err, res) {
+        for (let i = 0; i < res.length; i++) {
+            const id_discord = res[i].id_discord;
+            let guild = bit.guilds.get('532184361068527646');
+            if (!guild.member(id_discord)) {
+                botModel.deleteUser(id_discord, function (err, res) { });
+            }
+        }
+    });
+}
+
+exports.zeroValoriNegativi = function (){
+    botModel.selectUsers(function (err, res) {
+        for (let i = res.length - 1; i >= 0; i--) {
+            let id_discord = res[i].id_discord;
+            let n_message_getUsers = res[i].messages;
+            if (n_message_getUsers < 0) {
+                botModel.updateZeroMessage(id_discord, function (err, res) { });
+                botModel.updateZeroPresence(id_discord, function (err, res) { });
+            }
+            let n_message_presentes = res[i].presences;
+            if (n_message_presentes < 0) {
+                botModel.updateZeroPresence(id_discord, function (err, res) { });
+            }
+        }
+    });
+}
+
+exports.aggiuntaTimerDiNonAttivita = function(){
+    let guilds = client.guilds.array();
+    for (let i = 0; i < guilds.length; i++) {
+        client.guilds.get(guilds[i].id).fetchMembers().then(r => {
+            r.members.array().forEach(r => {
+                const id_discord = r.user.id;
+                //Controlla se è presente in lista bianca
+                botModel.selectUserWhiteList(id_discord, function (err, res) {
+                    if (res.length === 0) {
+                        //Evita il bot 1 di Discord
+                        if (id_discord > 1 && id_discord !== config.bot_id_1 && id_discord !== config.bot_id_2 && id_discord !== config.bot_id_3 && id_discord !== config.bot_id_4) {
+                            botModel.selectUser(id_discord, function (err, res) {
+                                if (res.length > 0) {
+                                    let presences = res[0].presences;
+                                    let last_check = res[0].last_check;
+                                    if (presences == 0) {
+                                        //Controlla l'ultimo check se non settato lo setta!
+                                        if (last_check == null) {
+                                            //Aggiungi la data del check
+                                            botModel.updateUserLastCheck(id_discord, function (err, res) { });
+                                        }
+                                    } else {
+                                        //Resetta il clock
+                                        if (last_check !== null) {
+                                            botModel.updateUserLastCheck(id_discord, function (err, res) { });
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    }
+}
+
+exports.passaggioSeiGiorniPostConteggio = function(){
+    botModel.selectNotifiedUsers(function (err, res) {
+        if (res.length > 0) {
+            for (let i = res.length - 1; i >= 0; i--) {
+                let notified = res[i].notified;
+                const id_discord = res[i].id_discord;
+                let last_check = res[i].last_check;
+                if (notified == 0) {
+                    if (last_check !== null) {
+                        botModel.selectUserWhiteList(id_discord, function (err, res) {
+                            if (res.length === 0) {
+                                client.users.get(id_discord).send(config.meg_pban);
+                                botModel.updateUserNotified(id_discord, function (err, res) { });
+                                botModel.updateUserLastCheck(id_discord, function (err, res) { });
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    });
+}
+
+exports.cicloDiEspulsione = function(){
+    botModel.selectDeadUsers(function (err, res) {
+        if (res.length > 0) {
+            for (let i = res.length - 1; i >= 0; i--) {
+                const id_discord = res[i].id_discord;
+                botModel.selectUserWhiteList(id_discord, function (err, res) {
+                    if (res.length === 0) {
+                        let guild = client.guilds.get("532184361068527646");
+                        guild.members.get(id_discord).kick();
+                    }
+                });
+            }
+        }
+    });
+}
+
+exports.resetCountDay = function(){
+    botModel.selectUsers(function (err, res) {
+        //Togliere i punti o le presenze
+        for (let i = res.length - 1; i >= 0; i--) {
+
+            let id_discord = res[i].id_discord;
+            let messages = res[i].messages;
+            let messages_day = res[i].messages_day;
+
+            if (messages_day == 0) {
+                if (messages > 0) {
+                    if (messages <= 100) {
+                        botModel.updateRemoveMessageUser(id_discord, 5, function (err, res) { });
+                    } else {
+                        botModel.updateRemoveMessageUser(id_discord, 10, function (err, res) { });
+                    }
+                }
+            }
+
+            let presences = res[i].presences;
+            let presence_day = res[i].presence_day;
+
+            if (presence_day == 0) {
+                if (presences > 0) {
+                    if (presences <= 100) {
+                        botModel.updateRemovePointUser(id_discord, 5, function (err, res) { });
+                    } else {
+                        botModel.updateRemovePointUser(id_discord, 10, function (err, res) { });
+                    }
+                }
+            }
+        }
+
+        botModel.updateResetPresenceCount(function (err, res) { });
+
+        for (let i = res.length - 1; i >= 0; i--) {
+            let id_discord_getUsers = res[i].id_discord;
+            let n_message_getUsers = res[i].messages;
+            if (n_message_getUsers < 0) {
+                botModel.updateZeroMessage(id_discord_getUsers, function (err, res) { });
+            }
+            let n_message_presentes = res[i].presences;
+            if (n_message_presentes < 0) {
+                botModel.updateZeroPresence(id_discord_getUsers, function (err, res) { });
+            }
+        }
+    });
+}
 
 exports.getGradoCacciatore = function(livel){
     var name = "";
@@ -67,7 +228,7 @@ exports.getGradoCacciatore = function(livel){
         name = "Stella di zaffiro";
     }
     return name;
-}
+};
 exports.censure = function(str) {
     var lista_bestemmie = ["dio cane", "diocane", "porcodio", "porco dio"];
     var arrayLength = lista_bestemmie.length;
@@ -83,7 +244,7 @@ exports.censure = function(str) {
     } else {
         return false;
     }
-}
+};
 exports.getRispose = function(){
     let id = Math.floor(Math.random() * 20) + 1;
     if (id == 1) {
@@ -129,4 +290,4 @@ exports.getRispose = function(){
     } else {
         return "Mi puoi rifare la domanda, non ho capito..";
     }
-}
+};

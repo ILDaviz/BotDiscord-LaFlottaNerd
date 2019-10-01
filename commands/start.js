@@ -9,26 +9,28 @@ exports.run = async (message, bot) => {
             : b.cost > a.cost ? -1
             :0;
     });
+
     cmds.forEach((cmd) => {
-        if (cmd.displayHelp === 1 && cmd.subClass === 'help_classifiche') {
+        if (cmd.displayHelp === 1 && cmd.subClass === 'start') {
             msg += `\n\n**^${cmd.cmdName}** [**^${cmd.alias}**] - ${cmd.description}`;
         }
     });
-
+    
     let emb = new Discord.RichEmbed()
-        .setTitle(`I comandi per le classifiche sono`)
-        .setDescription(msg);
+        .setTitle(`Ciao io sono LadyIsabel! :heart: Ho molte funzioni utili per la gilda, usa i comandi sotto indicati:`)
+        .setDescription(msg)
+        .setFooter(bot.conf.footer_standard);
 
     message.channel.send(emb);
 };
 
 exports.conf = {
-    name: "Help_classifiche",
-    fullcmd: "help_classifiche",
-    alias: "hclss",
-    description: "Mostra tutti i comandi per le classifiche della gilda",
-    timer: 400,
+    name: "Start",
+    fullcmd: "start",
+    alias: "start",
+    description: "Il comando per iniziare ad usarmi!",
+    timer: 0,
     tokenCost: 0,
-    subClass: 'help',
+    subClass: 'start',
     displayHelp: 1
 };

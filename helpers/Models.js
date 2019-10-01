@@ -1,6 +1,6 @@
 'user strict';
 
-var sql = require('./helpers/db.js');
+var sql = require('../helpers/Db');
 
 
 var Models = function () {

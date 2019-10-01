@@ -17,8 +17,8 @@ exports.run = async (message, bot) => {
 
     let emb = new Discord.RichEmbed()
         .setTitle(`Ecco i comandi di moderazione`)
-        .setDescription(msg);
-
+        .setDescription(msg)
+        .setFooter(bot.conf.footer_standard);
     message.channel.send(emb);
 };
 
@@ -27,7 +27,7 @@ exports.conf = {
     fullcmd: "help_moderazione",
     alias: "hmod",
     description: "Mostra tutti i comandi per la moderazione",
-    timer: 350,
+    timer: 0,
     tokenCost: 0,
     subClass: 'help',
     displayHelp: 1

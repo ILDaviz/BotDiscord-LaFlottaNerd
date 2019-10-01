@@ -9,6 +9,7 @@ exports.run = async (message, bot) => {
             : b.cost > a.cost ? -1
             :0;
     });
+
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'help') {
             msg += `\n\n**^${cmd.cmdName}** [**^${cmd.alias}**] - ${cmd.description}`;
@@ -17,7 +18,8 @@ exports.run = async (message, bot) => {
 
     let emb = new Discord.RichEmbed()
         .setTitle(`Ecco tutti gli Help disponibili`)
-        .setDescription(msg);
+        .setDescription(msg)
+        .setFooter(bot.conf.footer_standard);
 
     message.channel.send(emb);
 };
@@ -25,10 +27,10 @@ exports.run = async (message, bot) => {
 exports.conf = {
     name: "Help",
     fullcmd: "help",
-    alias: "cmds",
-    description: "mostra tutti i comandi disponibili",
-    timer: 300,
-    tokenCost: 0,
-    subClass: '',
+    alias: "help",
+    description: "Mostra tutti i sotto-comandi disponibili",
+    timer: 0,
+    tokenCost: 999,
+    subClass: 'start',
     displayHelp: 1
 };

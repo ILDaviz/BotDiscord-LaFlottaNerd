@@ -11,12 +11,12 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Donazioni",
-    fullcmd: "donazioni",
-    alias: "donaz",
-    description: "Ti piace il Bot di questa gilda? Offrimi un caffé!",
+    name: "Statistiche",
+    fullcmd: "statistiche",
+    alias: "stat",
+    description: "Le tue statistiche! dati, dati un sacco di dati :nerd:",
     timer: 0,
-    tokenCost: 10,
+    tokenCost: 0,
     subClass: 'start',
     displayHelp: 1
 };
