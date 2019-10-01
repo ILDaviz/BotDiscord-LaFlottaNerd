@@ -13,7 +13,7 @@ exports.load = () => {
 				cmds[name] = {run: cmd.run, conf: cmd.conf};
 				cmds[cmd.conf.alias] = {run: cmd.run, conf: cmd.conf, timer: new Date().getTime()}
 
-				cmdHelp.push({cmdName: name, alias:cmd.conf.alias, description: cmd.conf.description, cost: cmd.conf.tokenCost});
+				cmdHelp.push({cmdName: cmd.conf.name, alias:cmd.conf.alias, description: cmd.conf.description, cost: cmd.conf.tokenCost,subClass: cmd.conf.subClass,displayHelp: cmd.conf.displayHelp});
 			} catch (err) {
 				console.log(err);
 			}

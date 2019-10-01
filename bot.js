@@ -6,6 +6,7 @@ module.exports = bot;
 
 require('./events/onMessage');
 require('./events/onError');
+require('./events/onEvent');
 require('./helpers/loadcommands').load();
 bot.login('NTc0MTY3MTEyNjQyMzMwNjM0.XZNqhA.z1DCVZfWBos-pOPfpYLPzOhA18A');
 

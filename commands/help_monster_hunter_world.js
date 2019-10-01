@@ -10,25 +10,25 @@ exports.run = async (message, bot) => {
             :0;
     });
     cmds.forEach((cmd) => {
-        if (cmd.displayHelp === 1 && cmd.subClass === 'help') {
+        if (cmd.displayHelp === 1 && cmd.subClass === 'help_mhw') {
             msg += `\n\n**^${cmd.cmdName}** [**^${cmd.alias}**] - ${cmd.description}`;
         }
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Ecco tutti gli Help disponibili`)
+        .setTitle(`I comandi dedicati a Monster Hunter World sono`)
         .setDescription(msg);
 
     message.channel.send(emb);
 };
 
 exports.conf = {
-    name: "Help",
-    fullcmd: "help",
-    alias: "cmds",
-    description: "mostra tutti i comandi disponibili",
-    timer: 300,
+    name: "Help_mhw",
+    fullcmd: "help_mhw",
+    alias: "hmhw",
+    description: "I comandi dedicati a Monster Hunter World!",
+    timer: 400,
     tokenCost: 0,
-    subClass: '',
+    subClass: 'help',
     displayHelp: 1
 };

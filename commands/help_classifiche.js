@@ -10,25 +10,25 @@ exports.run = async (message, bot) => {
             :0;
     });
     cmds.forEach((cmd) => {
-        if (cmd.displayHelp === 1 && cmd.subClass === 'help') {
+        if (cmd.displayHelp === 1 && cmd.subClass === 'help_classifiche') {
             msg += `\n\n**^${cmd.cmdName}** [**^${cmd.alias}**] - ${cmd.description}`;
         }
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Ecco tutti gli Help disponibili`)
+        .setTitle(`I comandi per le classifiche sono`)
         .setDescription(msg);
 
     message.channel.send(emb);
 };
 
 exports.conf = {
-    name: "Help",
-    fullcmd: "help",
-    alias: "cmds",
-    description: "mostra tutti i comandi disponibili",
-    timer: 300,
+    name: "Help_classifiche",
+    fullcmd: "help_classifiche",
+    alias: "hclss",
+    description: "Mostra tutti i comandi per le classifiche della gilda",
+    timer: 400,
     tokenCost: 0,
-    subClass: '',
+    subClass: 'help',
     displayHelp: 1
 };
