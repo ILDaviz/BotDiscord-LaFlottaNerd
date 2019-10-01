@@ -26,6 +26,14 @@ exports.cleenDatabase = function () {
     });
 }
 
+exports.log = function (note) {
+    let embed = new Discord.RichEmbed()
+        .setTitle('-- LOG --')
+        .setColor(0xFFFF)
+        .setDescription(note)
+    bot.channels.get(bot.conf.chanel_log).send({ embed });
+}
+
 exports.asyncCall = async function(id_discord, message_chanel_id) {
     const mci = message_chanel_id;
     const id = id_discord;

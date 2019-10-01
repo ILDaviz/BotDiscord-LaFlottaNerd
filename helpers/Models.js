@@ -6,10 +6,7 @@ var sql = require('../helpers/Db');
 var Models = function () {
     //Costructor
 };
-/**
- * Seleziona tutti gli settaggi
- * @param { function } result
- */
+
 Models.selectSettings = function (result) {
     sql.query("SELECT * FROM settings", function (err, res) {
 
@@ -22,12 +19,20 @@ Models.selectSettings = function (result) {
         }
     });
 };
-/**
- * Seleziona un determinato settaggio
- * @param { int } id_settings
- * @param { function } result
- */
-Models.selectSettingValue = function (id_settings, result) {
+Models.selectSettingFromName = function (name, result) {
+    sql.query("SELECT * FROM settings WHERE name = '" + name + "'", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, JSON.parse(JSON.stringify(res)));
+
+        }
+    });
+};
+Models.selectSettingFromId = function (id_settings, result) {
     sql.query("SELECT * FROM settings WHERE id_settings = '" + id_settings + "'", function (err, res) {
 
         if (err) {
@@ -40,11 +45,6 @@ Models.selectSettingValue = function (id_settings, result) {
         }
     });
 };
-/**
- * Elimina un settaggio
- * @param { int } id_settings
- * @param { function } result
- */
 Models.deleteSetting = function (id_settings, result) {
     sql.query("DELETE FROM settings WHERE id_settings = '" + id_settings + "'", function (err, res) {
 
@@ -149,7 +149,6 @@ Models.selectLivelUser = function (messages, result) {
         }
     });
 };
-
 Models.insertUser = function (id_discord, result) {
     sql.query("INSERT INTO users (id_discord, messages) VALUES ('" + id_discord + "', 0)", function (err, res) {
 
@@ -540,10 +539,6 @@ Models.seletTopListMessageDay = function (id_monster, result) {
         }
     });
 }
-/**
- * Seleziona tutti i testi dal database
- * @param { function } result
- */
 Models.selectStringTexts = function (result) {
     sql.query("SELECT * FROM string_text", function (err, res) {
 
@@ -556,12 +551,6 @@ Models.selectStringTexts = function (result) {
         }
     });
 };
-/**
- * Inserisci un testi dal database
- * @param { string } tag di riferimento
- * @param { string } string il testo 
- * @param { function } result
- */
 Models.insertStringText = function (tag, string, bot, result) {
     sql.query("INSERT INTO`string_text`( `tag`, `string`, `bot`) VALUES('" + tag + "','" + string + "','" + bot + "')", function (err, res) {
 
@@ -574,11 +563,6 @@ Models.insertStringText = function (tag, string, bot, result) {
         }
     });
 };
-/**
- * Elimina un testo dal database
- * @param { number } id_string_text riferimento del testo
- * @param { function } result
- */
 Models.deleteStringText = function (id_string_text, result) {
     sql.query("DELETE FROM`string_text` WHERE id_string_text = '" + id_string_text + "'", function (err, res) {
 

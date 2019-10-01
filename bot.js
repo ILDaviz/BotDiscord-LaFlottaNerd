@@ -10,6 +10,7 @@ require('./events/onCounter');
 require('./events/onMenzioni');
 require('./events/onHelp');
 require('./events/onStart')
+require('./events/onRuleSelector');
 require('./helpers/loadcommands').load();
 
 bot.login('NTc0MTY3MTEyNjQyMzMwNjM0.XZNqhA.z1DCVZfWBos-pOPfpYLPzOhA18A');
@@ -17,5 +18,6 @@ bot.conf = {
 	prefix: '^',
 	claimTimeout: '15',
 	footer_standard: 'Il comando inizia con il simbolo ^ nelle parentesi quadre è rappresentato il comando più corto.',
-	id_bot: '574167112642330634'
+	id_bot: '574167112642330634',
+	chanel_log: '555661118639439872'
 };
