@@ -8,22 +8,21 @@ bot.on('raw', event => {
         channel.fetchMessage(event.d.message_id).then(msg => {
             const user = msg.guild.members.get(event.d.user_id);
             botModel.selectSettingFromName('role_title',function(err,res){
- 
                 if (res.length > 0) {
-                    var role_title = decodeURIComponent(res.value);
+                    var role_title = unescape(res.value);
                 } else {
                     var role_title = 'Titolo non settato';
                 }
-
-                if (msg.author.id == bot.user.id && msg.content != role_title) {
+                
+                if (msg.author.id == bot.conf.id_bot && msg.content != role_title) {
 
                     var re = `\\*\\*"(.+)?(?="\\*\\*)`;
                     var role = msg.content.match(re)[1];
-
-                    if (user.id != bot.user.id) {
+                    if (user.id != bot.conf.id_bot) {
                         var roleObj = msg.guild.roles.find(r => r.name === role);
+                        console.log(roleObj);
                         var memberObj = msg.guild.members.get(user.id);
-
+                        console.log(memberObj);
                         if (event.t === "MESSAGE_REACTION_ADD") {
                             memberObj.addRole(roleObj)
                         } else {
