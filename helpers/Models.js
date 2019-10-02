@@ -26,7 +26,7 @@ Models.selectSettings = function (type = null ,result) {
     });
 };
 Models.selectSettingFromName = function (name, result) {
-    sql.query("SELECT * FROM settings WHERE name = '" + name + "'", function (err, res) {
+    sql.query("SELECT * FROM settings WHERE name = '" + escape(name) + "'", function (err, res) {
 
         if (err) {
             console.log("error: ", err);
@@ -78,7 +78,7 @@ Models.deleteSetting = function (id_settings, result) {
     });
 };
 Models.insertSetting = function (tag, name, value, result) {
-    sql.query("INSERT INTO settings(tag, name ,  value ) VALUES ('" + tag + "','" + name + "','" + value + "')", function (err, res) {
+    sql.query("INSERT INTO settings(tag, name ,  value ) VALUES ('" + escape(tag) + "','" + escape(name) + "','" + escape(value) + "')", function (err, res) {
 
         if (err) {
             console.log("error: ", err);
@@ -91,7 +91,7 @@ Models.insertSetting = function (tag, name, value, result) {
     });
 };
 Models.updateSetting = function (id_settings, value, result) {
-    sql.query("UPDATE settings SET value = '" + value + "' WHERE id_settings = '" + id_settings + "'", function (err, res) {
+    sql.query("UPDATE settings SET value = '" + escape(value) + "' WHERE id_settings = '" + id_settings + "'", function (err, res) {
 
         if (err) {
             console.log("error: ", err);
@@ -104,7 +104,7 @@ Models.updateSetting = function (id_settings, value, result) {
     });
 };
 Models.updateSettingDescription = function (id_settings, description, result) {
-    sql.query("UPDATE settings SET description = '" + description + "' WHERE id_settings = '" + id_settings + "'", function (err, res) {
+    sql.query("UPDATE settings SET description = '" + escape(description) + "' WHERE id_settings = '" + id_settings + "'", function (err, res) {
 
         if (err) {
             console.log("error: ", err);

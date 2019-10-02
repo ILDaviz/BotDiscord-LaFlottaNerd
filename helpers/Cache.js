@@ -20,7 +20,7 @@ exports.resetCacheText = function(result){
                     for (let i = 0; i < res.length; i++) {
                         let name = res[i].name;
                         let value = res[i].value;
-                        obj.text.push({ id_refer: name, string: encodeURIComponent(value) });
+                        obj.text.push({ id_refer: name, string: value });
                     }
                     fs.writeFile('./cache/text.json', JSON.stringify(obj), function (err) {
                         if (err) {
@@ -53,7 +53,7 @@ exports.resetChaceRole = function(result){
                     for (let i = 0; i < res.length; i++) {
                         let name = res[i].name;
                         let value = res[i].value;
-                        obj.role.push({ id_refer: name, string: encodeURIComponent(value) });
+                        obj.role.push({ id_refer: name, string: value });
                     }
                     fs.writeFile('./cache/role.json', JSON.stringify(obj), function (err) {
                         if (err) {
@@ -78,15 +78,20 @@ exports.selectCacheText = function(tag) {
         let tag_list = data[i].id_refer;
         let string = data[i].string;
         if (tag_list === tag) {
-            return decodeURIComponent(string);
+            return unescape(string);
         }
     }
 }
 
 exports.selectCacheRole = () => {
+    var value = [];
     let text_json = require('../cache/role.json');
-    console.log(text_json.role);
-    return decodeURIComponent(text_json.role);
+    let role = text_json.role;
+    for (let i = 0; i < role.length; i++) {
+        let element = role[i].string;
+        value.push(unescape(element));
+    }
+    return value;
 }
 
 exports.resetCache = function() {

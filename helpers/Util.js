@@ -342,17 +342,16 @@ exports.generateMessages = () => {
     }
 
     messages.push(role_title);
-
     role = botCache.selectCacheRole('role');
-
+    console.log(role);
     if (role.length > 0) {
         for (var i = role.length - 1; i >= 0; i--) {
-            value = role[i].string;
+            value = role[i];
             messages.push(`"${role_subtitle}": **"${value}"**!`);
         }
     } else {
         messages.push(`"${role_subtitle}": ** Nessun ruolo inserito **!`);
     }
-
+    console.log(messages);
     return messages;
 };

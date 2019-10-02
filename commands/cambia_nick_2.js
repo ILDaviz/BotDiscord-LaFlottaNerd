@@ -5,7 +5,7 @@ exports.run = async (message, bot) => {
     
     const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
     const args_1 = args.slice(1).join(' ');
-    const args_2 = args.slice(1).join(' ');
+    const args_2 = args.slice(2).join(' ');
 
     if (!message.guild.me.hasPermission('MANAGE_NICKNAMES')) 
         return message.channel.send('In questa chat non è consentito cambiare il nickname o non ne hai i permessi');

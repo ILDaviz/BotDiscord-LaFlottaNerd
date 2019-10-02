@@ -5,8 +5,8 @@ const botCache = require('../helpers/Cache');
 
 exports.run = async (message, bot) => {
   	const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
-	  const args_1 = args.slice(1).join(' ');
-  	const args_2 = args.slice(1).join(' ');
+	const args_1 = args.slice(1).join(' ');
+  	const args_2 = args.slice(2).join(' ');
   	botCache.resetCache();
     message.channel.send('reset completato');
 };
