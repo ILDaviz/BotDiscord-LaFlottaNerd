@@ -2,7 +2,11 @@ let cmds = require('../helpers/loadcommands').cmdDetail;
 let Discord = require('discord.js');
 
 exports.run = async (message, bot) => {
-
+    
+    const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
+    const args_1 = args.slice(1).join(' ');
+    const args_2 = args.slice(1).join(' ');
+    
     let msg = '';
     cmds.sort((a,b)=>{
         return b.cost < a.cost? 1
@@ -29,7 +33,7 @@ exports.conf = {
     fullcmd: "start",
     alias: "start",
     description: "Il comando per iniziare ad usarmi! :stuck_out_tongue_winking_eye: ",
-    timer: 0,
+    timer: 3,
     tokenCost: 0,
     subClass: 'start',
     displayHelp: 1

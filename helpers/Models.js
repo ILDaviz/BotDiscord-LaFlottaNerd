@@ -7,8 +7,14 @@ var Models = function () {
     //Costructor
 };
 
-Models.selectSettings = function (result) {
-    sql.query("SELECT * FROM settings", function (err, res) {
+Models.selectSettings = function (type = null ,result) {
+    var query = "SELECT * FROM settings ";
+    
+    if (type) {
+        query += "WHERE type = '" + type + "'";
+    }
+
+    sql.query(query, function (err, res) {
 
         if (err) {
             console.log("error: ", err);
@@ -45,6 +51,19 @@ Models.selectSettingFromId = function (id_settings, result) {
         }
     });
 };
+Models.selectSettingFromType = function (type, result) {
+    sql.query("SELECT * FROM settings WHERE type = '" + type + "'", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, JSON.parse(JSON.stringify(res)));
+
+        }
+    });
+};
 Models.deleteSetting = function (id_settings, result) {
     sql.query("DELETE FROM settings WHERE id_settings = '" + id_settings + "'", function (err, res) {
 
@@ -58,8 +77,8 @@ Models.deleteSetting = function (id_settings, result) {
         }
     });
 };
-Models.insertSetting = function (name, value, result) {
-    sql.query("INSERT INTO settings( name ,  value ) VALUES ('" + name + "','" + value + "')", function (err, res) {
+Models.insertSetting = function (tag, name, value, result) {
+    sql.query("INSERT INTO settings(tag, name ,  value ) VALUES ('" + tag + "','" + name + "','" + value + "')", function (err, res) {
 
         if (err) {
             console.log("error: ", err);
@@ -73,6 +92,19 @@ Models.insertSetting = function (name, value, result) {
 };
 Models.updateSetting = function (id_settings, value, result) {
     sql.query("UPDATE settings SET value = '" + value + "' WHERE id_settings = '" + id_settings + "'", function (err, res) {
+
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else {
+            result(null, res);
+
+        }
+    });
+};
+Models.updateSettingDescription = function (id_settings, description, result) {
+    sql.query("UPDATE settings SET description = '" + description + "' WHERE id_settings = '" + id_settings + "'", function (err, res) {
 
         if (err) {
             console.log("error: ", err);
@@ -370,58 +402,6 @@ Models.updateResetBotMention = function (result) {
         }
     });
 };
-Models.selectMessageLadyisabel = function (result) {
-    sql.query("SELECT * FROM messages ", function (err, res) {
-
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else {
-            result(null, JSON.parse(JSON.stringify(res)));
-
-        }
-    });
-}
-Models.insertMessageLadyisabel = function (message, result) {
-    sql.query("INSERT INTO messages ( message ) VALUES ('" + message + "')", function (err, res) {
-
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else {
-            result(null, res);
-
-        }
-    });
-}
-Models.deleteMessageLadyisabel = function (id_phrase, result) {
-    sql.query("DELETE FROM messages WHERE id_message = '" + id_phrase + "'", function (err, res) {
-
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else {
-            result(null, res);
-
-        }
-    });
-}
-Models.updateStatusMessageLadyisabel = function (id_phrase, result) {
-    sql.query("UPDATE messages SET status = " + status + " WHERE id_message = '" + id_phrase + "'", function (err, res) {
-
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else {
-            result(null, res);
-
-        }
-    });
-}
 Models.updatePointMessageUser = function (id_discord, result) {
     sql.query("UPDATE users SET messages = messages + 1 , messages_day = messages_day + 1 WHERE id_discord = '" + id_discord + "'", function (err, res) {
 
@@ -539,41 +519,5 @@ Models.seletTopListMessageDay = function (id_monster, result) {
         }
     });
 }
-Models.selectStringTexts = function (result) {
-    sql.query("SELECT * FROM string_text", function (err, res) {
-
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else {
-            result(null, JSON.parse(JSON.stringify(res)));
-        }
-    });
-};
-Models.insertStringText = function (tag, string, bot, result) {
-    sql.query("INSERT INTO`string_text`( `tag`, `string`, `bot`) VALUES('" + tag + "','" + string + "','" + bot + "')", function (err, res) {
-
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else {
-            result(null, res);
-        }
-    });
-};
-Models.deleteStringText = function (id_string_text, result) {
-    sql.query("DELETE FROM`string_text` WHERE id_string_text = '" + id_string_text + "'", function (err, res) {
-
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else {
-            result(null, res);
-        }
-    });
-};
 
 module.exports = Models;

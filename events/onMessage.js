@@ -1,14 +1,14 @@
 const bot = require('../bot.js');
 const cmds = require('../helpers/loadcommands').getCmds();
-
 let extendMessage = require('../structs/Message');
 let lastMessageUnix = new Date().getTime();
 
 bot.on('message', (message) => {
-
 	if (message.content[0] !== bot.conf.prefix) {
 		return;
 	}
+
+	if (message.author.bot) return;
 
 	lastMessageUnix = new Date().getTime();
 	// Add some additional metadata to the message

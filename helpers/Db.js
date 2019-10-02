@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'bot_discord_2'
+    database: 'bot_discord'
 });
 
 connection.connect(function (err) {

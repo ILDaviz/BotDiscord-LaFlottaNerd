@@ -1,13 +1,24 @@
-let cmds = require('../helpers/loadcommands').cmdDetail;
-let Discord = require('discord.js');
+const Discord  = require('discord.js');
+const botModel = require('../helpers/Models');
+const botUtili = require('../helpers/Util');
+const botCache = require('../helpers/Cache');
+const reactions = "👍";
 
 exports.run = async (message, bot) => {
-
-    let emb = new Discord.RichEmbed()
-        .setTitle(`Ecco tutti gli Help disponibili`)
-        .setDescription('');
-
-    message.channel.send(emb);
+    const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
+    const args_1 = args.slice(1).join(' ');
+    const args_2 = args.slice(1).join(' ');
+    
+    var toSend = botUtili.generateMessages();
+    
+    let mappedArray = [[toSend[0], false], ...toSend.slice(1).map( (message, idx) => [message, reactions])];
+    for (let mapObj of mappedArray){
+        message.channel.send(mapObj[0]).then( sent => {
+            if (mapObj[1]){
+                sent.react(mapObj[1]);  
+            } 
+        });
+    }
 };
 
 exports.conf = {

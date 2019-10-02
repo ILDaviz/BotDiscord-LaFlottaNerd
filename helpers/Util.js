@@ -1,16 +1,19 @@
 'user strict';
 
 const botModel = require('../helpers/Models');
+const botCache = require('../helpers/Cache');
 const fs = require('fs');
 const bot = require('../bot')
 
 exports.checkIfUserIsBot = id_discord => {
     let guild = bot.guilds.get('532184361068527646');
-    let itsbot = guild.member(id_discord).user;
-    if (itsbot) {
-        return itsbot.bot;
-    } else {
-        return false;
+    if (guild.member(id_discord)) {
+        let itsbot = guild.member(id_discord).user;
+        if (itsbot) {
+            return itsbot.bot;
+        } else {
+            return false;
+        }   
     }
 };
 
@@ -318,4 +321,38 @@ exports.getRispose = () => {
     } else {
         return "Mi puoi rifare la domanda, non ho capito..";
     }
+};
+
+exports.generateMessages = () => {
+    var messages = [];
+
+    initialMessage = botCache.selectCacheText('role_title');
+    subMessage = botCache.selectCacheText('role_subtitle');
+
+    if (initialMessage) {
+        role_title = initialMessage;
+    } else {
+        role_title = 'Titolo non settato';
+    }
+
+    if (subMessage) {
+        role_subtitle = subMessage;
+    } else {
+        role_subtitle = 'Sottotitoli non settati';
+    }
+
+    messages.push(role_title);
+
+    role = botCache.selectCacheRole('role');
+
+    if (role.length > 0) {
+        for (var i = role.length - 1; i >= 0; i--) {
+            value = role[i].string;
+            messages.push(`"${role_subtitle}": **"${value}"**!`);
+        }
+    } else {
+        messages.push(`"${role_subtitle}": ** Nessun ruolo inserito **!`);
+    }
+
+    return messages;
 };
