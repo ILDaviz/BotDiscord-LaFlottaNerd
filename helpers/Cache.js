@@ -86,7 +86,7 @@ exports.selectCacheText = function(tag) {
 exports.selectCacheRole = () => {
     let text_json = require('../cache/role.json');
     console.log(text_json.role);
-    //return decodeURIComponent(text_json.role);
+    return decodeURIComponent(text_json.role);
 }
 
 exports.resetCache = function() {
