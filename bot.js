@@ -2,18 +2,17 @@
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const botCache = require('./helpers/Cache');
 module.exports = bot;
 
-botCache.resetCache();
 require('./events/onMessage');
 require('./events/onError');
 require('./events/onCounter');
 require('./events/onMenzioni');
-require('./events/onHelp');
 require('./events/onStart')
 require('./events/onRuleSelector');
+require('./events/onTrigger');
 //require('./events/onMemberInOut');
+//require('./events/onSchedule');
 require('./helpers/loadcommands').load();
 
 bot.login('NTc0MTY3MTEyNjQyMzMwNjM0.XZNqhA.z1DCVZfWBos-pOPfpYLPzOhA18A');

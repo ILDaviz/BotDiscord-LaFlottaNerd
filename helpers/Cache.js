@@ -69,25 +69,77 @@ exports.resetChaceRole = function(result){
     });
 }
 
+
+exports.resetTriggerCache = function(result){
+    fs.readFile('./cache/trigger.json', function (err, content) {
+        if (err) {
+            result(err, false);
+        }
+        else {
+            botModel.selectSettingFromType('trigger', function(err,res){
+                var obj = {
+                    trigger: []
+                };
+                for (let i = 0; i < res.length; i++) {
+                    let name = res[i].name;
+                    let value = res[i].value;
+                    obj.trigger.push({ rif: name, trigger: value });
+                }
+                fs.writeFile('./cache/trigger.json', JSON.stringify(obj), function (err) {
+                    if (err) {
+                        result(err, false);
+                    }
+                    else {
+                        result(null, true);
+                    }
+                });
+            });
+        }
+    });
+}
+
 exports.selectCacheText = function(tag) {
     let text_json = require('../cache/text.json');
-    let data = text_json.text;
-    for (let i = 0; i < data.length; i++) {
-        let tag_list = data[i].id_refer;
-        let string = data[i].string;
-        if (tag_list === tag) {
-            return unescape(string);
+    if (text_json) {
+        let data = text_json.text;
+        for (let i = 0; i < data.length; i++) {
+            let tag_list = data[i].id_refer;
+            let string = data[i].string;
+            if (tag_list === tag) {
+                return unescape(string);
+            }
         }
+    } else {
+        return '';
     }
 }
 
 exports.selectCacheRole = () => {
     var value = [];
     let text_json = require('../cache/role.json');
-    let role = text_json.role;
-    for (let i = 0; i < role.length; i++) {
-        let element = role[i].string;
-        value.push(unescape(element));
+    if (text_json){
+        let role = text_json.role;
+        for (let i = 0; i < role.length; i++) {
+            let element = role[i].string;
+            value.push(unescape(element));
+        }
+    }
+    return value;
+}
+
+exports.selectCacheTrigger = function(name_trigger,group){
+    var value = [];
+    let trigger_json = require('../cache/trigger.json');
+    if (trigger_json){
+        let role = trigger_json.trigger;
+        for (let i = 0; i < role.length; i++) {
+            let element = role[i].rif;
+            let trigger = role[i].trigger;
+            let et = element.trim().split('-');
+            if (et[0] == name_trigger && et[1] == group) {
+                value.push(unescape(trigger));
+            }
+        }
     }
     return value;
 }
@@ -95,4 +147,5 @@ exports.selectCacheRole = () => {
 exports.resetCache = function() {
     this.resetCacheText(function(err,res){ });
     this.resetChaceRole(function(err,res){ });
+    this.resetTriggerCache(function(err,res){ });
 }

@@ -75,9 +75,9 @@ exports.zeroValoriNegativi = () => {
 }
 
 exports.aggiuntaTimerDiNonAttivita = () => {
-    let guilds = client.guilds.array();
+    let guilds = bot.guilds.array();
     for (let i = 0; i < guilds.length; i++) {
-        client.guilds.get(guilds[i].id).fetchMembers().then(r => {
+        bot.guilds.get(guilds[i].id).fetchMembers().then(r => {
             r.members.array().forEach(r => {
                 const id_discord = r.user.id;
                 //Controlla se è presente in lista bianca
@@ -122,7 +122,7 @@ exports.passaggioSeiGiorniPostConteggio = () => {
                     if (last_check !== null) {
                         botModel.selectUserWhiteList(id_discord, function (err, res) {
                             if (res.length === 0) {
-                                client.users.get(id_discord).send(config.meg_pban);
+                                bot.users.get(id_discord).send(config.meg_pban);
                                 botModel.updateUserNotified(id_discord, function (err, res) { });
                                 botModel.updateUserLastCheck(id_discord, function (err, res) { });
                             }
@@ -141,13 +141,20 @@ exports.cicloDiEspulsione = () => {
                 const id_discord = res[i].id_discord;
                 botModel.selectUserWhiteList(id_discord, function (err, res) {
                     if (res.length === 0) {
-                        let guild = client.guilds.get("532184361068527646");
+                        let guild = bot.guilds.get("532184361068527646");
                         guild.members.get(id_discord).kick();
                     }
                 });
             }
         }
     });
+}
+
+exports.moderationCicle = () => {
+    this.zeroValoriNegativi();
+    this.aggiuntaTimerDiNonAttivita();
+    this.passaggioSeiGiorniPostConteggio();
+    this.cicloDiEspulsione();
 }
 
 exports.resetCountDay = () => {
@@ -360,6 +367,7 @@ exports.generaMessaggioSelezionaGioco = () => {
 
 exports.generaMessaggioSelezionaGiocoSmall = function(emoji){
     var messages = [];
+
     initialMessage = botCache.selectCacheText('role_title_small');
     subMessage_1 = botCache.selectCacheText('role_subtitle_small_1');
     subMessage_2 = botCache.selectCacheText('role_subtitle_small_2');
@@ -378,4 +386,48 @@ exports.generaMessaggioSelezionaGiocoSmall = function(emoji){
         }
     }
     return messages;
+}
+
+exports.getServiceMessage = function(){
+        const messages = [];
+        botModel.selectSettingFromType('service_message',function(err,res){
+            for (let i = 0; i < res.length; i++) {
+                let text = res[i].value;
+                messages.push(text);       
+            }
+        });
+        let embed = new Discord.RichEmbed()
+        .setTitle('Messaggio di servizio! :nerd: ')
+        .setColor(0xFF0000)
+        .setDescription(messages)
+        bot.channels.find(ch => ch.name === '4-chiacchiere').send({embed});
+}
+
+exports.checkPresence = function(name_trigger,group,str){
+
+    let strra = str.replace(/[^a-zA-Z ]/g, "");
+    strtlc = strra.toLowerCase()
+    console.log(strtlc);
+    let ti = botCache.selectCacheTrigger(name_trigger,group);
+    let str_sp = strtlc.trim().split(/ +/g);
+    var p = 0;
+    for (let i = 0; i < ti.length; i++) {
+        let hi = ti[i];
+        let hi_sp = hi.split(',');
+        for (let i = 0; i < hi_sp.length; i++) {
+            const hot_item = hi_sp[i];
+            console.log(hot_item);
+            for (let i = 0; i < str_sp.length; i++) {
+                const hot_str = str_sp[i];
+                if (hot_item == hot_str) {
+                    p = p + 1;  
+                }
+            }   
+        }
+    }
+    if (p == 0) {
+        return false;
+    } else {
+        return true;
+    }
 }
