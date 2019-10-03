@@ -37,10 +37,10 @@ exports.log = function (note) {
     bot.channels.get(bot.conf.chanel_log).send({ embed });
 }
 
-exports.asyncCall = async function(id_discord, message_chanel_id) {
-    const mci = message_chanel_id;
-    const id = id_discord;
-    botModel.selectUser(id_discord, function (err, res) {
+exports.utenteSuperamentoLivello = async function(message) {
+    const mci = message.channel.id;
+    const id = message.author.id;
+    botModel.selectUser(id, function (err, res) {
         if (res.length > 0) {
             const n_messages = res.map(a => a.messages);
             botModel.selectLivelUser(n_messages, function (err, res) {
@@ -51,6 +51,10 @@ exports.asyncCall = async function(id_discord, message_chanel_id) {
             });
         }
     });
+}
+
+exports.rispostaAutomaticaAlleDomande = async function(message){
+
 }
 
 exports.zeroValoriNegativi = () => {
@@ -322,8 +326,7 @@ exports.getRispose = () => {
         return "Mi puoi rifare la domanda, non ho capito..";
     }
 };
-
-exports.generateMessages = () => {
+exports.generaMessaggioSelezionaGioco = () => {
     var messages = [];
 
     initialMessage = botCache.selectCacheText('role_title');
@@ -343,7 +346,7 @@ exports.generateMessages = () => {
 
     messages.push(role_title);
     role = botCache.selectCacheRole('role');
-    console.log(role);
+
     if (role.length > 0) {
         for (var i = role.length - 1; i >= 0; i--) {
             value = role[i];
@@ -352,6 +355,27 @@ exports.generateMessages = () => {
     } else {
         messages.push(`"${role_subtitle}": ** Nessun ruolo inserito **!`);
     }
-    console.log(messages);
     return messages;
 };
+
+exports.generaMessaggioSelezionaGiocoSmall = function(emoji){
+    var messages = [];
+    initialMessage = botCache.selectCacheText('role_title_small');
+    subMessage_1 = botCache.selectCacheText('role_subtitle_small_1');
+    subMessage_2 = botCache.selectCacheText('role_subtitle_small_2');
+
+    if (initialMessage) {
+        role_title = initialMessage;
+    } else {
+        role_title = 'Titolo non settato';
+    }
+    messages.push(role_title);
+    role = botCache.selectCacheRole('role');
+    if (role.length > 0) {
+        for (var i = role.length - 1; i >= 0; i--) {
+            value = role[i];
+            messages.push(`${subMessage_2} **"${value}"** ${subMessage_1} ${emoji[i]}`);
+        }
+    }
+    return messages;
+}

@@ -18,7 +18,7 @@ exports.conf = {
     name: "Aggiungi_settaggio",
     fullcmd: "aggiungi_settaggio",
     alias: "addsett",
-    description: "[tipo] [nome] [valore] Aggiungi un nuovo settaggio nel database. Tipo e nome non devono contenere spazzi ma solo il simbolo _ . I tipi disponibili sono: settings,text,role,service_message. Non usare altri tipi. Il nome è il riferimento deve essere univoco.",
+    description: "[tipo] [nome] [valore] Aggiungi un nuovo settaggio nel database. Tipo e nome non devono contenere spazzi ma solo il simbolo _ . I tipi disponibili sono: settings,text,role,service_message,trigger. Non usare altri tipi. Il nome è il riferimento del settaggio è deve essere univoco.",
     timer: 0,
     tokenCost: 0,
     subClass: 'help_settaggi',

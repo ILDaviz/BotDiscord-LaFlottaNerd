@@ -77,8 +77,8 @@ Models.deleteSetting = function (id_settings, result) {
         }
     });
 };
-Models.insertSetting = function (tag, name, value, result) {
-    sql.query("INSERT INTO settings(tag, name ,  value ) VALUES ('" + escape(tag) + "','" + escape(name) + "','" + escape(value) + "')", function (err, res) {
+Models.insertSetting = function (type, name, value, result) {
+    sql.query("INSERT INTO settings(type, name ,  value ) VALUES ('" + escape(type) + "','" + escape(name) + "','" + escape(value) + "')", function (err, res) {
 
         if (err) {
             console.log("error: ", err);

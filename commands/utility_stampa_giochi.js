@@ -5,7 +5,7 @@ const botCache = require('../helpers/Cache');
 const reactions = "👍";
 
 exports.run = async (message, bot) => {    
-    var toSend = botUtili.generateMessages();
+    var toSend = botUtili.generaMessaggioSelezionaGioco();
     let mappedArray = [[toSend[0], false], ...toSend.slice(1).map( (message, idx) => [message, reactions])];
     for (let mapObj of mappedArray){
         message.channel.send(mapObj[0]).then( sent => {
@@ -17,12 +17,12 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Seleziona_gioco",
-    fullcmd: "seleziona_gioco",
-    alias: "sgame",
-    description: ":bangbang: **importante!** Usa questo comando per avere la lista dei giochi disponibili, poi segui le istruzzioni indicate per entrare nel canale dedicato",
+    name: "Stampa_seleziona_giochi",
+    fullcmd: "stampa_seleziona_giochi",
+    alias: "ssgame",
+    description: "Comando per stampare la lista giochi",
     timer: 0,
     tokenCost: 0,
-    subClass: 'start',
+    subClass: 'help_utility',
     displayHelp: 1
 };

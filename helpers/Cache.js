@@ -69,8 +69,6 @@ exports.resetChaceRole = function(result){
     });
 }
 
-
-
 exports.selectCacheText = function(tag) {
     let text_json = require('../cache/text.json');
     let data = text_json.text;

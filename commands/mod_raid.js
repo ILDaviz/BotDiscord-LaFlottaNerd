@@ -4,9 +4,6 @@ const botUtili = require('../helpers/Util');
 const botCache = require('../helpers/Cache');
 
 exports.run = async (message, bot) => {
-  const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
-const args_1 = args.slice(1).join(' ');
-const args_2 = args.slice(2).join(' ');
     if (!message.member.roles.some(r => ["Admin", "Moderatori", "Developer", "Aiutante di Bordo"].includes(r.name)))
       return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
     botModel.selectDeadUsers(function (err, res) {
