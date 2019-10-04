@@ -4,7 +4,6 @@ const arole = require('../commands/seleziona_gioco_smal');
 
 bot.on('raw', event => {
     if (event.t === 'MESSAGE_REACTION_ADD' || event.t == "MESSAGE_REACTION_REMOVE") {
-        console.log(event);
         let channel = bot.channels.get(event.d.channel_id);
         channel.fetchMessage(event.d.message_id).then(msg => {
             //Metodo via comando

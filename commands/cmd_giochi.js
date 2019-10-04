@@ -12,24 +12,24 @@ exports.run = async (message, bot) => {
     });
 
     cmds.forEach((cmd) => {
-        if (cmd.displayHelp === 1 && cmd.subClass === 'funzioni_giochi') {
-            msg += `\n\n**^${cmd.cmdName}** [**^${cmd.alias}**] - ${cmd.description}`;
+        if (cmd.displayHelp === 1 && cmd.subClass === 'comandi_giochi') {
+            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
         }
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Ecco tutte i comandi di ogni gioco`)
+        .setTitle(`Ecco i comandi dedicati ai giochi della gilda suddivisi per gioco`)
+        .setColor('RANDOM')
         .setDescription(msg)
         .setFooter(bot.conf.footer_standard);
-
     message.channel.send(emb);
 };
 
 exports.conf = {
-    name: "Comandi_gionci",
-    fullcmd: "comandi_gionci",
+    name: "Cmd_giochi",
+    fullcmd: "cmd_giochi",
     alias: "cmdgame",
-    description: "Entra nei comandi deciati di ogni gioco della gilda.",
+    description: "Entra nei comandi dedicati di ogni gioco.",
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

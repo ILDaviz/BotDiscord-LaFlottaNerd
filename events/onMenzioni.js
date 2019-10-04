@@ -6,7 +6,7 @@ bot.on('raw', event => {
     if (event.t === 'MESSAGE_CREATE') {
         const id_user = event.d.author.id;
         let mentions = event.d.mentions;
-        let id_channel = event.d.channel_id;
+        let id_channel = event.d.channel_id;        
         for (let index = 0; index < mentions.length; index++) {
             let id_mention = mentions[index].id;
             if (id_mention == bot.conf.id_bot) {

@@ -480,7 +480,7 @@ Models.updateMentionBot = function (id_discord, result) {
         }
     });
 }
-Models.selectMonser = function (id_monster, result) {
+Models.selectMonster = function (id_monster, result) {
     sql.query("SELECT name FROM monster WHERE id_monster = '" + id_monster + "'", function (err, res) {
 
         if (err) {
@@ -493,7 +493,7 @@ Models.selectMonser = function (id_monster, result) {
         }
     });
 }
-Models.seletTopListMessageAllTime = function (id_monster, result) {
+Models.seletTopListMessageAllTime = function (result) {
     sql.query("SELECT * FROM `users` ORDER BY `users`.`messages` DESC LIMIT 10", function (err, res) {
 
         if (err) {
@@ -506,7 +506,7 @@ Models.seletTopListMessageAllTime = function (id_monster, result) {
         }
     });
 }
-Models.seletTopListMessageDay = function (id_monster, result) {
+Models.seletTopListMessageDay = function (result) {
     sql.query("SELECT * FROM `users` ORDER BY `users`.`messages_day` DESC LIMIT 10", function (err, res) {
 
         if (err) {

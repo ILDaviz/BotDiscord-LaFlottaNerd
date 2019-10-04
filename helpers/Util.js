@@ -17,13 +17,25 @@ exports.checkIfUserIsBot = id_discord => {
     }
 };
 
-exports.cleenDatabase = function () {
+exports.cleenDatabase = function (result) {
     botModel.selectUsers(function (err, res) {
-        for (let i = 0; i < res.length; i++) {
-            const id_discord = res[i].id_discord;
-            let guild = bit.guilds.get('532184361068527646');
-            if (!guild.member(id_discord)) {
-                botModel.deleteUser(id_discord, function (err, res) { });
+        if (err) {
+            console.log("error: ", err);
+            result(err);
+        } else {
+            for (let i = 0; i < res.length; i++) {
+                const id_discord = res[i].id_discord;
+                let guild = bot.guilds.get('532184361068527646');
+                if (!guild.member(id_discord)) {
+                    botModel.deleteUser(id_discord, function (err, res) {
+                        if (err) {
+                            console.log("error: ", err);
+                            result(err);
+                        } else {
+                            result(null);
+                        }
+                    });
+                }
             }
         }
     });
@@ -407,7 +419,6 @@ exports.checkPresence = function(name_trigger,group,str){
 
     let strra = str.replace(/[^a-zA-Z ]/g, "");
     strtlc = strra.toLowerCase()
-    console.log(strtlc);
     let ti = botCache.selectCacheTrigger(name_trigger,group);
     let str_sp = strtlc.trim().split(/ +/g);
     var p = 0;
@@ -416,7 +427,6 @@ exports.checkPresence = function(name_trigger,group,str){
         let hi_sp = hi.split(',');
         for (let i = 0; i < hi_sp.length; i++) {
             const hot_item = hi_sp[i];
-            console.log(hot_item);
             for (let i = 0; i < str_sp.length; i++) {
                 const hot_str = str_sp[i];
                 if (hot_item == hot_str) {

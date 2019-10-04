@@ -31,11 +31,8 @@ exports.run = async (message, bot) => {
 
         message.awaitReactions(filter, { max: role_n, time: 60000, errors: ['time'] })
         .then(collected => {
-            console.log(collected);
-            console.log(message.contenet);
         })
         .catch(collected => {
-            message.delete();
         });
     }).catch(function() {
         //Something
@@ -46,7 +43,7 @@ exports.conf = {
     name: "Seleziona_gioco",
     fullcmd: "seleziona_gioco",
     alias: "sgame",
-    description: ":bangbang: **importante!** Usa questo comando per avere la lista dei giochi disponibili, poi segui le istruzzioni indicate per entrare nel canale dedicato",
+    description: ":bangbang: **Importante!** Scegli i videogiochi che ti interessano. Questo comando ti farà abilitare nelle sezioni che ti interessano. Dopo 60s il messaggio sarà cancellato.",
     timer: 0,
     tokenCost: 0,
     subClass: 'start',
