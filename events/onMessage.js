@@ -12,8 +12,6 @@ bot.on('message', (message) => {
 
 	//Scrive un messaggio di passaggio di livello
 	//botUtil.utenteSuperamentoLivello(message);
-	//Risponde in automatico se presente una domanda
-	//botUtil.rispostaAutomaticaAlleDomande(message);
 
 	if (message.content[0] !== bot.conf.prefix) {
 		return;
