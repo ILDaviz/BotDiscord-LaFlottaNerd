@@ -41,6 +41,6 @@ exports.conf = {
     description: "Mostra lo stato del server con dei dati informativi come n° utenti o altro",
     timer: 0,
     tokenCost: 0,
-    subClass: 'help_moderazione',
+    subClass: 'utility_staff',
     displayHelp: 1
 };

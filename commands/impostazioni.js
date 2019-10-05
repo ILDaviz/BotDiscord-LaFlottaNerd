@@ -17,7 +17,7 @@ exports.run = async (message, bot) => {
 
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'impostazioni') {
-            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
+            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] ${cmd.description}`;
         }
     });
 
@@ -33,7 +33,7 @@ exports.conf = {
     name: "Impostazioni",
     fullcmd: "impostazioni",
     alias: "settings",
-    description: "Mostra tutti i comandi per le impostazioni del bot",
+    description: "Mostra tutti i comandi per le impostazioni del Bot.",
     timer: 0,
     tokenCost: 0,
     subClass: 'admin',

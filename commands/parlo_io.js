@@ -17,7 +17,7 @@ exports.conf = {
     name: "Parlo_io",
     fullcmd: "parlo_io",
     alias: "say",
-    description: "{testo} Scrivere un testo personalizzato nelle spoglie del bot, il bot riscriverà il comando dove viene avviato. (Solo staff)",
+    description: "{testo} Scrivere un testo personalizzato nelle spoglie del Bot, esso riscriverà il comando dove viene avviato (solo Staff).",
     timer: 0,
     tokenCost: 0,
     subClass: 'help_utility',

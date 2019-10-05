@@ -11,13 +11,13 @@ exports.run = async (message, bot) => {
     });
 
     cmds.forEach((cmd) => {
-        if (cmd.displayHelp === 1 && cmd.subClass === 'admin') {
-            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}**  [**${bot.conf.prefix}${cmd.alias}**] ${cmd.description}`;
+        if (cmd.displayHelp === 1 && cmd.subClass === 'utility_staff') {
+            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
         }
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Comandi per la gestione del server (Solo Staff).`)
+        .setTitle(`Comandi utili per lo staff.`)
         .setColor('RANDOM')
         .setDescription(msg)
         .setFooter(bot.conf.footer_standard);
@@ -26,12 +26,12 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Administrator",
-    fullcmd: "administrator",
-    alias: "admin",
-    description: "Comandi per la gestione del server (Solo Staff).",
+    name: "Utility_staff",
+    fullcmd: "utility_staff",
+    alias: "ustaff",
+    description: "Comandi utili per lo staff.",
     timer: 0,
     tokenCost: 999,
-    subClass: 'start',
+    subClass: 'admin',
     displayHelp: 1
 };

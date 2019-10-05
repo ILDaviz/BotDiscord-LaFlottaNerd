@@ -22,6 +22,6 @@ exports.conf = {
     description: "Pulizia forzata database, elimina gli utenti che non sono più presenti in gilda",
     timer: 0,
     tokenCost: 0,
-    subClass: 'help_moderazione',
+    subClass: 'utility_staff',
     displayHelp: 1
 };

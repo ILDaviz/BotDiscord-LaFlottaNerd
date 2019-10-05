@@ -11,7 +11,7 @@ exports.run = async (message, bot) => {
     });
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'help_moderazione') {
-            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
+            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] ${cmd.description}`;
         }
     });
 
@@ -27,7 +27,7 @@ exports.conf = {
     name: "Moderazione",
     fullcmd: "moderazione",
     alias: "mod",
-    description: "Mostra tutti i comandi per la moderazione",
+    description: "Mostra tutti i comandi per la moderazione.",
     timer: 0,
     tokenCost: 0,
     subClass: 'admin',

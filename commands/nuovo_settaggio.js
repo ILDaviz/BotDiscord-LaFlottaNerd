@@ -28,9 +28,9 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Aggiungi_settaggio",
-    fullcmd: "aggiungi_settaggio",
-    alias: "addsett",
+    name: "Nuovo_settaggio",
+    fullcmd: "nuovo_settaggio",
+    alias: "newsett",
     description: "{tipo} {nome} {valore} Aggiungi un nuovo settaggio nel database. Tipo e nome non devono contenere spazzi. I tipi disponibili sono: settings,text,role,service_message,trigger. Non usare altri tipi. Il nome è il riferimento del settaggio devono essere univoci.",
     timer: 0,
     tokenCost: 0,

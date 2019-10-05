@@ -1,6 +1,6 @@
 const bot = require('../bot.js');
 const botCache = require('../helpers/Cache');
-const arole = require('../commands/seleziona_gioco_smal'); 
+const arole = require('../commands/seleziona_gioco'); 
 
 bot.on('raw', event => {
     if (event.t === 'MESSAGE_REACTION_ADD' || event.t == "MESSAGE_REACTION_REMOVE") {
@@ -19,6 +19,27 @@ bot.on('raw', event => {
             var namemoji = event.d.emoji.name;
             if (msg.author.id == bot.conf.id_bot) {
                 if (inbuf) {
+                    if (user.id != bot.conf.id_bot) {
+                        var array_arole = arole.a_role();
+                        for (let i = 0; i < array_arole.length; i++) {
+                            const emoji = array_arole[i].emoji;
+                            const role = array_arole[i].role;
+                            if (emoji === namemoji) {
+                                var memberObj = msg.guild.members.get(user.id);
+                                var roleObj = msg.guild.roles.find(r => r.name === role);
+                                if (event.t === "MESSAGE_REACTION_ADD") {
+                                    memberObj.addRole(roleObj)
+                                } else {
+                                    memberObj.removeRole(roleObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //Metodo via comando
+            if (msg.author.id == bot.conf.id_bot) {
+                if (msg.channel.name == 'welcome') {
                     if (user.id != bot.conf.id_bot) {
                         var array_arole = arole.a_role();
                         for (let i = 0; i < array_arole.length; i++) {

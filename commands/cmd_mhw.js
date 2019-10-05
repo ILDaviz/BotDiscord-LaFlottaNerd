@@ -12,12 +12,12 @@ exports.run = async (message, bot) => {
     
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'comandi_mhw') {
-            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
+            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** ${cmd.description}`;
         }
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Ecco i comandi dedicati a Monster Hunter World`)
+        .setTitle(`Ecco i comandi dedicati a Monster Hunter World.`)
         .setColor('RANDOM')
         .setDescription(msg)
         .setFooter(bot.conf.footer_standard);
@@ -25,8 +25,8 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Comandi_mhw",
-    fullcmd: "comandi_mhw",
+    name: "Cmd_mhw",
+    fullcmd: "cmd_mhw",
     alias: "cmdmhw",
     description: "I comandi dedicati a Monster Hunter World!",
     timer: 0,

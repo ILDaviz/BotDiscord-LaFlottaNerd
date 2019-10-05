@@ -23,15 +23,15 @@ exports.run = async (message, bot) => {
       }
       
       let value = res[0].value;
-      let frase = decodeURIComponent(value);
+      let frase = unescape(value);
       message.channel.send(frase);
   });
 };
 
 exports.conf = {
-    name: "Mostra_settaggio",
-    fullcmd: "mostra_settaggio",
-    alias: "visett",
+    name: "Contenuto_settaggio",
+    fullcmd: "contenuto_settaggio",
+    alias: "consett",
     description: "{id_setting} visualizza il contenuto di un settaggio specifico",
     timer: 0,
     tokenCost: 0,

@@ -394,25 +394,20 @@ exports.generaMessaggioSelezionaGiocoSmall = function(emoji){
     if (role.length > 0) {
         for (var i = role.length - 1; i >= 0; i--) {
             value = role[i];
-            messages.push(`${subMessage_2} **"${value}"** ${subMessage_1} ${emoji[i]}`);
+            //messages.push(`${subMessage_2} **"${value}"** ${subMessage_1} ${emoji[i]}`);
+            messages.push(`${emoji[i]} = **"${value}"**`);
         }
     }
     return messages;
 }
 
 exports.getServiceMessage = function(){
-        const messages = [];
-        botModel.selectSettingFromType('service_message',function(err,res){
-            for (let i = 0; i < res.length; i++) {
-                let text = res[i].value;
-                messages.push(text);       
-            }
-        });
-        let embed = new Discord.RichEmbed()
-        .setTitle('Messaggio di servizio! :nerd: ')
-        .setColor(0xFF0000)
-        .setDescription(messages)
-        bot.channels.find(ch => ch.name === '4-chiacchiere').send({embed});
+    let message = botCache.selectCacheText('service_message');
+    let embed = new Discord.RichEmbed()
+    .setTitle('Messaggio di servizio! :nerd: ')
+    .setColor(0xFF0000)
+    .setDescription(message)
+    bot.channels.find(ch => ch.name === '4-chiacchiere').send({embed});
 }
 
 exports.checkPresence = function(name_trigger,group,str){
@@ -440,4 +435,8 @@ exports.checkPresence = function(name_trigger,group,str){
     } else {
         return true;
     }
+}
+
+exports.sleep = function(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

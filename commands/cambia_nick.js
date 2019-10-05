@@ -14,7 +14,7 @@ exports.run = async (message, bot) => {
         return message.channel.send('Non hai scritto nessun nickname. Ti ricordo che è formato dal tuonickpsn(tuo nome vero) tra parentesi');
     
     message.member.setNickname(args_1).then((log) => {
-        return message.channel.send('Fatto!');
+        return message.channel.send('Soprannome modificato, dal prossimo messaggio sarà visibile!');
         }).catch((log) => {
         return message.channel.send('Non ha funzinoato, hai un ruolo più alto del mio.. :tired_face: ');
         });
@@ -24,7 +24,7 @@ exports.conf = {
     name: "Cambia_nick",
     fullcmd: "cambia_nick",
     alias: "cnick",
-    description: "{nuovo soprannome} Crea un soprannome composto in questo modo: prima scrivi il tuo ID-PSN, seguito dal nome reale (non quello in-game) tra parentesi, ad esempio: Lupercalex (Alessio), Griselbrand85 (Simone), in modo da riconoscerci facilmente durante le sessioni di gioco.",
+    description: "{nuovo soprannome} Crea un soprannome composto in questo modo: prima scrivi il tuo ID-PSN, seguito dal nome reale (non quello in-game) tra parentesi, ad esempio: Cicciogamer88 (Davide), in modo da riconoscerci facilmente durante le sessioni di gioco.",
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

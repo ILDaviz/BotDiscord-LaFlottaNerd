@@ -13,12 +13,12 @@ exports.run = async (message, bot) => {
 
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'comandi_giochi') {
-            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
+            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** ${cmd.description}`;
         }
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Ecco i comandi dedicati ai giochi della gilda suddivisi per gioco`)
+        .setTitle(`Ecco i comandi dedicati ai giochi della gilda suddivisi per gioco.`)
         .setColor('RANDOM')
         .setDescription(msg)
         .setFooter(bot.conf.footer_standard);

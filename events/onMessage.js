@@ -11,7 +11,7 @@ bot.on('message', (message) => {
 	if (message.author.bot) return;
 
 	//Scrive un messaggio di passaggio di livello
-	//botUtil.utenteSuperamentoLivello(message);
+	botUtil.utenteSuperamentoLivello(message);
 
 	if (message.content[0] !== bot.conf.prefix) {
 		return;

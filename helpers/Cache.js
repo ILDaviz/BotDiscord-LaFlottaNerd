@@ -6,11 +6,13 @@ const fs = require('fs');
 exports.resetCacheText = function(result){
     fs.readFile('./cache/text.json', function (err, content) {
         if (err) {
+            console.log(err);
             result(err, false);
         }
         else {
             botModel.selectSettingFromType('text', function(err,res){
                 if (err) {
+                    console.log(err);
                     result(err, false);
                 }
                 else {
@@ -24,6 +26,7 @@ exports.resetCacheText = function(result){
                     }
                     fs.writeFile('./cache/text.json', JSON.stringify(obj), function (err) {
                         if (err) {
+                            console.log(err);
                             result(err, false);
                         }
                         else {
@@ -39,11 +42,13 @@ exports.resetCacheText = function(result){
 exports.resetChaceRole = function(result){
     fs.readFile('./cache/role.json', function (err, content) {
         if (err) {
+            console.log(err);
             result(err, false);
         }
         else {
             botModel.selectSettingFromType('role', function(err,res){
                 if (err) {
+                    console.log(err);
                     result(err, false);
                 }
                 else {
@@ -57,6 +62,7 @@ exports.resetChaceRole = function(result){
                     }
                     fs.writeFile('./cache/role.json', JSON.stringify(obj), function (err) {
                         if (err) {
+                            console.log(err);
                             result(err, false);
                         }
                         else {
@@ -73,6 +79,7 @@ exports.resetChaceRole = function(result){
 exports.resetTriggerCache = function(result){
     fs.readFile('./cache/trigger.json', function (err, content) {
         if (err) {
+            console.log(err);
             result(err, false);
         }
         else {
@@ -87,6 +94,7 @@ exports.resetTriggerCache = function(result){
                 }
                 fs.writeFile('./cache/trigger.json', JSON.stringify(obj), function (err) {
                     if (err) {
+                        console.log(err);
                         result(err, false);
                     }
                     else {

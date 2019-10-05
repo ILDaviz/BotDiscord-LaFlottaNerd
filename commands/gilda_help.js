@@ -12,7 +12,7 @@ exports.run = async (message, bot) => {
 
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'help_gilda') {
-            msg += `\n\n**^${cmd.cmdName}** [**^${cmd.alias}**] - ${cmd.description}`;
+            msg += `\n\n**^${cmd.cmdName}** ${cmd.description}`;
         }
     });
 

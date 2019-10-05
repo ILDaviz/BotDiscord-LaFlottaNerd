@@ -44,7 +44,7 @@ exports.conf = {
     name: "Statistiche",
     fullcmd: "statistiche",
     alias: "stat",
-    description: "{@utente (Opzionale)} Per vedere le tue statistiche o di un utente specifico! Dati, dati un sacco di dati :nerd:",
+    description: "{@utente (Opzionale)} Per vedere le tue statistiche o quelle di un utente specifico! Dati, un sacco di dati! :nerd:",
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

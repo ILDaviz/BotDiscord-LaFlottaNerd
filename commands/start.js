@@ -12,7 +12,7 @@ exports.run = async (message, bot) => {
 
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'start') {
-            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**?${cmd.alias}**] - ${cmd.description}`;
+            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** ${cmd.description}`;
         }
     });
     
@@ -31,7 +31,7 @@ exports.conf = {
     name: "Start",
     fullcmd: "start",
     alias: "s",
-    description: "Il comando per iniziare ad usarmi! :stuck_out_tongue_winking_eye: ",
+    description: "Digita in chat questo comando per iniziare ad usarmi! :stuck_out_tongue_winking_eye:",
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

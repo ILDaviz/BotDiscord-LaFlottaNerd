@@ -14,7 +14,7 @@ exports.conf = {
     name: "Donazioni",
     fullcmd: "donazioni",
     alias: "dammiisoldi",
-    description: "Ti piace il Bot di questa gilda? Offrimi un caffé!",
+    description: "Ti piace il Bot di questa Gilda? Offri un caffé allo sviluppatore che lo ha creato!",
     timer: 0,
     tokenCost: 10,
     subClass: 'start',

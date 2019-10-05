@@ -16,6 +16,10 @@ exports.a_role = () => {
     return associate_role;
 }
 
+exports.emoji = () => {
+    return emoji;
+}
+
 exports.run = async (message, bot) => {    
 
     message.channel.send(toSend)
@@ -42,7 +46,7 @@ exports.conf = {
     name: "Seleziona_gioco",
     fullcmd: "seleziona_gioco",
     alias: "sgame",
-    description: ":bangbang: **Importante!** Scegli i videogiochi che ti interessano. Questo comando ti farà abilitare nelle sezioni che ti interessano. Dopo 60s il messaggio sarà cancellato.",
+    description: "Scegli i videogiochi che ti interessano. Questo comando ti farà abilitare nelle sezioni a cui sei interessato, facendoti visualizzare le chat di ogni singolo gioco. Dopo 60s il messaggio sarà cancellato.",
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

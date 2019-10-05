@@ -13,7 +13,7 @@ exports.conf = {
     name: "Ping",
     fullcmd: "ping",
     alias: "ping",
-    description: "Mostra il tempo di risposta del bot",
+    description: "Mostra il tempo di risposta del Bot.",
     timer: 0,
     tokenCost: 0,
     subClass: 'help_utility',

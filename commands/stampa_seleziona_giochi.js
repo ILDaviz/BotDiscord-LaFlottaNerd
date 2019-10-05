@@ -23,6 +23,6 @@ exports.conf = {
     description: "Comando per stampare la lista giochi (vecchia versione)",
     timer: 0,
     tokenCost: 0,
-    subClass: 'impostazioni',
+    subClass: 'utility_staff',
     displayHelp: 1
 };

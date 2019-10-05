@@ -18,6 +18,6 @@ exports.conf = {
     description: "Resetta il contatore delle menzioni",
     timer: 0,
     tokenCost: 0,
-    subClass: 'impostazioni',
+    subClass: 'utility_staff',
     displayHelp: 1
 };

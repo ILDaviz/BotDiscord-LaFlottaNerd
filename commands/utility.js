@@ -11,7 +11,7 @@ exports.run = async (message, bot) => {
     });
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'help_utility') {
-            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
+            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** ${cmd.description}`;
         }
     });
 
@@ -27,7 +27,7 @@ exports.conf = {
     name: "Utility",
     fullcmd: "utility",
     alias: "u",
-    description: "Una lista di comandi secondari utili",
+    description: "Una lista di comandi secondari utili.",
     timer: 0,
     tokenCost: 0,
     subClass: 'start',
