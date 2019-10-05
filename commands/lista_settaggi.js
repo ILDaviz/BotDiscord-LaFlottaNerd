@@ -14,7 +14,7 @@ exports.run = async (message, bot) => {
     return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
   
   if (!args_1) {
-    return message.reply("Non hai indicato una pagina, se vuoi partire dalla prima pagina scrivi " + bot.conf.prefix + "listsett 0.");
+    return message.reply("Non hai indicato una pagina, se vuoi partire dalla prima pagina scrivi " + bot.conf.prefix + "listsett 1.");
   }
 
   botModel.selectSettings(args_2, function (err, res) {
@@ -31,7 +31,7 @@ exports.run = async (message, bot) => {
     let nrt = res.length;
     tpage = nrt / lim;
     let npr = Math.floor(tpage);
-    if (args_1 == 0) {
+    if (args_1 == 1) {
       var limit_start = 0;
       var limit_end = 10;
     } else {
@@ -39,7 +39,7 @@ exports.run = async (message, bot) => {
       var limit_end = (10 * args_1) + 10;
     }
 
-    if (args_1 > npr) {
+    if (args_1 > npr ) {
       return message.reply("Il numero delle pagine è maggiore di quelle disponibili."); 
     }
 
