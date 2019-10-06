@@ -1,6 +1,6 @@
 const bot = require('../bot.js');
 const botCache = require('../helpers/Cache');
-const arole = require('../commands/seleziona_gioco'); 
+const arole = require('../commands/s_home/seleziona_gioco'); 
 
 bot.on('raw', event => {
     if (event.t === 'MESSAGE_REACTION_ADD' || event.t == "MESSAGE_REACTION_REMOVE") {
