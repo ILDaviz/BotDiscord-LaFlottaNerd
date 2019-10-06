@@ -1,18 +1,15 @@
-const schedule = require('node-schedule');
-const botUtil = require('../helpers/Util')
-
-schedule.scheduleJob('0 2 * * *', function () {
-    botUtil.moderationCicle();
-});
-schedule.scheduleJob('0 9 * * *', function () {
+const botUtil = require('../helpers/Util');
+const CronJob = require('cron').CronJob;
+//Cron ciclo di espulsioni
+new CronJob('0 2 * * * *', function () {
+  botUtil.moderationCicle();
+}, null, true);
+new CronJob('0 13 * * * *', function () {
   botUtil.getServiceMessage();
-});
-schedule.scheduleJob('0 13 * * *', function () {
+}, null, true);
+new CronJob('0 17 * * * *', function () {
   botUtil.getServiceMessage();
-});
-schedule.scheduleJob('0 17 * * *', function () {
+}, null, true);
+new CronJob('0 21 * * * *', function () {
   botUtil.getServiceMessage();
-});
-schedule.scheduleJob('0 21 * * *', function () {
-  botUtil.getServiceMessage();
-});
+}, null, true);

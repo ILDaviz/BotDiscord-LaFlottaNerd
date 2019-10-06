@@ -30,7 +30,7 @@ exports.run = async (message, bot) => {
     let tpage = 0;
     let nrt = res.length;
     tpage = nrt / lim;
-    let npr = Math.floor(tpage);
+    let npr = Math.floor(tpage) + 1;
     if (args_1 == 1) {
       var limit_start = 0;
       var limit_end = 10;
@@ -71,7 +71,7 @@ exports.conf = {
     name: "Lista_settaggi",
     fullcmd: "lista_settaggi",
     alias: "listsett",
-    description: "{numero pagina (0 per indicare la prima pagina)} {tipo (opzionale)} Mostra una lista con tutti i settaggi disponibili",
+    description: "{numero pagina (1 per indicare la prima pagina)} {tipo (opzionale)} Mostra una lista con tutti i settaggi disponibili",
     timer: 0,
     tokenCost: 0,
     subClass: 'impostazioni',

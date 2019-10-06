@@ -10,3 +10,12 @@ comeando di avviso con la notizia
 comandi x testi rapidi pre composti black desert.
 cambiaree i nomi in settaggi dei comandi 
 e mostrare un risultato con taglio ...
+
+
+
+
+
+# fix "its Bot" function
+# fix errore in espulsione forzata.
+# fix errore nel processo di espulsione errore nel cofig
+# fix errore nel processo di espulsione errore nel controllo bot

@@ -12,7 +12,7 @@ exports.run = async (message, bot) => {
     return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
   
     if (!args_1) {
-      return message.reply("Non hai indicato una pagina, se vuoi partire dalla prima pagina scrivi " + bot.conf.prefix + "grave 0.");
+      return message.reply("Non hai indicato una pagina, se vuoi partire dalla prima pagina scrivi " + bot.conf.prefix + "grave 1.");
     }
     
     botModel.selectUsersInToGrave(function (err, res) {
@@ -30,7 +30,7 @@ exports.run = async (message, bot) => {
         let nrt = res.length;
         tpage = nrt / lim;
         console.log(tpage);
-        let npr = Math.floor(tpage);
+      let npr = Math.floor(tpage) + 1;
         if (args_1 == 0) {
           var limit_start = 0;
           var limit_end = 10;
@@ -71,7 +71,7 @@ exports.conf = {
     name: "Utenti_listanera",
     fullcmd: "utenti_listanera",
     alias: "grave",
-    description: "{numero pagina (0 per indicare la prima pagina)} Utenti nella lista nera",
+    description: "{numero pagina (1 per indicare la prima pagina)} Utenti nella lista nera",
     timer: 0,
     tokenCost: 0,
     subClass: 'help_moderazione',

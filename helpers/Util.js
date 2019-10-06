@@ -2,18 +2,16 @@
 
 const botModel = require('../helpers/Models');
 const botCache = require('../helpers/Cache');
-const fs = require('fs');
+const Discord = require('discord.js');
 const bot = require('../bot')
 
+var _this = this;
+
 exports.checkIfUserIsBot = id_discord => {
-    let guild = bot.guilds.get('532184361068527646');
-    if (guild.member(id_discord)) {
-        let itsbot = guild.member(id_discord).user;
-        if (itsbot) {
-            return itsbot.bot;
-        } else {
-            return false;
-        }   
+    let guild = bot.guilds.get(bot.conf.guild_lfn_id);
+    if (guild.members.get(id_discord)) {
+        let itsbot = guild.members.get(id_discord).user.bot;
+        return itsbot;
     }
 };
 
@@ -57,7 +55,7 @@ exports.utenteSuperamentoLivello = async function(message) {
             const n_messages = res.map(a => a.messages);
             botModel.selectLivelUser(n_messages, function (err, res) {
                 if (res.length > 0) {
-                    let result = getGradoCacciatore(n_messages);
+                    let result = this.getGradoCacciatore(n_messages);
                     bot.channels.get(mci).send("Ciao <@" + id + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " **; Sei stato proprio un buon cacciatore :kissing_heart:");
                 }
             });
@@ -95,8 +93,7 @@ exports.aggiuntaTimerDiNonAttivita = () => {
                 //Controlla se è presente in lista bianca
                 botModel.selectUserWhiteList(id_discord, function (err, res) {
                     if (res.length === 0) {
-                        //Evita il bot 1 di Discord
-                        if (id_discord > 1 && id_discord !== config.bot_id_1 && id_discord !== config.bot_id_2 && id_discord !== config.bot_id_3 && id_discord !== config.bot_id_4) {
+                        if (_this.checkIfUserIsBot(id_discord)) {
                             botModel.selectUser(id_discord, function (err, res) {
                                 if (res.length > 0) {
                                     let presences = res[0].presences;
@@ -134,7 +131,7 @@ exports.passaggioSeiGiorniPostConteggio = () => {
                     if (last_check !== null) {
                         botModel.selectUserWhiteList(id_discord, function (err, res) {
                             if (res.length === 0) {
-                                bot.users.get(id_discord).send(config.meg_pban);
+                                bot.users.get(id_discord).send(botCache.selectCacheText('messaggio_exit'));
                                 botModel.updateUserNotified(id_discord, function (err, res) { });
                                 botModel.updateUserLastCheck(id_discord, function (err, res) { });
                             }
@@ -163,10 +160,10 @@ exports.cicloDiEspulsione = () => {
 }
 
 exports.moderationCicle = () => {
-    this.zeroValoriNegativi();
-    this.aggiuntaTimerDiNonAttivita();
-    this.passaggioSeiGiorniPostConteggio();
-    this.cicloDiEspulsione();
+    _this.zeroValoriNegativi();
+    _this.aggiuntaTimerDiNonAttivita();
+    _this.passaggioSeiGiorniPostConteggio();
+    _this.cicloDiEspulsione();
 }
 
 exports.resetCountDay = () => {
@@ -402,10 +399,10 @@ exports.generaMessaggioSelezionaGiocoSmall = function(emoji){
 }
 
 exports.getServiceMessage = function(){
-    let message = botCache.selectCacheText('service_message');
+    let message = botCache.selectCacheText('message_service');
     let embed = new Discord.RichEmbed()
     .setTitle('Messaggio di servizio! :nerd: ')
-    .setColor(0xFF0000)
+    .setColor('RANDOM')
     .setDescription(message)
     bot.channels.find(ch => ch.name === '4-chiacchiere').send({embed});
 }

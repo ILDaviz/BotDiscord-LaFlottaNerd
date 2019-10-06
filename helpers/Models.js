@@ -85,7 +85,7 @@ Models.insertSetting = function (type, name, value, result) {
             result(err, null);
         }
         else {
-            result(null, res);
+            result(null, res.insertId);
 
         }
     });
@@ -150,7 +150,7 @@ Models.insertUser = function (id_discord, result) {
             result(err, null);
         }
         else {
-            result(null, JSON.parse(JSON.stringify(res)));
+            result(null, res.insertId);
 
         }
     });
@@ -189,7 +189,7 @@ Models.insertUser = function (id_discord, result) {
             result(err, null);
         }
         else {
-            result(null, res);
+            result(null, res.insertId);
 
         }
     });
@@ -319,7 +319,7 @@ Models.insertUserWhiteList = function (id_discord, tag, result) {
             result(err, null);
         }
         else {
-            result(null, res);
+            result(null, res.insertId);
 
         }
     });

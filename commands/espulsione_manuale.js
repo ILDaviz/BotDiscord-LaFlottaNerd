@@ -1,7 +1,4 @@
-const Discord  = require('discord.js');
 const botModel = require('../helpers/Models');
-const botUtili = require('../helpers/Util');
-const botCache = require('../helpers/Cache');
 
 exports.run = async (message, bot) => {
     if (!message.member.roles.some(r => ["Admin", "Moderatori", "Developer", "Aiutante di Bordo"].includes(r.name)))
@@ -18,7 +15,7 @@ exports.run = async (message, bot) => {
               return message.channel.send('errore_text' + err);
             }
             if (res.length === 0) {
-              let guild = client.guilds.get("532184361068527646");
+              let guild = bot.guilds.get("532184361068527646");
               message.channel.send('Espulso utente: <@' + id_discord + '>\n');
               guild.members.get(id_discord).kick();
             }
