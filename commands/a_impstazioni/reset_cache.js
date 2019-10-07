@@ -1,8 +1,12 @@
 const botCache = require('../../helpers/Cache');
 
 exports.run = async (message, bot) => {
-  	botCache.resetCache();
-    message.channel.send('reset completato');
+    botCache.resetCache(function(err){
+        if (err) {
+            message.channel.send('errore di reset cache' + err );
+        }
+        message.channel.send('Cache resettata con successo');
+    });
 };
 
 exports.conf = {

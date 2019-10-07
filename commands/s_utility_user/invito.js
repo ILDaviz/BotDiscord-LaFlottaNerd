@@ -1,6 +1,6 @@
 
 exports.run = async (message, bot) => {
-  message.channel.send("Ciao");
+  message.channel.send("Ecco il link per invitare un utente in quest gilda : https://discord.gg/2FaG9kE");
 };
 
 exports.conf = {

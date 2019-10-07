@@ -17,6 +17,12 @@ exports.run = async (message, bot) => {
             return message.channel.send('errore_text' + err);
         }
         message.channel.send("Scorciatoia aggiunta il suo riferimento è **" + res + "** usalo con il comando !stsc " + res + ".");
+        botCache.resetCache(function(err){
+        if (err) {
+        message.channel.send('errore di reset cache' + err );
+        }
+        message.channel.send('Cache resettata con successo');
+      });
     });
 
 };

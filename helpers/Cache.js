@@ -3,6 +3,8 @@
 const botModel = require('../helpers/Models');
 const fs = require('fs');
 
+var _this = this;
+
 exports.resetCacheText = function(result){
     fs.readFile('./cache/text.json', function (err, content) {
         if (err) {
@@ -152,8 +154,24 @@ exports.selectCacheTrigger = function(name_trigger,group){
     return value;
 }
 
-exports.resetCache = function() {
-    this.resetCacheText(function(err,res){ });
-    this.resetChaceRole(function(err,res){ });
-    this.resetTriggerCache(function(err,res){ });
+exports.resetCache = function(result) {
+    _this.resetCacheText(function(err,res){
+        if (err) {
+            result(err);
+        } else {
+            _this.resetChaceRole(function(err,res){
+                if (err) {
+                    result(err);
+                } else {
+                    _this.resetTriggerCache(function(err,res){
+                        if (err) {
+                            result(err);
+                        } else {
+                            result(null);
+                        }
+                    });
+                }
+            });
+        }
+    });
 }

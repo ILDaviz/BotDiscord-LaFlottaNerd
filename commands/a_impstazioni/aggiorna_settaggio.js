@@ -1,5 +1,6 @@
 
 const botModel = require('../../helpers/Models');
+const botCache = require('../../helpers/Cache');
 
 exports.run = async (message, bot) => {
     
@@ -18,7 +19,13 @@ exports.run = async (message, bot) => {
       if (err) {
         return message.channel.send('errore_text' + err);
       }
-      message.channel.send('Settaggio aggiunto');
+      message.channel.send('Settaggio aggiornato');
+      botCache.resetCache(function(err){
+        if (err) {
+        message.channel.send('errore di reset cache' + err );
+        }
+        message.channel.send('Cache resettata con successo');
+      });
     });
 };
 

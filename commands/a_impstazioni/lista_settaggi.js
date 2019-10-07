@@ -24,7 +24,7 @@ exports.run = async (message, bot) => {
       return message.reply("Mi dispiace, ma non ci sono settaggi.");
     }
     
-    const lim = 2;
+    const lim = 5;
     let text = '';
     let tpage = 0;
     let nrt = res.length;
@@ -45,16 +45,18 @@ exports.run = async (message, bot) => {
     for (let index = 1; index < res.length; index++) {
       let id_settings = res[index].id_settings;
       let name = res[index].name;
-      let value = res[index].value;
+      let value = unescape(res[index].value);
+      let value_txt = value.substring(0, 50);
+      value_txt += '...';
       if (args_1 == 0) {
         if (index <= limit_end) {
           text += "id:  [**" + id_settings + "**]  name: **" + name + "**\n";
-          text += "testo : " + unescape(value) + "\n\n";
+          text += "testo : " + value_txt + "\n\n";
         }
       } else {
         if (index >= limit_start && index <= limit_end) {
           text += "id:  [**" + id_settings + "**]  name: **" + name + "**\n";
-          text += "testo : " + unescape(value) + "\n\n";
+          text += "testo : " + value_txt + "\n\n";
         }
       }
     }

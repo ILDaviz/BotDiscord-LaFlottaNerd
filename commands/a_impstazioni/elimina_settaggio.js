@@ -15,6 +15,12 @@ exports.run = async (message, bot) => {
             return message.channel.send('errore_text' + err);
         }
         message.channel.send('Settaggio eliminato');
+        botCache.resetCache(function(err){
+            if (err) {
+                message.channel.send('errore di reset cache' + err );
+            }
+            message.channel.send('Cache resettata con successo');
+        });
     });
 };
 

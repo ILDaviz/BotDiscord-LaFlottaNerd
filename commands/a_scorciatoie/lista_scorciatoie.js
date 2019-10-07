@@ -22,7 +22,7 @@ exports.run = async (message, bot) => {
             return message.reply("Mi dispiace, ma non ci sono scorciatoie.");
         }
 
-        const lim = 3;
+        const lim = 5;
         let text = '';
         let tpage = 0;
         let nrt = res.length;
@@ -45,15 +45,18 @@ exports.run = async (message, bot) => {
             let name = res[index].name;
             var id_users = name.replace('scorciatoia_','');
             let value = res[index].value;
+            let value = unescape(res[index].value);
+            let value_txt = value.substring(0, 128);
+            value_txt += '...';
             if (args_1 == 0) {
                 if (index <= limit_end) {
                     text += "id:  [**" + id_settings + "**]  users: <@" + id_users + ">\n";
-                    text += "testo : " + unescape(value) + "\n\n";
+                    text += "testo : " + value_txt + "\n\n";
                 }
             } else {
                 if (index >= limit_start && index <= limit_end) {
                     text += "id:  [**" + id_settings + "**]  users: <@" + id_users + ">\n";
-                    text += "testo : " + unescape(value) + "\n\n";
+                    text += "testo : " + value_txt + "\n\n";
                 }
             }
         }
