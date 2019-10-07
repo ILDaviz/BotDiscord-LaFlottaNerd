@@ -8,7 +8,6 @@ exports.run = async (message, bot) => {
   const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
   const args_1 = args[1];
   const args_2 = args.slice(2).join(' ');
-  const limit_p = 9;
 
   if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
     return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
@@ -25,34 +24,37 @@ exports.run = async (message, bot) => {
       return message.reply("Mi dispiace, ma non ci sono settaggi.");
     }
     
-    const lim = 10;
+    const lim = 2;
     let text = '';
     let tpage = 0;
     let nrt = res.length;
     tpage = nrt / lim;
-    let npr = Math.floor(tpage) + 1;
+    let npr = Math.floor(tpage);
     if (args_1 == 1) {
       var limit_start = 0;
-      var limit_end = 10;
+      var limit_end = lim;
     } else {
-      var limit_start = 10 * args_1;
-      var limit_end = (10 * args_1) + 10;
+      var limit_start = lim * args_1;
+      var limit_end = (lim * args_1) + lim;
     }
 
     if (args_1 > npr ) {
       return message.reply("Il numero delle pagine è maggiore di quelle disponibili."); 
     }
 
-    for (let index = 0; index < res.length; index++) {
+    for (let index = 1; index < res.length; index++) {
       let id_settings = res[index].id_settings;
       let name = res[index].name;
+      let value = res[index].value;
       if (args_1 == 0) {
         if (index <= limit_end) {
           text += "id:  [**" + id_settings + "**]  name: **" + name + "**\n";
+          text += "testo : " + unescape(value) + "\n\n";
         }
       } else {
         if (index >= limit_start && index <= limit_end) {
           text += "id:  [**" + id_settings + "**]  name: **" + name + "**\n";
+          text += "testo : " + unescape(value) + "\n\n";
         }
       }
     }

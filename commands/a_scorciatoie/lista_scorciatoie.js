@@ -43,7 +43,6 @@ exports.run = async (message, bot) => {
         for (let index = 1; index < res.length; index++) {
             let id_settings = res[index].id_settings;
             let name = res[index].name;
-            var buf = Buffer.from(name);
             var id_users = name.replace('scorciatoia_','');
             let value = res[index].value;
             if (args_1 == 0) {

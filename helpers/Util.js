@@ -55,7 +55,7 @@ exports.utenteSuperamentoLivello = async function(message) {
             const n_messages = res.map(a => a.messages);
             botModel.selectLivelUser(n_messages, function (err, res) {
                 if (res.length > 0) {
-                    let result = this.getGradoCacciatore(n_messages);
+                    let result = _this.getGradoCacciatore(n_messages);
                     bot.channels.get(mci).send("Ciao <@" + id + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " **; Sei stato proprio un buon cacciatore :kissing_heart:");
                 }
             });

@@ -11,7 +11,7 @@ exports.run = async (message, bot) => {
     if (!message.guild.me.hasPermission('CHANGE_NICKNAME'))
         return message.channel.send('Purtroppo non posso cambiare il tuo nickname');
     if (!args_1)
-        return message.channel.send('Non hai scritto nessun nickname. Ti ricordo che è formato dal tuonickpsn(tuo nome vero) tra parentesi');
+        return message.channel.send('Hai digitato male il comando, ti ricordo che devi scrivere !Cambia_nick seguito dal tuo ID-PSN + il nome reale tra parentesi, esempio: !Cambia_nick Cicciogamer88 (Davide)');
     
     message.member.setNickname(args_1).then((log) => {
         return message.channel.send('Soprannome modificato, dal prossimo messaggio sarà visibile!');
@@ -24,7 +24,7 @@ exports.conf = {
     name: "Cambia_nick",
     fullcmd: "cambia_nick",
     alias: "cnick",
-    description: "{nuovo soprannome} Crea un soprannome composto in questo modo: prima scrivi il tuo ID-PSN, seguito dal nome reale (non quello in-game) tra parentesi, ad esempio: Cicciogamer88 (Davide), in modo da riconoscerci facilmente durante le sessioni di gioco.",
+    description: "Comando per modificare il proprio nickname, scrivilo in chat inserendo di seguito il tuo ID-PSN + il nome reale tra parentesi, esempio: !Cambia_nick Cicciogamer88 (Davide)",
     timer: 0,
     tokenCost: 0,
     subClass: 'start',
