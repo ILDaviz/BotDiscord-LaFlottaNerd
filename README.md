@@ -19,3 +19,12 @@ e mostrare un risultato con taglio ...
 # fix errore in espulsione forzata.
 # fix errore nel processo di espulsione errore nel cofig
 # fix errore nel processo di espulsione errore nel controllo bot
+
+
+
+
+get crontab from cache.
+creare dei processi custom
+array:{
+    time : 0 3 * * * *, function : clear_channal , id_channal : 15
+}

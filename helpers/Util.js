@@ -150,6 +150,7 @@ exports.cicloDiEspulsione = () => {
                 const id_discord = res[i].id_discord;
                 botModel.selectUserWhiteList(id_discord, function (err, res) {
                     if (res.length === 0) {
+                        bot.channels.find(ch => ch.name === 'welcome').send('Oggi espello l\'utente <@' + id_discord + '> per inattività, mi dispiace ma sarà così.');
                         let guild = bot.guilds.get("532184361068527646");
                         guild.members.get(id_discord).kick();
                     }
