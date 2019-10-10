@@ -41,8 +41,7 @@ exports.cleenDatabase = function (result) {
 
 exports.log = function (note) {
     let embed = new Discord.RichEmbed()
-        .setTitle('-- LOG --')
-        .setColor(0xFFFF)
+        .setColor('RANDOM')
         .setDescription(note)
     bot.channels.get(bot.conf.chanel_log).send({ embed });
 }
@@ -61,10 +60,6 @@ exports.utenteSuperamentoLivello = async function(message) {
             });
         }
     });
-}
-
-exports.rispostaAutomaticaAlleDomande = async function(message){
-
 }
 
 exports.zeroValoriNegativi = () => {
@@ -102,11 +97,13 @@ exports.aggiuntaTimerDiNonAttivita = () => {
                                         //Controlla l'ultimo check se non settato lo setta!
                                         if (last_check == null) {
                                             //Aggiungi la data del check
+                                            _this.log('Aggiunto timer all\'utente <@' + id_discord + '>');
                                             botModel.updateUserLastCheck(id_discord, function (err, res) { });
                                         }
                                     } else {
                                         //Resetta il clock
                                         if (last_check !== null) {
+                                            _this.log('Tolto timer all\'utente <@' + id_discord + '>');
                                             botModel.updateUserLastCheck(id_discord, function (err, res) { });
                                         }
                                     }
@@ -131,6 +128,7 @@ exports.passaggioSeiGiorniPostConteggio = () => {
                     if (last_check !== null) {
                         botModel.selectUserWhiteList(id_discord, function (err, res) {
                             if (res.length === 0) {
+                                _this.log('Avviso superamento 6 giorni di innattività <@' + id_discord + '>');
                                 bot.users.get(id_discord).send(botCache.selectCacheText('messaggio_exit'));
                                 botModel.updateUserNotified(id_discord, function (err, res) { });
                                 botModel.updateUserLastCheck(id_discord, function (err, res) { });
@@ -150,6 +148,7 @@ exports.cicloDiEspulsione = () => {
                 const id_discord = res[i].id_discord;
                 botModel.selectUserWhiteList(id_discord, function (err, res) {
                     if (res.length === 0) {
+                        _this.log('Utente <@' + id_discord + '> in procinto di essere eliminato');
                         bot.channels.find(ch => ch.name === 'welcome').send('Oggi espello l\'utente <@' + id_discord + '> per inattività, mi dispiace ma sarà così.');
                         let guild = bot.guilds.get("532184361068527646");
                         guild.members.get(id_discord).kick();
@@ -213,6 +212,8 @@ exports.resetCountDay = () => {
                 botModel.updateZeroPresence(id_discord_getUsers, function (err, res) { });
             }
         }
+
+        _this.log('Contatori resettati e i negativi portati a 0');
     });
 }
 

@@ -12,9 +12,9 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Caffè",
-    fullcmd: "caffè",
-    alias: "caffe",
+    name: "Caffe",
+    fullcmd: "caffe",
+    alias: "caffè",
     description: "Offri un caffè a qualcuno o altrimenti te lo offro io :yum:",
     timer: 0,
     tokenCost: 0,

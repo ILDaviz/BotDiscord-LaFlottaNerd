@@ -16,7 +16,7 @@ exports.run = async (message, bot) => {
     message.member.setNickname(args_1).then((log) => {
         return message.channel.send('Soprannome modificato, dal prossimo messaggio sarà visibile!');
         }).catch((log) => {
-        return message.channel.send('Non ha funzinoato, hai un ruolo più alto del mio.. :tired_face: ');
+        return message.channel.send('Non ha funzionato, hai un ruolo più alto del mio.. :tired_face: ');
         });
 };
 

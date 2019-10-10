@@ -1,6 +1,7 @@
 const bot = require('../bot.js');
 const botCache = require('../helpers/Cache');
 const arole = require('../commands/s_home/seleziona_gioco'); 
+const botUtil = require('../helpers/Util');
 
 bot.on('raw', event => {
     if (event.t === 'MESSAGE_REACTION_ADD' || event.t == "MESSAGE_REACTION_REMOVE") {
@@ -29,8 +30,10 @@ bot.on('raw', event => {
                                 var roleObj = msg.guild.roles.find(r => r.name === role);
                                 if (event.t === "MESSAGE_REACTION_ADD") {
                                     memberObj.addRole(roleObj)
+                                    botUtil.log('Utente <@' + user.id + '> è entrante nel ruolo: ' + role + '. (via comando)');
                                 } else {
                                     memberObj.removeRole(roleObj);
+                                    botUtil.log('Utente <@' + user.id + '> è uscito nel ruolo: ' + role + '. (via comando)');
                                 }
                             }
                         }
@@ -50,8 +53,10 @@ bot.on('raw', event => {
                                 var roleObj = msg.guild.roles.find(r => r.name === role);
                                 if (event.t === "MESSAGE_REACTION_ADD") {
                                     memberObj.addRole(roleObj)
+                                    botUtil.log('Utente <@' + user.id + '> è entrante nel ruolo: ' + role + '. (via comando)');
                                 } else {
                                     memberObj.removeRole(roleObj);
+                                    botUtil.log('Utente <@' + user.id + '> è uscito nel ruolo: ' + role + '. (via comando)');
                                 }
                             }
                         }
@@ -78,8 +83,10 @@ bot.on('raw', event => {
                         var memberObj = msg.guild.members.get(user.id);
                         if (event.t === "MESSAGE_REACTION_ADD") {
                             memberObj.addRole(roleObj)
+                            botUtil.log('Utente <@' + user.id + '> è entrante nel ruolo: ' + role + '. (via canale)');
                         } else {
                             memberObj.removeRole(roleObj);
+                            botUtil.log('Utente <@' + user.id + '> è uscito nel ruolo: ' + role + '. (via canale)');
                         }
                     }
                 }
