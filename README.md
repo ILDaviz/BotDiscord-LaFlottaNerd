@@ -20,7 +20,7 @@ e mostrare un risultato con taglio ...
 # fix errore nel processo di espulsione errore nel cofig
 # fix errore nel processo di espulsione errore nel controllo bot
 
-
+canvas
 
 
 get crontab from cache.
