@@ -1,6 +1,6 @@
 'user strict';
 
-const botModel = require('../helpers/Models');
+const botModel = require('./Models');
 const fs = require('fs');
 
 var _this = this;
