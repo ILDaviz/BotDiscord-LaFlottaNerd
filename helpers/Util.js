@@ -55,7 +55,7 @@ exports.utenteSuperamentoLivello = async function(message) {
             botModel.selectLivelUser(n_messages, function (err, res) {
                 if (res.length > 0) {
                     let result = _this.getGradoCacciatore(n_messages);
-                    bot.channels.get(mci).send("Ciao <@" + id + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " **; Sei stato proprio un buon cacciatore :kissing_heart:");
+                    bot.channels.get(mci).send("Ciao <@" + id + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " ** :kissing_heart:");
                 }
             });
         }
@@ -400,13 +400,64 @@ exports.generaMessaggioSelezionaGiocoSmall = function(emoji){
     return messages;
 }
 
-exports.getServiceMessage = function(){
+// exports.getServiceMessage = function(){
+//     let message = botCache.selectCacheText('message_service');
+//     let embed = new Discord.RichEmbed()
+//     .setTitle('Messaggio di servizio! :nerd: ')
+//     .setColor('RANDOM')
+//     .setDescription(message);
+//     bot.channels.find(ch => ch.name === '4-chiacchiere').send({embed});
+// }
+
+exports.getServiceMessage = function () {
     let message = botCache.selectCacheText('message_service');
     let embed = new Discord.RichEmbed()
-    .setTitle('Messaggio di servizio! :nerd: ')
-    .setColor('RANDOM')
-    .setDescription(message)
-    bot.channels.find(ch => ch.name === '4-chiacchiere').send({embed});
+        .setTitle('Messaggio di servizio! :nerd: ')
+        .setColor('RANDOM')
+        .setDescription(message);
+    const b = [
+        "4-chiacchiere",
+        "black-desert",
+        "borderlands-2",
+        "borderlands-3",
+        "diablo-3",
+        "path-of-exile",
+        "ghost-wildlands",
+        "ghost-breakpoint",
+        "mhw",
+        "the-division"
+    ];
+    let c = bot.channels.array();
+    //console.log(c);
+    for (let i = 0; i < c.length; i++) {
+        const n = c[i].name;
+        const t = c[i].type;
+        if (t == 'text') {
+            var it = _this.checkdata(n, b); 
+            if (it == true) {
+                bot.channels.find(ch => ch.name === n).send({ embed })
+                    .then()
+                    .catch();
+            } 
+        }    
+    }
+}
+
+exports.checkdata = function(string, array){
+    var x = 0;
+    for (let i = 0; i < array.length; i++) {
+        const erif = array[i];
+        //console.log(erif);
+        if (string == erif) {
+            x++;
+        }
+    }
+
+    if (x > 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 exports.checkPresence = function(name_trigger,group,str){

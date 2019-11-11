@@ -7,7 +7,7 @@ exports.run = async (message, bot) => {
     const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
     const string = args.slice(2).join(' ');
     
-    if (!message.member.roles.some(r => ["Developer"].includes(r.name)))
+    if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
       return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
     if (!args[1]) {
         return message.reply("Devi fornirmi un id_setting!");

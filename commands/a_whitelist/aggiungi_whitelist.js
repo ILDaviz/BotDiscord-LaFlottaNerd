@@ -4,19 +4,21 @@ const botUtili = require('../../helpers/Util');
 const botCache = require('../../helpers/Cache');
 
 exports.run = async (message, bot) => {
-    const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
-    if (!message.member.roles.some(r => ["Admin", "Moderatori", "Aiutante di Bordo", "Developer"].includes(r.name)))
-      return message.reply("Mi dispiace, non hai i permessi per inviare questo comando");
-    let member = message.mentions.members.first();
-    if (!member)
-      return message.reply("Per piacere menziona un utente presente nel server");
-    if (!member.bannable)
-      return message.reply("Purtroppo non posso bannarlo! Hai il permesso di bannare gli utenti?");
-    let reason = args.slice(1).join(' ');
-    if (!reason) reason = "Nessuna ragione";
-    await member.ban(reason)
-      .catch(error => message.reply(`Mi dispiace ${message.author} non è stato possibile bannarlo perché: ${error}`));
-    message.reply(`${member.user.tag} è stato bannato da ${message.author.tag} perché: ${reason}`);
+  const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
+  if (!message.member.roles.some(r => ["Admin", "Moderatori", "Aiutante di Bordo", "Developer"].includes(r.name)))
+    return message.reply("Mi dispiace, non hai i permessi per inviare questo comando");
+  let member = message.mentions.members.first() || message.guild.members.get(args[0]);
+  if (!member)
+    return message.reply("Menziona un utente presente nel server");
+  botModel.insertUserWhiteList(member.user.id, member.user.tag, function (err, res) {
+    if (err) {
+      return message.reply(`${member.user.tag} non è stato inserito in Whitelist da ${message.author.tag} a causa di questo errore ${err}.`);
+    }
+
+    message.reply(`${member.user.tag} è stato inserito in Whitelist da ${message.author.tag}.`);
+
+  });
+  botUtili.log(`${member.user.tag} è stato inserito in Whitelist da ${message.author.tag}.`);
 };
 
 exports.conf = {

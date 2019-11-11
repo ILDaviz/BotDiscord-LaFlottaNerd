@@ -4,16 +4,16 @@ const CronJob = require('cron').CronJob;
 new CronJob('0 0 2 * * *', function () {
   botUtil.log('Avvio processo di espulsione');
   botUtil.moderationCicle();
-}, null, true);
-new CronJob('0 0 13 * * *', function () {
-  botUtil.log('Messaggio di servizio inviato');
-  botUtil.getServiceMessage();
-}, null, true);
-new CronJob('0 0 17 * * *', function () {
-  botUtil.log('Messaggio di servizio inviato');
-  botUtil.getServiceMessage();
-}, null, true);
-new CronJob('0 0 21 * * *', function () {
-  botUtil.log('Messaggio di servizio inviato');
-  botUtil.getServiceMessage();
-}, null, true);
+}, null, true, "Europe/Rome");
+// new CronJob('0 0 11 * * *', function () {
+//   botUtil.log('Messaggio di servizio inviato');
+//   botUtil.getServiceMessage();
+// }, null, true, "Europoe/Rome");
+// new CronJob('0 0 17 * * *', function () {
+//   botUtil.log('Messaggio di servizio inviato');
+//   botUtil.getServiceMessage();
+// }, null, true, "Europoe/Rome");
+// new CronJob('0 0 23 * * *', function () {
+//   botUtil.log('Messaggio di servizio inviato');
+//   botUtil.getServiceMessage();
+// }, null, true, "Europoe/Rome");
