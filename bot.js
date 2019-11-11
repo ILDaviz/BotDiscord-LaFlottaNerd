@@ -1,8 +1,12 @@
 "use strict";
+//npm install lowdb
+
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 module.exports = bot;
+
+
 
 require('./events/onMessage');
 require('./events/onError');
@@ -15,7 +19,7 @@ require('./events/onMemberInOut');
 require('./events/onSchedule');
 require('./helpers/loadcommands').load();
 
-const BetaBot = true; //Se il bot è in test.
+const BetaBot = true; //Se il bot è in test aggiungere true.
 
 if (BetaBot) {
 	bot.login('NTc0MTY3MTEyNjQyMzMwNjM0.Xckuew.kJbyUoG8Bo-FWr1fcmhfjSzT8JY');
