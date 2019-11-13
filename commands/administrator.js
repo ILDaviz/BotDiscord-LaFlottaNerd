@@ -1,5 +1,6 @@
 let cmds = require('../helpers/loadcommands').cmdDetail;
 let Discord = require('discord.js');
+let texts = require("../helpers/Texts");
 
 exports.run = async (message, bot) => {
 
@@ -17,11 +18,12 @@ exports.run = async (message, bot) => {
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Comandi per la gestione del server (Solo Staff).`)
+        .setTitle(texts.getText('command_administrator_title'))
+        .setThumbnail('https://media1.tenor.com/images/0edd53dd2110147b786329c2e24fb1d0/tenor.gif')
         .setColor('RANDOM')
         .setDescription(msg)
+        .setTimestamp()
         .setFooter(bot.conf.footer_standard);
-
     message.channel.send(emb);
 };
 
@@ -29,7 +31,7 @@ exports.conf = {
     name: "Administrator",
     fullcmd: "administrator",
     alias: "admin",
-    description: "Comandi per la gestione del server (Solo Staff).",
+    description: texts.getText('command_administrator_description'),
     timer: 0,
     tokenCost: 999,
     subClass: 'start',

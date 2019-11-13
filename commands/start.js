@@ -1,5 +1,6 @@
 let cmds = require('../helpers/loadcommands').cmdDetail;
 let Discord = require('discord.js');
+let texts = require("../helpers/Texts");
 
 exports.run = async (message, bot) => {
     
@@ -17,13 +18,12 @@ exports.run = async (message, bot) => {
     });
     
     let emb = new Discord.RichEmbed()
-        .setTitle(`Ciao io sono il BOT della GILDA! :heart:`)
+        .setTitle(texts.getText('command_start_title'))
         .setThumbnail('https://media1.tenor.com/images/0edd53dd2110147b786329c2e24fb1d0/tenor.gif')
         .setColor("RANDOM")
         .setDescription(msg)
         .setTimestamp()
         .setFooter(bot.conf.footer_standard);
-
     message.channel.send(emb);
 };
 
@@ -31,7 +31,7 @@ exports.conf = {
     name: "Start",
     fullcmd: "start",
     alias: "s",
-    description: "Digita in chat questo comando per iniziare ad usarmi! :stuck_out_tongue_winking_eye:",
+    description: texts.getText('command_start_description'),
     timer: 0,
     tokenCost: 0,
     subClass: 'start',
