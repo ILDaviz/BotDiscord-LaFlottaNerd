@@ -38,7 +38,6 @@ exports.load = (dir = "./commands/") => {
 
 exports.reload = (cmd) => {
 	try {
-		let check = require('../commands/' + cmd);
 		delete require.cache[require.resolve('../commands/' + cmd)];
 		let good = require('../commands/' + cmd);
 		cmds[cmd] = {run: good.run, conf: good.conf};
