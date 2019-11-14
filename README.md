@@ -7,3 +7,8 @@ Obbiettivi:
 
 
 * Creato un sistema a js per la gestione dei testi.
+
+
+
+* Nel database ci sono degli utenti doppi.
+* Questi doppioni creano errori nell'estrazione del livello.
