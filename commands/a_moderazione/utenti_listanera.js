@@ -29,8 +29,7 @@ exports.run = async (message, bot) => {
         let tpage = 0;
         let nrt = res.length;
         tpage = nrt / lim;
-        console.log(tpage);
-      let npr = Math.floor(tpage) + 1;
+        let npr = Math.floor(tpage) + 1;
         if (args_1 == 0) {
           var limit_start = 0;
           var limit_end = 10;
