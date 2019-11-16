@@ -18,7 +18,7 @@ exports.run = async (message, bot) => {
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Comandi dedicati per le scorciatoie.`)
+        .setTitle(texts.getText(`Comandi dedicati per le scorciatoie`))
         .setColor('RANDOM')
         .setDescription(msg)
         .setFooter(bot.conf.footer_standard);
@@ -30,7 +30,7 @@ exports.conf = {
     name: "Scorciatoie",
     fullcmd: "scorciatoie",
     alias: "sc",
-    description: "Comandi dedicati per le scorciatoie.",
+    description: texts.getText('Comandi dedicati per le scorciatoie'),
     timer: 0,
     tokenCost: 999,
     subClass: 'admin',

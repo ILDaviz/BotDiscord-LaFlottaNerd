@@ -18,7 +18,7 @@ exports.run = async (message, bot) => {
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Comandi utili per lo staff.`)
+        .setTitle(texts.getText(`command_utility_staff_title`))
         .setColor('RANDOM')
         .setDescription(msg)
         .setFooter(bot.conf.footer_standard);
@@ -30,7 +30,7 @@ exports.conf = {
     name: "Utility_staff",
     fullcmd: "utility_staff",
     alias: "ustaff",
-    description: "Comandi utili per lo staff.",
+    description: texts.getText(`command_utility_staff_descrizione`),
     timer: 0,
     tokenCost: 999,
     subClass: 'admin',

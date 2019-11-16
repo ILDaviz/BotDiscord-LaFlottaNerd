@@ -5,8 +5,6 @@ const texts = require("../../helpers/Texts");
 exports.run = async (message, bot) => {
     
     const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
-    const args_1 = args.slice(1).join(' ');
-    const args_2 = args.slice(2).join(' ');
     
     let msg = '';
     
@@ -23,7 +21,7 @@ exports.run = async (message, bot) => {
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Impostazioni del bot`)
+        .setTitle(texts.getText('command_impostazioni_title'))
         .setColor('RANDOM')
         .setDescription(msg)
         .setFooter(bot.conf.footer_standard);
@@ -34,7 +32,7 @@ exports.conf = {
     name: "Impostazioni",
     fullcmd: "impostazioni",
     alias: "settings",
-    description: "Mostra tutti i comandi per le impostazioni del Bot.",
+    description: texts.getText('command_impostazioni_descrizione'),
     timer: 0,
     tokenCost: 0,
     subClass: 'admin',

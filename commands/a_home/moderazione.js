@@ -18,7 +18,7 @@ exports.run = async (message, bot) => {
     });
 
     let emb = new Discord.RichEmbed()
-        .setTitle(`Ecco i comandi di moderazione`)
+        .setTitle(texts.getText(`command_moderazione_title`))
         .setColor('RANDOM')
         .setDescription(msg)
         .setFooter(bot.conf.footer_standard);
@@ -29,7 +29,7 @@ exports.conf = {
     name: "Moderazione",
     fullcmd: "moderazione",
     alias: "mod",
-    description: "Mostra tutti i comandi per la moderazione.",
+    description: texts.getText('command_moderazione_descrizione'),
     timer: 0,
     tokenCost: 0,
     subClass: 'admin',

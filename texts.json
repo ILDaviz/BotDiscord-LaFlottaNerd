@@ -53,11 +53,16 @@
         "text":"Scegli i videogiochi che ti interessano! Clicca sulle emoji sotto il messaggio per sbloccare le chat di ogni singolo gioco."
     },
     {
-        "reference":"message_role_title_small","text":"Clicca sulle emoji che troverai a fine messaggio per sbloccare e visualizzare le chat dei videogiochi a cui sei interessato:"},
+        "reference":"message_role_title_small",
+        "text":"Clicca sulle emoji che troverai a fine messaggio per sbloccare e visualizzare le chat dei videogiochi a cui sei interessato:"
+    },
     {
-        "reference":"message_comand_nickname_1","text":"Aggiornare il tuo soprannome:"},
+        "reference":"message_comand_nickname_1",
+        "text":"Aggiornare il tuo soprannome:"
+    },
     {
-        "reference":"message_comand_nickname_2","text":"Digita qua in chat il comando !Cambia_nick seguito dal tuo ID-PSN + il nome reale tra parentesi. Esempio: **!Cambia_nick Cicciogamer88 (Davide)** Scegli cosa vedere:"},
+        "reference":"message_comand_nickname_2",
+        "text":"Digita qua in chat il comando !Cambia_nick seguito dal tuo ID-PSN + il nome reale tra parentesi. Esempio: **!Cambia_nick Cicciogamer88 (Davide)** Scegli cosa vedere:"},
     {
         "reference":"messaggio_exit",
         "text":"Ciao sono uno dei bot della Gilda, questo messaggio  generato automaticamente, quindi non rispondere, in quanto il mio creatore non lo leggerebbe. Volevo comunicarti che  da 15 giorni che non ti colleghi qua nella Flotta Nerd, se NON lo farai per altri 15 giorni consecutivi dalla data odierna verrai espulso dal gruppo; ti ricordo che basta collegarsi una volta ogni 30 giorni oppure scrivere un semplice messaggio in un canale qualsiasi della Gilda per annullare il conteggio di espulsione; tieni presente che se non si pu essere attivi per periodi prolungati per causa di forza maggiore, puoi contattare un admin o un moderatore, in modo da farti inserire in WHITELIST, rimarrai cos senza problemi di espulsione nella Flotta anche se sei inattivo per molto tempo; maggiori info le trovi nella parte di <#536179785093611552> denominata [PERMANENZA NELLA GILDA]"
@@ -83,8 +88,36 @@
         "text":"Comandi per la gestione del server (Solo Staff)."
     },
     {
-        "reference":"command_administrator_title",
-        "text":""
+        "reference":"command_impostazioni_title",
+        "text":"Impostazioni del bot"
+    },
+    {
+        "reference": "command_impostazioni_descrizione",
+        "text": "Mostra tutti i comandi per le impostazioni del Bot."
+    },
+    {
+        "reference": "command_moderazione_title",
+        "text": "Ecco i comandi di moderazione"
+    },
+    {
+        "reference": "command_moderazione_descrizione",
+        "text": "Mostra tutti i comandi per la moderazione."
+    },
+    {
+        "reference": "command_scorciatoie_title",
+        "text": "Comandi dedicati per le scorciatoie"
+    },
+    {
+        "reference": "command_scorciatoie_descrizione",
+        "text": "Comandi dedicati per le scorciatoie"
+    },
+    {
+        "reference": "command_utility_staff_title",
+        "text": "Comandi utili per lo staff"
+    },
+    {
+        "reference": "command_utility_staff_descrizione",
+        "text": "Comandi utili per lo staff"
     },
     {
         "reference": "command_administrator_title",
@@ -94,6 +127,14 @@
         "reference": "command_administrator_title",
         "text": ""
     },
+
+
+
+
+
+
+
+
     {
         "reference": "command_administrator_title",
         "text": ""
@@ -101,11 +142,7 @@
     {
         "reference": "command_administrator_title",
         "text": ""
-    },
-    {
-        "reference": "command_administrator_title",
-        "text": ""
-    },
+    }
 
 
 
