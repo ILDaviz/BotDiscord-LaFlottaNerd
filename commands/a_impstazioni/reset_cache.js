@@ -1,4 +1,5 @@
 const botCache = require('../../helpers/Cache');
+const texts = require("../../helpers/Texts");
 
 exports.run = async (message, bot) => {
     botCache.resetCache(function(err){

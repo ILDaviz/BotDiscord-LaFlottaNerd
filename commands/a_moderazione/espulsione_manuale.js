@@ -1,5 +1,6 @@
 const botModel = require('../../helpers/Models');
 const botUtil = require('../../helpers/Util');
+const texts = require("../../helpers/Texts");
 
 exports.run = async (message, bot) => {
     botUtil.moderationCicle();

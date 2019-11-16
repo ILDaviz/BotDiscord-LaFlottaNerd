@@ -1,6 +1,7 @@
 
 const botModel = require('../../helpers/Models');
 const botCache = require('../../helpers/Cache');
+const texts = require("../../helpers/Texts");
 
 exports.run = async (message, bot) => {
     

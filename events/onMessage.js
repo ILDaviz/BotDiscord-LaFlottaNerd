@@ -28,7 +28,6 @@ bot.on('message', (message) => {
 		cmds[message.cmd].timer = new Date().getTime();
 		cmds[message.cmd].run(message, bot);
 	} catch (err) {
-		console.log(err);
 		let emb = new Discord.RichEmbed()
 			.setTitle(`Mh... sicuro di aver scritto giusto? :scream:`)
 			.setColor("RANDOM")

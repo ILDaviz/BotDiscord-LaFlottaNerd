@@ -1,7 +1,8 @@
-let Discord = require('discord.js');
-let moment = require('moment');
-let botModel = require('../../helpers/Models'); 
-let botUtil = require('../../helpers/Util');
+const Discord = require('discord.js');
+const moment = require('moment');
+const botModel = require('../../helpers/Models'); 
+const botUtil = require('../../helpers/Util');
+const texts = require("../../helpers/Texts");
 
 exports.run = async (message, bot) => {
 

@@ -1,5 +1,6 @@
-let cmds = require('../../helpers/loadcommands').cmdDetail;
-let Discord = require('discord.js');
+const cmds = require('../../helpers/loadcommands').cmdDetail;
+const Discord = require('discord.js');
+const texts = require("../../helpers/Texts");
 
 exports.run = async (message, bot) => {
 

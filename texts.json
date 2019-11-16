@@ -1,28 +1,117 @@
 {
 "texts": [
-    {"reference":"role_title","text":"Scegli i videogiochi che ti interessano! Clicca sulle emoji sottostanti e magicamente ti appariranno chat dedicate ai giochi da te scelti; se ci ripensi e non vuoi pi visualizzarle, basta cliccare nuovamente sull'emoji e i canali saranno nuovamente oscurati; nella eventualit che il sistema venga resettato, il tuo click sull'emoji andr perso e dovr essere nuovamente posto per poter ri-visualizzare tutto."},
-    {"reference":"role_subtitle","text":"Aggiungi una reazione per cambiare l'accesso alla categoria:"},
-    {"reference":"welcome_message","text":"ti invito a leggere ci che  scritto nel canale <#536179785093611552>, e se sei nuovo del software Discord di dare uno sguardo anche a <#621702338524217375>; se trovi difficolt scrivi direttamente in questo canale o su <#621701347758178324>.%uD83D%uDE04 I tuoi prossimi passi:"},
-    {"reference":"head_message_standard","text":"Ciao sono uno dei bot della Gilda, questo messaggio è generato automaticamente, quindi non rispondere, in quanto il mio creatore non lo leggerebbe."},
-    {"reference":"footer_message_standard","text":"Buona permanenza nel server Discord de LA FLOTTA NERD."},
-    {"reference":"message_nickname","text":"Volevo comunicarti che per una questione di praticità conviene che ogni iscritto si rinomini qua sul server 'La Flotta Nerd' col proprio ID-PSN, seguito dal nome reale (non quello in-game), ad esempio: cicciogamer88 (Davide), in modo da riconoscerci facilmente durante le sessioni di gioco online. Modificare il proprio soprannome è semplicissimo, vai nel canale <#621702338524217375> e troverai degli utilissimi screenshots che ti aiuteranno nella procedura. Ti ricordo che modificarlo non comporta mutamenti negli altri server in cui sei iscritto, lì rimarrai tranquillamente col nome utente/soprannome che hai deciso tu in precedenza. Se trovi ancora difficoltà scrivi su <#621701347758178324> per chiedere aiuto. Questo messaggio verrà ripetuto fino a quando non sarà sistemato il tuo soprannome. **Buona permanenza nel server Discord de LA FLOTTA NERD.** 🙂"},
-    {"reference":"message_no_nickname","text":"Questo messaggio è generato automaticamente, quindi non rispondere, in quanto il mio creatore non lo leggerebbe. Volevo comunicarti che per una questione di praticità conviene che ogni iscritto si rinomini qua sul server La Flotta Nerd col proprio ID-PSN, seguito dal nome reale (non quello in-game), ad esempio: cicciogamer88 (Davide), in modo da riconoscerci facilmente durante le sessioni di gioco. Per cambiare il nickname basta cliccare sul proprio nome nella lista utenti a destra, --> gestisci utente, --> cambia soprannome. Ti ricordo che cambiarlo non comporta mutamenti negli altri server in cui sei iscritto, lì rimarrai tranquillamente col nome utente/soprannome che hai deciso tu in precedenza. Maggiori info e screenshots che possono aiutarti con la procedura puoi trovarli nella sezione di <#536179785093611552> denominata [GUIDA ALLA SOPRAVVIVENZA]; se trovi ancora difficoltà scrivi su <#544489482926161941> o ad un Admin/Moderatore per chiedere aiuto. Questo messaggio verrà ripetuto fino a quando non sarà sistemato il tuo nickname. Buona permanenza nel server Discord de La Flotta Nerd. 🙂"},
-    {"reference":"message_title_no_nickname","text":"Purtroppo il tuo nome non è valido per questa Gilda."},
-    {"reference":"welcome_title_message","text":"Prima di buttarti a capofitto nella Flotta leggi qua sotto!"},
-    {"reference":"message_service","text":"__**Vuoi darci una mano**__ a mantenere vivi i giochi della Gilda? Cerchiamo infatti dei volenterosi che ci aiutino a scovare __**nuovi giocatori nei gruppi Facebook**__; se sei interessato faccelo sapere scrivendolo nel canale <#621701347758178324>. Ti aspettiamo! %uD83D%uDE42"},
-    {"reference":"role_title_small","text":"Scegli i videogiochi che ti interessano! Clicca sulle emoji sotto il messaggio per sbloccare le chat di ogni singolo gioco."},
-    {"reference":"role_subtitle_small_1","text":"Clicca sull'emoji sottostante uguale a questa:"},
-    {"reference":"role_subtitle_small_2","text":"Scegli i videogiochi che ti interessano! Clicca sulle emoji sotto il messaggio per sbloccare le chat di ogni singolo gioco."},
-    {"reference":"message_role_title_small","text":"Clicca sulle emoji che troverai a fine messaggio per sbloccare e visualizzare le chat dei videogiochi a cui sei interessato:"},
-    {"reference":"message_comand_nickname_1","text":"Aggiornare il tuo soprannome:"},
-    {"reference":"message_comand_nickname_2","text":"Digita qua in chat il comando !Cambia_nick seguito dal tuo ID-PSN + il nome reale tra parentesi. Esempio: **!Cambia_nick Cicciogamer88 (Davide)** Scegli cosa vedere:"},
-    {"reference":"messaggio_exit","text":"Ciao sono uno dei bot della Gilda, questo messaggio  generato automaticamente, quindi non rispondere, in quanto il mio creatore non lo leggerebbe. Volevo comunicarti che  da 15 giorni che non ti colleghi qua nella Flotta Nerd, se NON lo farai per altri 15 giorni consecutivi dalla data odierna verrai espulso dal gruppo; ti ricordo che basta collegarsi una volta ogni 30 giorni oppure scrivere un semplice messaggio in un canale qualsiasi della Gilda per annullare il conteggio di espulsione; tieni presente che se non si pu essere attivi per periodi prolungati per causa di forza maggiore, puoi contattare un admin o un moderatore, in modo da farti inserire in WHITELIST, rimarrai cos senza problemi di espulsione nella Flotta anche se sei inattivo per molto tempo; maggiori info le trovi nella parte di <#536179785093611552> denominata [PERMANENZA NELLA GILDA]"},
-    {"reference":"suggerimento_idmhw","text":"Per scoprire se c' qualcuno online, entra nel canale <#569146256123887617> , se gi presente troverai l'id della sessione online che ti permetter di unirti agli altri cacciatori della Gilda, in caso contrario pubblicane tu uno come indicato nel messaggio fissato della pagina. Buona caccia!"},
-    {"reference":"footer_standard","text":"Il comando è valido solo se prima c'è il simbolo ! . Le parentesi graffe servono solo a farti capire dove e cosa indicare per avviarlo correttamente."},
-    {"reference":"command_start_description","text":"Digita in chat questo comando per iniziare ad usarmi! :stuck_out_tongue_winking_eye:"},
-    {"reference":"command_start_title","text":"Ciao io sono il BOT della GILDA! :heart:"},
-    {"reference":"command_administrator_description","text":"Comandi per la gestione del server (Solo Staff)."},
-    {"reference":"command_administrator_title","text":"Comandi per la gestione del server (Solo Staff)."}
+    {
+        "reference":"role_title",
+        "text":"Scegli i videogiochi che ti interessano! Clicca sulle emoji sottostanti e magicamente ti appariranno chat dedicate ai giochi da te scelti; se ci ripensi e non vuoi pi visualizzarle, basta cliccare nuovamente sull'emoji e i canali saranno nuovamente oscurati; nella eventualit che il sistema venga resettato, il tuo click sull'emoji andr perso e dovr essere nuovamente posto per poter ri-visualizzare tutto."
+    },
+    {
+        "reference":"role_subtitle",
+        "text":"Aggiungi una reazione per cambiare l'accesso alla categoria:"
+    },
+    {
+        "reference":"welcome_message",
+        "text":"ti invito a leggere ci che  scritto nel canale <#536179785093611552>, e se sei nuovo del software Discord di dare uno sguardo anche a <#621702338524217375>; se trovi difficolt scrivi direttamente in questo canale o su <#621701347758178324>.%uD83D%uDE04 I tuoi prossimi passi:"
+    },
+    {
+        "reference":"head_message_standard",
+        "text":"Ciao sono uno dei bot della Gilda, questo messaggio è generato automaticamente, quindi non rispondere, in quanto il mio creatore non lo leggerebbe."
+    },
+    {
+        "reference":"footer_message_standard",
+        "text":"Buona permanenza nel server Discord de LA FLOTTA NERD."
+    },
+    {
+        "reference":"message_nickname",
+        "text":"Volevo comunicarti che per una questione di praticità conviene che ogni iscritto si rinomini qua sul server 'La Flotta Nerd' col proprio ID-PSN, seguito dal nome reale (non quello in-game), ad esempio: cicciogamer88 (Davide), in modo da riconoscerci facilmente durante le sessioni di gioco online. Modificare il proprio soprannome è semplicissimo, vai nel canale <#621702338524217375> e troverai degli utilissimi screenshots che ti aiuteranno nella procedura. Ti ricordo che modificarlo non comporta mutamenti negli altri server in cui sei iscritto, lì rimarrai tranquillamente col nome utente/soprannome che hai deciso tu in precedenza. Se trovi ancora difficoltà scrivi su <#621701347758178324> per chiedere aiuto. Questo messaggio verrà ripetuto fino a quando non sarà sistemato il tuo soprannome. **Buona permanenza nel server Discord de LA FLOTTA NERD.** 🙂"
+    },
+    {
+        "reference":"message_no_nickname",
+        "text":"Questo messaggio è generato automaticamente, quindi non rispondere, in quanto il mio creatore non lo leggerebbe. Volevo comunicarti che per una questione di praticità conviene che ogni iscritto si rinomini qua sul server La Flotta Nerd col proprio ID-PSN, seguito dal nome reale (non quello in-game), ad esempio: cicciogamer88 (Davide), in modo da riconoscerci facilmente durante le sessioni di gioco. Per cambiare il nickname basta cliccare sul proprio nome nella lista utenti a destra, --> gestisci utente, --> cambia soprannome. Ti ricordo che cambiarlo non comporta mutamenti negli altri server in cui sei iscritto, lì rimarrai tranquillamente col nome utente/soprannome che hai deciso tu in precedenza. Maggiori info e screenshots che possono aiutarti con la procedura puoi trovarli nella sezione di <#536179785093611552> denominata [GUIDA ALLA SOPRAVVIVENZA]; se trovi ancora difficoltà scrivi su <#544489482926161941> o ad un Admin/Moderatore per chiedere aiuto. Questo messaggio verrà ripetuto fino a quando non sarà sistemato il tuo nickname. Buona permanenza nel server Discord de La Flotta Nerd. 🙂"
+    },
+    {
+        "reference":"message_title_no_nickname",
+        "text":"Purtroppo il tuo nome non è valido per questa Gilda."
+    },
+    {
+        "reference":"welcome_title_message",
+        "text":"Prima di buttarti a capofitto nella Flotta leggi qua sotto!"
+    },
+    {
+        "reference":"message_service",
+        "text":"__**Vuoi darci una mano**__ a mantenere vivi i giochi della Gilda? Cerchiamo infatti dei volenterosi che ci aiutino a scovare __**nuovi giocatori nei gruppi Facebook**__; se sei interessato faccelo sapere scrivendolo nel canale <#621701347758178324>. Ti aspettiamo! %uD83D%uDE42"
+    },
+    {
+        "reference":"role_title_small",
+        "text":"Scegli i videogiochi che ti interessano! Clicca sulle emoji sotto il messaggio per sbloccare le chat di ogni singolo gioco."
+    },
+    {
+        "reference":"role_subtitle_small_1",
+        "text":"Clicca sull'emoji sottostante uguale a questa:"
+    },
+    {
+        "reference":"role_subtitle_small_2",
+        "text":"Scegli i videogiochi che ti interessano! Clicca sulle emoji sotto il messaggio per sbloccare le chat di ogni singolo gioco."
+    },
+    {
+        "reference":"message_role_title_small","text":"Clicca sulle emoji che troverai a fine messaggio per sbloccare e visualizzare le chat dei videogiochi a cui sei interessato:"},
+    {
+        "reference":"message_comand_nickname_1","text":"Aggiornare il tuo soprannome:"},
+    {
+        "reference":"message_comand_nickname_2","text":"Digita qua in chat il comando !Cambia_nick seguito dal tuo ID-PSN + il nome reale tra parentesi. Esempio: **!Cambia_nick Cicciogamer88 (Davide)** Scegli cosa vedere:"},
+    {
+        "reference":"messaggio_exit",
+        "text":"Ciao sono uno dei bot della Gilda, questo messaggio  generato automaticamente, quindi non rispondere, in quanto il mio creatore non lo leggerebbe. Volevo comunicarti che  da 15 giorni che non ti colleghi qua nella Flotta Nerd, se NON lo farai per altri 15 giorni consecutivi dalla data odierna verrai espulso dal gruppo; ti ricordo che basta collegarsi una volta ogni 30 giorni oppure scrivere un semplice messaggio in un canale qualsiasi della Gilda per annullare il conteggio di espulsione; tieni presente che se non si pu essere attivi per periodi prolungati per causa di forza maggiore, puoi contattare un admin o un moderatore, in modo da farti inserire in WHITELIST, rimarrai cos senza problemi di espulsione nella Flotta anche se sei inattivo per molto tempo; maggiori info le trovi nella parte di <#536179785093611552> denominata [PERMANENZA NELLA GILDA]"
+    },
+    {
+        "reference":"suggerimento_idmhw",
+        "text":"Per scoprire se c' qualcuno online, entra nel canale <#569146256123887617> , se gi presente troverai l'id della sessione online che ti permetter di unirti agli altri cacciatori della Gilda, in caso contrario pubblicane tu uno come indicato nel messaggio fissato della pagina. Buona caccia!"
+    },
+    {
+        "reference":"footer_standard",
+        "text":"Il comando è valido solo se prima c'è il simbolo ! . Le parentesi graffe servono solo a farti capire dove e cosa indicare per avviarlo correttamente."
+    },
+    {
+        "reference":"command_start_description",
+        "text":"Digita in chat questo comando per iniziare ad usarmi! :stuck_out_tongue_winking_eye:"
+    },
+    {
+        "reference":"command_start_title",
+        "text":"Ciao io sono il BOT della GILDA! :heart:"
+    },
+    {
+        "reference":"command_administrator_description",
+        "text":"Comandi per la gestione del server (Solo Staff)."
+    },
+    {
+        "reference":"command_administrator_title",
+        "text":""
+    },
+    {
+        "reference": "command_administrator_title",
+        "text": ""
+    },
+    {
+        "reference": "command_administrator_title",
+        "text": ""
+    },
+    {
+        "reference": "command_administrator_title",
+        "text": ""
+    },
+    {
+        "reference": "command_administrator_title",
+        "text": ""
+    },
+    {
+        "reference": "command_administrator_title",
+        "text": ""
+    },
+
+
+
+
+
+
 ],
 "status_module": 1
 }
