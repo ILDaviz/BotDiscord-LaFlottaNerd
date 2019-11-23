@@ -9,12 +9,12 @@ exports.run = async (message, bot) => {
     const string = args.slice(2).join(' ');
     
     if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
-      return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
+      return message.reply(texts.getText('message_error_authorization'));
     if (!args[1]) {
-        return message.reply("Devi fornirmi un id_setting!");
+      return message.reply(texts.getText('command_settins_error_id'));
     }
     if (!string) {
-      return message.reply("Devi fornirmi un valore!");
+      return message.reply(texts.getText('message_error_value'));
     }
     botModel.updateSetting(args[1],string, function (err, res) {
       if (err) {
@@ -34,7 +34,7 @@ exports.conf = {
     name: "Aggiorna_settaggio",
     fullcmd: "aggiorna_settaggio",
     alias: "updsett",
-    description: "{id_settaggio} {Nuovo valore} Aggiorna un settaggio pre-esistente",
+    description: texts.getText('command_settaggio_descrizione'),
     timer: 0,
     tokenCost: 0,
     subClass: 'impostazioni',

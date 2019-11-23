@@ -120,28 +120,28 @@
         "text": "Comandi utili per lo staff"
     },
     {
-        "reference": "command_administrator_title",
-        "text": ""
+        "reference": "command_settaggio_descrizione",
+        "text": "{id_settaggio} {Nuovo valore} Aggiorna un settaggio pre-esistente"
     },
     {
-        "reference": "command_administrator_title",
-        "text": ""
-    },
-
-
-
-
-
-
-
-
-    {
-        "reference": "command_administrator_title",
-        "text": ""
+        "reference": "message_error_authorization",
+        "text": "Mi dispiace, ma non hai le autorizzazioni per usare questo comando."
     },
     {
-        "reference": "command_administrator_title",
-        "text": ""
+        "reference": "command_settins_error_id",
+        "text": "Devi fornirmi un id_setting!"
+    },
+    {
+        "reference": "message_error_value",
+        "text": "Devi fornirmi un valore!"
+    },
+    {
+        "reference": "command_error_no_settings",
+        "text": "Mi dispiace, ma non ci sono settaggi."
+    },
+    {
+        "reference": "command_settings_description",
+        "text": "{id_setting} visualizza il contenuto di un settaggio specifico"
     }
 
 

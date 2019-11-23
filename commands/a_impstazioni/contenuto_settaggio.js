@@ -9,10 +9,10 @@ exports.run = async (message, bot) => {
 	  const args_1 = args.slice(1).join(' ');
 
   	if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
-      return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
+      return message.reply(texts.getText('message_error_authorization'));
     
     if (!args_1) {
-      return message.reply("Non hai inserito il riferimento id_setting!");
+      return message.reply(texts.getText('command_settins_error_id'));
     }
 
   	botModel.selectSettingFromId(args_1, function (err, res) {
@@ -20,7 +20,7 @@ exports.run = async (message, bot) => {
         return message.channel.send('errore_text' + err);
       }
     	if (res.length === 0) {
-      		return message.reply("Mi dispiace, ma non ci sono settaggi.");
+        return message.reply(texts.getText('command_error_no_settings'));
       }
       
       let value = res[0].value;
@@ -33,7 +33,7 @@ exports.conf = {
     name: "Contenuto_settaggio",
     fullcmd: "contenuto_settaggio",
     alias: "consett",
-    description: "{id_setting} visualizza il contenuto di un settaggio specifico",
+    description: texts.getText('command_settings_description'),
     timer: 0,
     tokenCost: 0,
     subClass: 'impostazioni',
