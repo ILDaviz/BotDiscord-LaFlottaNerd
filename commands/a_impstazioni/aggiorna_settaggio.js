@@ -5,14 +5,14 @@ exports.run = async (message, bot) => {
 
   const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
   const string = args.slice(2).join(' ');
-
+  
   if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
     return message.reply(texts.getText('message_error_authorization'));
 
   if (!args[1]) {
     return message.reply(texts.getText('command_settins_error_id'));
   }
-  
+
   if (!string) {
     return message.reply(texts.getText('message_error_value'));
   }
