@@ -17,7 +17,7 @@ require('./events/onMemberInOut');
 require('./events/onSchedule');
 require('./helpers/loadcommands').load();
 
-const BetaBot = true; //Se il bot è in test aggiungere true.
+const BetaBot = true;
 
 if (BetaBot) {
 	bot.login('NTc0MTY3MTEyNjQyMzMwNjM0.Xckuew.kJbyUoG8Bo-FWr1fcmhfjSzT8JY');
