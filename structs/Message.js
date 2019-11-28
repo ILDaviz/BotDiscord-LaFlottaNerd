@@ -1,4 +1,4 @@
-let bot = require('../bot');
+const bot = require('../bot');
 
 const extendMessage = (message) => {
 

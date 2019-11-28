@@ -8,7 +8,7 @@ exports.run = async (message, bot) => {
 
     if (!message.member.roles.some(r => ["Admin", "Moderatori", "Developer"].includes(r.name)))
         return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-    
+
     const user = message.mentions.users.first();
     // Parse Amount
     const amount = !!parseInt(message.content.split(' ')[1]) ? parseInt(message.content.split(' ')[1]) : parseInt(message.content.split(' ')[2])
@@ -30,7 +30,7 @@ exports.conf = {
     name: "Elimina_messaggi",
     fullcmd: "elimina_messaggi",
     alias: "purge",
-    description: "!purge @user 10 , altrimenti !purge 25 Elimina i messaggi di un specifico utente (massimo 100 messaggi) ",
+    description: texts.getText('command_utility_elimina_messaggio_description'),
     timer: 0,
     tokenCost: 0,
     subClass: 'utility_staff',

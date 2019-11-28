@@ -1,4 +1,4 @@
-const Discord  = require('discord.js');
+const Discord = require('discord.js');
 const botModel = require('../../helpers/Models');
 const botUtili = require('../../helpers/Util');
 const botCache = require('../../helpers/Cache');
@@ -23,12 +23,12 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Aggiungi_whitelist",
-    fullcmd: "aggiungi_whitelist",
-    alias: "addwl",
-    description: "{id utente} Aggiungi nella withelist un determinato utente",
-    timer: 0,
-    tokenCost: 0,
-    subClass: 'help_moderazione',
-    displayHelp: 1
+  name: "Aggiungi_whitelist",
+  fullcmd: "aggiungi_whitelist",
+  alias: "addwl",
+  description: texts.getText("command_whitelist_aggiungi_description"),
+  timer: 0,
+  tokenCost: 0,
+  subClass: 'help_moderazione',
+  displayHelp: 1
 };

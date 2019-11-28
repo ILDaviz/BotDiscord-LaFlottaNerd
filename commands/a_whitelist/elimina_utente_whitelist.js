@@ -1,4 +1,4 @@
-const Discord  = require('discord.js');
+const Discord = require('discord.js');
 const botModel = require('../../helpers/Models');
 const botUtili = require('../../helpers/Util');
 const botCache = require('../../helpers/Cache');
@@ -11,9 +11,9 @@ exports.run = async (message, bot) => {
   let member = message.mentions.members.first() || message.guild.members.get(args[0]);
   if (!member)
     return message.reply("Menziona un utente presente nel server");
-  botModel.deleteUserwhiteList(member.user.tag, function(err,res){
+  botModel.deleteUserwhiteList(member.user.tag, function (err, res) {
     if (err) {
-      return message.reply(`utente: ${member.user.tag} non è stato cancellato dalla Whitelist da ${message.author.tag} errore: ${err} `);  
+      return message.reply(`utente: ${member.user.tag} non è stato cancellato dalla Whitelist da ${message.author.tag} errore: ${err} `);
     }
 
     message.reply(`utente: ${member.user.tag} è stato cancellato dalla Whitelist da ${message.author.tag}.`);
@@ -22,12 +22,12 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Elimina_utente_whitelist",
-    fullcmd: "elimina_utente_whitelist",
-    alias: "delwl",
-    description: "{id utente} Elimina un determinato utente dalla whitelist",
-    timer: 0,
-    tokenCost: 0,
-    subClass: 'help_moderazione',
-    displayHelp: 1
+  name: "Elimina_utente_whitelist",
+  fullcmd: "elimina_utente_whitelist",
+  alias: "delwl",
+  description: texts.getText("command_whitelist_wlimina_utente_description"),
+  timer: 0,
+  tokenCost: 0,
+  subClass: 'help_moderazione',
+  displayHelp: 1
 };

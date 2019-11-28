@@ -28,7 +28,7 @@ exports.conf = {
     name: "Class_alltime",
     fullcmd: "class_alltime",
     alias: "ctime",
-    description: "Mostra la classifica totale in Gilda (rappresenta il n° di messaggi totali inviati dall'entrata sul nostro server).",
+    description: texts.getText("command_s_home_alltime_description"),
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

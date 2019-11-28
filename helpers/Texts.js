@@ -7,8 +7,6 @@ const FileSync = require('lowdb/adapters/FileSync')
 const texts = low(new FileSync('./texts.json'))
 /** Estrazione dei testi dal json */
 exports.getText = function(reference_item){
-    $value = texts.get('texts')
-    .find({ reference: reference_item })
-    .value()
-    return $value.text;
+    $value = texts.get(reference_item).value();
+    return $value;
 }

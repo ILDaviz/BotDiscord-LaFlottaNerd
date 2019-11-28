@@ -39,7 +39,7 @@ exports.conf = {
     name: "Espelli_utente",
     fullcmd: "espelli_utente",
     alias: "kick",
-    description: "{id utente} {motivo espulsione (opzionale)} Espelli un determinato utente",
+    description: texts.getText("command_moderazione_espelli_utenti_description"),
     timer: 0,
     tokenCost: 0,
     subClass: 'help_moderazione',

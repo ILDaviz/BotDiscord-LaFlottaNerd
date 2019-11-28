@@ -47,7 +47,7 @@ exports.conf = {
     name: "Seleziona_gioco",
     fullcmd: "seleziona_gioco",
     alias: "sgame",
-    description: "Scegli i videogiochi che ti interessano. Questo comando ti farà abilitare nelle sezioni a cui sei interessato, facendoti visualizzare le chat di ogni singolo gioco. Dopo 60s il messaggio sarà cancellato.",
+    description: texts.getText("command_s_home_seleziona_gioco_description"),
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

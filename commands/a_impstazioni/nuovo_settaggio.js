@@ -1,7 +1,4 @@
-const Discord  = require('discord.js');
 const botModel = require('../../helpers/Models');
-const botUtili = require('../../helpers/Util');
-const botCache = require('../../helpers/Cache');
 const texts = require("../../helpers/Texts");
 
 exports.run = async (message, bot) => {
@@ -25,12 +22,6 @@ exports.run = async (message, bot) => {
         return message.channel.send('errore_text' + err);
       }
       message.channel.send('Settaggio aggiunto');
-      botCache.resetCache(function(err){
-        if (err) {
-        message.channel.send('errore di reset cache' + err );
-        }
-        message.channel.send('Cache resettata con successo');
-      });
     });
 };
 

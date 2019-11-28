@@ -49,7 +49,7 @@ exports.conf = {
     name: "Statistiche",
     fullcmd: "statistiche",
     alias: "stat",
-    description: "{@utente (Opzionale)} Per vedere le tue statistiche o quelle di un utente specifico! Dati, un sacco di dati! :nerd:",
+    description: texts.getText("command_s_home_statistiche_description"),
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

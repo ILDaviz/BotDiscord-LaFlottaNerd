@@ -28,7 +28,7 @@ exports.conf = {
     name: "Class_giorno",
     fullcmd: "class_giorno",
     alias: "gtime",
-    description: "Mostra la classifica giornaliera in Gilda (rappresenta il n° di messaggi inviati in una giornata).",
+    description: texts.getText("command_s_home_giorno_description"),
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

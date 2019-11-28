@@ -25,7 +25,7 @@ exports.conf = {
     name: "Cambia_nick",
     fullcmd: "cambia_nick",
     alias: "cnick",
-    description: "Comando per modificare il proprio nickname, scrivilo in chat inserendo di seguito il tuo ID-PSN + il nome reale tra parentesi, esempio: !Cambia_nick Cicciogamer88 (Davide)",
+    description: texts.getText("command_s_home_cambia_nick_description"),
     timer: 0,
     tokenCost: 0,
     subClass: 'start',

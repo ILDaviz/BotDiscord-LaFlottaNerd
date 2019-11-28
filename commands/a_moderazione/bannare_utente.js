@@ -24,7 +24,7 @@ exports.conf = {
     name: "Bannare_utente",
     fullcmd: "bannare_utente",
     alias: "ban",
-    description: "{id utente} {motivo espulsione (opzionale)} Espelli un determinato utente",
+    description: texts.getText("command_moderazione_bannare_utente_description"),
     timer: 0,
     tokenCost: 0,
     subClass: 'help_moderazione',

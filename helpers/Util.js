@@ -1,7 +1,6 @@
 'user strict';
 
 const botModel = require('../helpers/Models');
-const botCache = require('../helpers/Cache');
 const texts = require('../helpers/Texts');
 const Discord = require('discord.js');
 const bot = require('../bot')
