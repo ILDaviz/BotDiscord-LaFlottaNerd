@@ -5,6 +5,7 @@ const texts = require("../../helpers/Texts");
 exports.run = async (message, bot) => {
 
     let msg = '';
+    
     cmds.sort((a,b)=>{
         return b.cost < a.cost? 1
             : b.cost > a.cost ? -1
@@ -22,7 +23,6 @@ exports.run = async (message, bot) => {
         .setColor('RANDOM')
         .setDescription(msg)
         .setFooter(bot.conf.footer_standard);
-
     message.channel.send(emb);
 };
 

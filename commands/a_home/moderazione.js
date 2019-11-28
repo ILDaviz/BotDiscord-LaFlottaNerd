@@ -5,13 +5,14 @@ const texts = require("../../helpers/Texts");
 exports.run = async (message, bot) => {
 
     let msg = '';
+    
     cmds.sort((a,b)=>{
         return b.cost < a.cost? 1
             : b.cost > a.cost ? -1
             :0;
     });
+
     cmds.forEach((cmd) => {
-        console.log(cmd)
         if (cmd.displayHelp === 1 && cmd.subClass === 'help_moderazione') {
             msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] ${cmd.description}`;
         }

@@ -4,16 +4,14 @@ const texts = require("../../helpers/Texts");
 
 exports.run = async (message, bot) => {
     
-    const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
-    
     let msg = '';
-    
+
     cmds.sort((a,b)=>{
         return b.cost < a.cost? 1
             : b.cost > a.cost ? -1
             :0;
     });
-
+    
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'impostazioni') {
             msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] ${cmd.description}`;
