@@ -2,6 +2,7 @@
 
 const botModel = require('../helpers/Models');
 const botCache = require('../helpers/Cache');
+const texts = require('../helpers/Texts');
 const Discord = require('discord.js');
 const bot = require('../bot')
 
@@ -129,7 +130,7 @@ exports.passaggioSeiGiorniPostConteggio = () => {
                         botModel.selectUserWhiteList(id_discord, function (err, res) {
                             if (res.length === 0) {
                                 _this.log('Avviso superamento 6 giorni di innattività <@' + id_discord + '>');
-                                bot.users.get(id_discord).send(botCache.selectCacheText('messaggio_exit'));
+                                bot.users.get(id_discord).send(texts.getText('messaggio_exit'));
                                 botModel.updateUserNotified(id_discord, function (err, res) { });
                                 botModel.updateUserLastCheck(id_discord, function (err, res) { });
                             }
@@ -347,8 +348,8 @@ exports.getRispose = () => {
 exports.generaMessaggioSelezionaGioco = () => {
     var messages = [];
 
-    initialMessage = botCache.selectCacheText('role_title');
-    subMessage = botCache.selectCacheText('role_subtitle');
+    initialMessage = texts.getText('role_title');
+    subMessage = texts.getText('role_subtitle');
 
     if (initialMessage) {
         role_title = initialMessage;
@@ -363,7 +364,7 @@ exports.generaMessaggioSelezionaGioco = () => {
     }
 
     messages.push(role_title);
-    role = botCache.selectCacheRole('role');
+    role = botCache.selectCacheRole('role'); //Questa funziona è da cambiare
 
     if (role.length > 0) {
         for (var i = role.length - 1; i >= 0; i--) {
@@ -379,9 +380,9 @@ exports.generaMessaggioSelezionaGioco = () => {
 exports.generaMessaggioSelezionaGiocoSmall = function(emoji){
     var messages = [];
 
-    initialMessage = botCache.selectCacheText('role_title_small');
-    subMessage_1 = botCache.selectCacheText('role_subtitle_small_1');
-    subMessage_2 = botCache.selectCacheText('role_subtitle_small_2');
+    initialMessage = texts.getText('role_title_small');
+    subMessage_1 = texts.getText('role_subtitle_small_1');
+    subMessage_2 = texts.getText('role_subtitle_small_2');
 
     if (initialMessage) {
         role_title = initialMessage;
@@ -389,25 +390,15 @@ exports.generaMessaggioSelezionaGiocoSmall = function(emoji){
         role_title = 'Titolo non settato';
     }
     messages.push(role_title);
-    role = botCache.selectCacheRole('role');
+    role = botCache.selectCacheRole('role'); // Questa funzine è da cambiare.
     if (role.length > 0) {
         for (var i = role.length - 1; i >= 0; i--) {
             value = role[i];
-            //messages.push(`${subMessage_2} **"${value}"** ${subMessage_1} ${emoji[i]}`);
             messages.push(`${emoji[i]} = **"${value}"**`);
         }
     }
     return messages;
 }
-
-// exports.getServiceMessage = function(){
-//     let message = botCache.selectCacheText('message_service');
-//     let embed = new Discord.RichEmbed()
-//     .setTitle('Messaggio di servizio! :nerd: ')
-//     .setColor('RANDOM')
-//     .setDescription(message);
-//     bot.channels.find(ch => ch.name === '4-chiacchiere').send({embed});
-// }
 
 exports.getServiceMessage = function () {
     let message = botCache.selectCacheText('message_service');
@@ -460,33 +451,22 @@ exports.checkdata = function(string, array){
     }
 }
 
-exports.checkPresence = function(name_trigger,group,str){
-
-    let strra = str.replace(/[^a-zA-Z ]/g, "");
-    strtlc = strra.toLowerCase()
-    let ti = botCache.selectCacheTrigger(name_trigger,group);
-    let str_sp = strtlc.trim().split(/ +/g);
-    var p = 0;
-    for (let i = 0; i < ti.length; i++) {
-        let hi = ti[i];
-        let hi_sp = hi.split(',');
-        for (let i = 0; i < hi_sp.length; i++) {
-            const hot_item = hi_sp[i];
-            for (let i = 0; i < str_sp.length; i++) {
-                const hot_str = str_sp[i];
-                if (hot_item == hot_str) {
-                    p = p + 1;  
-                }
-            }   
-        }
-    }
-    if (p == 0) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
 exports.sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+exports.settingsLivel = function(message_in, bot_in, livels) {
+
+    const args = message_in.content.slice(bot_in.conf.prefix.length).trim().split(/ +/g);
+    const string = args.slice(2).join(' ');
+    
+    if (!message_in.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
+      return message_in.reply(texts.getText('message_error_authorization'));
+
+    if (!args[1]) {
+      return message_in.reply(texts.getText('command_settins_error_id'));
+    }
+    if (!string) {
+      return message_in.reply(texts.getText('message_error_value'));
+    }
 }

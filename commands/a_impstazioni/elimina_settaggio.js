@@ -7,9 +7,9 @@ const texts = require("../../helpers/Texts");
 exports.run = async (message, bot) => {
 	const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);
 	if (!message.member.roles.some(r => ["Developer"].includes(r.name)))
-      return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
+      return message.reply(texts.getText('message_error_authorization'));
     if (args[1]) {
-        return message.reply("Devi fornirmi un id_setting");
+        return message.reply(texts.getText('command_settins_error_id'));
     }
     botModel.deleteSetting(args[1], function (err, res) {
         if (err) {
@@ -20,7 +20,7 @@ exports.run = async (message, bot) => {
             if (err) {
                 message.channel.send('errore di reset cache' + err );
             }
-            message.channel.send('Cache resettata con successo');
+            message.channel.send(texts.getText('cache_reset_success'));
         });
     });
 };
@@ -29,7 +29,7 @@ exports.conf = {
     name: "Elimina_settaggio",
     fullcmd: "elimina_settaggio",
     alias: "delsett",
-    description: "{id_settaggio} Elimina un settaggio",
+    description: texts.getText('command_elimina_settaggio_description'),
     timer: 0,
     tokenCost: 0,
     subClass: 'impostazioni',

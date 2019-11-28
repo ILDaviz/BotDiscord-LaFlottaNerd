@@ -8,7 +8,7 @@ exports.run = async (message, bot) => {
   const args_secondo = args.slice(2).join(' ');
 
   if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
-    return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
+    return message.reply(texts.getText('message_error_authorization'));
 
   botModel.selectSettings(args_secondo, function (err, res) {
     for (let index = 1; index < res.length; index++) {
@@ -29,7 +29,7 @@ exports.conf = {
     name: "Lista_settaggi",
     fullcmd: "lista_settaggi",
     alias: "listsett",
-    description: "{Tipologia (opzionale)} Mostra una lista con tutti i settaggi disponibili",
+    description: texts.getText('command_lista_settaggi_description'),
     timer: 0,
     tokenCost: 0,
     subClass: 'impostazioni',

@@ -38,7 +38,7 @@ exports.conf = {
     name: "Nuovo_settaggio",
     fullcmd: "nuovo_settaggio",
     alias: "newsett",
-    description: "{tipo} {nome} {valore} Aggiungi un nuovo settaggio nel database. Tipo e nome non devono contenere spazzi. I tipi disponibili sono: settings,text,role,service_message,trigger. Non usare altri tipi. Il nome è il riferimento del settaggio devono essere univoci.",
+    description: texts.getText('command_nuovo_settaggio_description'),
     timer: 0,
     tokenCost: 0,
     subClass: 'impostazioni',

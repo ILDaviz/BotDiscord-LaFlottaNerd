@@ -143,23 +143,28 @@
         "reference": "command_settings_contenuto_visualizza",
         "text": "{id_setting} visualizza il contenuto di un settaggio specifico"
     },
-
-
     {
         "reference": "command_descrizione_setting_descrtiption",
         "text": "{id_setting} {valore} Aggiunge una descrizione informativa al valore"
     },
     {
-        "reference": "command_settings_description",
-        "text": "{id_setting} visualizza il contenuto di un settaggio specifico"
+        "reference": "command_elimina_settaggio_description",
+        "text": "{id_settaggio} Elimina un settaggio"
     },
     {
-        "reference": "command_settings_description",
-        "text": "{id_setting} visualizza il contenuto di un settaggio specifico"
+        "reference": "cache_reset_success",
+        "text": "Cache resettata con successo"
+    },
+    {
+        "reference": "command_lista_settaggi_description",
+        "text": "{Tipologia (opzionale)} Mostra una lista con tutti i settaggi disponibili"
+    },
+    {
+        "reference": "command_nuovo_settaggio_description",
+        "text": "{tipo} {nome} {valore} Aggiungi un nuovo settaggio nel database. Tipo e nome non devono contenere spazzi. I tipi disponibili sono: settings,text,role,service_message,trigger. Non usare altri tipi. Il nome è il riferimento del settaggio devono essere univoci."
     }
 
-
-
+    
 
 
 
