@@ -33,7 +33,7 @@ exports.conf = {
     name: "Contenuto_settaggio",
     fullcmd: "contenuto_settaggio",
     alias: "consett",
-    description: texts.getText('command_settings_description'),
+    description: texts.getText('command_settings_contenuto_visualizza'),
     timer: 0,
     tokenCost: 0,
     subClass: 'impostazioni',

@@ -16,6 +16,8 @@ exports.run = async (message, bot) => {
     if (!string) {
       return message.reply(texts.getText('message_error_value'));
     }
+
+    
     botModel.updateSetting(args[1],string, function (err, res) {
       if (err) {
         return message.channel.send('errore_text' + err);
@@ -34,7 +36,7 @@ exports.conf = {
     name: "Aggiorna_settaggio",
     fullcmd: "aggiorna_settaggio",
     alias: "updsett",
-    description: texts.getText('command_settaggio_descrizione'),
+    description: texts.getText('command_aggiornamento_settaggio_descrizione'),
     timer: 0,
     tokenCost: 0,
     subClass: 'impostazioni',

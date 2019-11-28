@@ -120,7 +120,7 @@
         "text": "Comandi utili per lo staff"
     },
     {
-        "reference": "command_settaggio_descrizione",
+        "reference": "command_aggiornamento_settaggio_descrizione",
         "text": "{id_settaggio} {Nuovo valore} Aggiorna un settaggio pre-esistente"
     },
     {
@@ -140,9 +140,26 @@
         "text": "Mi dispiace, ma non ci sono settaggi."
     },
     {
+        "reference": "command_settings_contenuto_visualizza",
+        "text": "{id_setting} visualizza il contenuto di un settaggio specifico"
+    },
+
+
+    {
+        "reference": "command_descrizione_setting_descrtiption",
+        "text": "{id_setting} {valore} Aggiunge una descrizione informativa al valore"
+    },
+    {
+        "reference": "command_settings_description",
+        "text": "{id_setting} visualizza il contenuto di un settaggio specifico"
+    },
+    {
         "reference": "command_settings_description",
         "text": "{id_setting} visualizza il contenuto di un settaggio specifico"
     }
+
+
+
 
 
 
