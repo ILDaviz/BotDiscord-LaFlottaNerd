@@ -460,7 +460,7 @@ exports.sleep = function(ms) {
 exports.getRole = function() {
     let rules_array = [];
     //console.log(bot);
-    let guild = bot.guilds.array(); 
+    let guild = bot.guilds.get('539030917121966085');
     console.log(guild);
     //Estra tutte le rule
     // let rules = guild.roles;
