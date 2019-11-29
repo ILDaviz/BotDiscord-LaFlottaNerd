@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const botModel = require('../../helpers/Models');
 const botUtili = require('../../helpers/Util');
 const botCache = require('../../helpers/Cache');
-const texts = require("../../helpers/Texts");
+const texts = require("../../helpers/Json");
 
 exports.run = async (message, bot) => {
   if (!message.member.roles.some(r => ["Admin", "Moderatori", "Developer"].includes(r.name)))

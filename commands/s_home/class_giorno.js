@@ -1,7 +1,7 @@
 const cmds = require('../../helpers/loadcommands').cmdDetail;
 const Discord = require('discord.js');
 const botModel = require('../../helpers/Models');
-const texts = require("../../helpers/Texts");
+const texts = require("../../helpers/Json");
 
 exports.run = async (message, bot) => {
     const m = await message.channel.send("Attendi..");

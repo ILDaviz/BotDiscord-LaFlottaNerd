@@ -5,7 +5,7 @@ const bot = new Discord.Client();
 
 module.exports = bot;
 
-const texts = require("./helpers/Texts");
+const texts = require("./helpers/Json");
 
 require('./events/onMessage');
 require('./events/onError');
