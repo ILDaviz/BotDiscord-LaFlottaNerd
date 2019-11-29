@@ -1,4 +1,4 @@
-const bot = require('../bot.js').default;
+const bot = require('../bot.js');
 const botCache = require('../helpers/Cache');
 const arole = require('../commands/s_home/seleziona_gioco'); 
 const botUtil = require('../helpers/Util');

@@ -3,7 +3,7 @@
 const botModel = require('../helpers/Models');
 const estractor = require('../helpers/Json');
 const Discord = require('discord.js');
-const bot = require('../bot').default
+const bot = require('../bot.js');
 
 var _this = this;
 
@@ -458,17 +458,19 @@ exports.sleep = function(ms) {
 
 /** Estrapola tutte le role e ne estre le role con l'interprete con @@MhWorld */
 exports.getRole = function() {
-    var rules_array = [];
-    var guild = bot.guilds.get(estractor.getSetting('gilda_id'));
+    let rules_array = [];
+    //console.log(bot);
+    let guild = bot.guilds.array(); 
+    console.log(guild);
     //Estra tutte le rule
-    var rules = guild.roles;
-    rules.forEach(e => {
-        //Se presente il tag aggiunge il role.
-        if (e.include(estractor.getSetting('role_tag')) == true) {
-            rules_array.push(e);
-        }
-    });
+    // let rules = guild.roles;
+    // rules.forEach(e => {
+    //     //Se presente il tag aggiunge il role.
+    //     if (e.include(estractor.getSetting('role_tag')) == true) {
+    //         rules_array.push(e);
+    //     }
+    // });
 
-    return rules_array;
+    // return rules_array;
 
 }
