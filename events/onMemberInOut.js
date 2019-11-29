@@ -1,4 +1,4 @@
-const bot = require('../bot.js');
+const bot = require('../bot.js').default;
 const botModel = require('../helpers/Models');
 const botCache = require('../helpers/Cache');
 const botUtil = require('../helpers/Util')

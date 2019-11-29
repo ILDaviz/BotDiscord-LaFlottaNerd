@@ -2,20 +2,20 @@
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
+const texts = require("./helpers/Json");
 
 module.exports = bot;
 
-const texts = require("./helpers/Json");
 
 require('./events/onMessage');
-require('./events/onError');
-require('./events/onCounter');
-require('./events/onMenzioni');
-require('./events/onStart')
-require('./events/onRuleSelector');
-require('./events/onTrigger');
-require('./events/onMemberInOut');
-require('./events/onSchedule');
+// require('./events/onError');
+// require('./events/onCounter');
+// require('./events/onMenzioni');
+// require('./events/onStart')
+// require('./events/onRuleSelector');
+// require('./events/onTrigger');
+// require('./events/onMemberInOut');
+// require('./events/onSchedule');
 require('./helpers/loadcommands').load();
 
 const BetaBot = true;

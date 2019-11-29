@@ -2,8 +2,8 @@
 
 const fs = require('fs');
 const path = require('path');
-let cmds = {};
 
+let cmds = {};
 let cmdHelp = [];
 
 exports.load = (dir = "./commands/") => {
