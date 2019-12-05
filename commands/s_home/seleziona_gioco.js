@@ -1,46 +1,30 @@
-const Discord  = require('discord.js');
-const botModel = require('../../helpers/Models');
-const botUtili = require('../../helpers/Util');
-//const botCache = require('../../helpers/Cache');
 const texts = require("../../helpers/Json");
-const emoji = ['👹','🕹','🖥','🌃','🎆','🐲','🐗','🌵','💣','🔪','🔋','🔌','🗡','📼'];
-const toSend = botUtili.generaMessaggioSelezionaGiocoSmall(emoji);
-//const role = botCache.selectCacheRole('role');
-const role_n = role.length;
+const role = require('../../events/onStart');
 
-const associate_role = []
-for (let i = 0; i < role.length; i++) {
-    associate_role.push({'role':role[i],'emoji':emoji[i]});
-}
+exports.run = async (message, bot) => {
 
-exports.a_role = () => {
-    return associate_role;
-}
+    console.log(role);
 
-exports.emoji = () => {
-    return emoji;
-}
-
-exports.run = async (message, bot) => {    
-
-    message.channel.send(toSend)
-    .then(function (message) {
-        for (let i = 0; i < role.length; i++) {
-            message.react(emoji[i]);
+    let messages = [];
+    //Inizializza il messaggio di ben
+    initialMessage = texts.getText('role_title_small');
+    messages.push(initialMessage);
+    //Crea la lista ruoli
+    var roles = texts.getSetting('role_selector');
+    if (roles.length > 0) {
+        for (var i = roles.length - 1; i >= 0; i--) {
+            value = roles[i].role;
+            emoji = roles[i].emoji;
+            messages.push(`${emoji} = **"${value}"**`);
         }
-
-        const filter = (reaction, user) => {
-            
-        };
-
-        message.awaitReactions(filter, { max: role_n, time: 60000, errors: ['time'] })
-        .then(collected => {
-        })
-        .catch(collected => {
-        });
-    }).catch(function() {
-        //Something
-        });
+    }
+    //Stampa le emoji per la selezzione del ruolo.
+    message.channel.send(messages)
+        .then(function (message) {
+            for (var i = roles.length - 1; i >= 0; i--) {
+                message.react(roles[i].emoji);
+            }
+        }).catch(function () { });
 };
 
 exports.conf = {

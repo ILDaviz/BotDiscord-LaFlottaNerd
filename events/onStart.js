@@ -1,6 +1,7 @@
 const bot = require('../bot.js');
+const json = require("../helpers/Json");
 
 bot.on("ready", () => {
-    //bot.user.setActivity(`^start se vuoi sapere come usarmi ;D`);
+    //Setta il suggerimento
     bot.user.setActivity(`!start`);
 });

@@ -344,61 +344,6 @@ exports.getRispose = () => {
         return "Mi puoi rifare la domanda, non ho capito..";
     }
 };
-exports.generaMessaggioSelezionaGioco = () => {
-    var messages = [];
-
-    initialMessage = estractor.getText('role_title');
-    subMessage = estractor.getText('role_subtitle');
-
-    if (initialMessage) {
-        role_title = initialMessage;
-    } else {
-        role_title = 'Titolo non settato';
-    }
-
-    if (subMessage) {
-        role_subtitle = subMessage;
-    } else {
-        role_subtitle = 'Sottotitoli non settati';
-    }
-
-    messages.push(role_title);
-    //role = botCache.selectCacheRole('role'); //Questa funziona è da cambiare
-    role = [];
-    if (role.length > 0) {
-        for (var i = role.length - 1; i >= 0; i--) {
-            value = role[i];
-            messages.push(`"${role_subtitle}": **"${value}"**!`);
-        }
-    } else {
-        messages.push(`"${role_subtitle}": ** Nessun ruolo inserito **!`);
-    }
-    return messages;
-};
-
-exports.generaMessaggioSelezionaGiocoSmall = function(emoji){
-    var messages = [];
-
-    initialMessage = estractor.getText('role_title_small');
-    subMessage_1 = estractor.getText('role_subtitle_small_1');
-    subMessage_2 = estractor.getText('role_subtitle_small_2');
-
-    if (initialMessage) {
-        role_title = initialMessage;
-    } else {
-        role_title = 'Titolo non settato';
-    }
-    messages.push(role_title);
-    //role = botCache.selectCacheRole('role'); // Questa funzine è da cambiare.
-    role = [];
-    if (role.length > 0) {
-        for (var i = role.length - 1; i >= 0; i--) {
-            value = role[i];
-            messages.push(`${emoji[i]} = **"${value}"**`);
-        }
-    }
-    return messages;
-}
 
 exports.getServiceMessage = function () {
     let message = botCache.selectCacheText('message_service');
@@ -454,23 +399,4 @@ exports.checkdata = function(string, array){
 /** Crea un periodo di pausa */
 exports.sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-/** Estrapola tutte le role e ne estre le role con l'interprete con @@MhWorld */
-exports.getRole = function() {
-    let rules_array = [];
-    //console.log(bot);
-    let guild = bot.guilds.get('539030917121966085');
-    console.log(guild);
-    //Estra tutte le rule
-    // let rules = guild.roles;
-    // rules.forEach(e => {
-    //     //Se presente il tag aggiunge il role.
-    //     if (e.include(estractor.getSetting('role_tag')) == true) {
-    //         rules_array.push(e);
-    //     }
-    // });
-
-    // return rules_array;
-
 }

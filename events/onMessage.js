@@ -2,12 +2,12 @@ const bot = require('../bot.js');
 const Discord = require('discord.js');
 const cmds = require('../helpers/loadcommands').getCmds();
 const botUtil = require('../helpers/Util');
+
 let extendMessage = require('../structs/Message');
 let lastMessageUnix = new Date().getTime();
 
-
 bot.on('message', (message) => {
-	
+
 	if (message.author.bot) return;
 
 	//Scrive un messaggio di passaggio di livello

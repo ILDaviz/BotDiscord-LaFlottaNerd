@@ -16,7 +16,7 @@ exports.getSettings = function(){
 /** Aggiorna un settaggo */
 exports.updateSetting = function(name,value){
     let settings = lowdb(new FileSync('./json/settings.json'));
-    settings.update(name,value).write();
+    settings.set(name,value).write();
 }
 /** Estrazione dei testi dal json */
 exports.getText = function(reference_item){

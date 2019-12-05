@@ -1,17 +1,19 @@
 const bot = require('../bot.js');
 const botModel = require('../helpers/Models');
-const util = require('../helpers/Util')
+const botUtil = require('../helpers/Util');
 
 bot.on('raw', event => {
-    //console.log('\nRaw event data:\n', event);
+    /** Update di presenza */
     if (event.t === 'PRESENCE_UPDATE') {
         let user_id_discod = event.d.user.id;
         if (event.d.guild_id == bot.conf.guild_lfn_id && event.d.status == 'online') {
-            if (util.checkIfUserIsBot(user_id_discod) == false) {
+            if (botUtil.checkIfUserIsBot(user_id_discod) == false) {
                 botModel.selectUser(user_id_discod, function (err, res) {
                     if (res.length > 0) {
+                        botUtil.log('Utente <@' + user_id_discod + '> si è loggato ad discord, aggiunta punto');
                         botModel.updatePointPresenceDayUpdate(user_id_discod, function (err, res) { });
                     } else {
+                        botUtil.log('Utente <@' + user_id_discod + '> si è loggato ad discord.');
                         botModel.insertUser(user_id_discod, function (err, res) { });
                         botModel.updatePointPresenceDayUpdate(user_id_discod, function (err, res) { });
                     }
@@ -19,15 +21,18 @@ bot.on('raw', event => {
             }        
         }
     }
+    /** Creazione di un nuovo messaggio */
     if (event.t === 'MESSAGE_CREATE') {
         let user_id_discod = event.d.author.id;
         if (event.d.guild_id == bot.conf.guild_lfn_id) {
-            if (util.checkIfUserIsBot(user_id_discod) == false) {
+            if (botUtil.checkIfUserIsBot(user_id_discod) == false) {
                 botModel.selectUser(user_id_discod, function (err, res) {
                     if (res.length > 0) {
+                        botUtil.log('Utente <@' + user_id_discod + '> ha scritto un nuovo messaggio, aggiunta punto');
                         botModel.updatePointMessageUser(user_id_discod, function (err, res) { });
                         botModel.updatePointPresenceDayMessage(user_id_discod, function (err, res) { });
                     } else {
+                        botUtil.log('Utente <@' + user_id_discod + '> ha scritto un nuovo messaggio, aggiunta punto');
                         botModel.insertUser(user_id_discod, function (err, res) { });
                         botModel.updatePointMessageUser(user_id_discod, function (err, res) { });
                         botModel.updatePointPresenceDayMessage(user_id_discod, function (err, res) { });
@@ -36,14 +41,17 @@ bot.on('raw', event => {
             }
         }
     }
+    /** Aggiunta di una nuova reazione */
     if (event.t === 'MESSAGE_REACTION_ADD') {
         let user_id_discod = event.d.user_id;
         if (event.d.guild_id == bot.conf.guild_lfn_id) {
-            if (util.checkIfUserIsBot(user_id_discod) == false) {
+            if (botUtil.checkIfUserIsBot(user_id_discod) == false) {
                 botModel.selectUser(user_id_discod, function (err, res) {
                     if (res.length > 0) {
+                        botUtil.log('Utente <@' + user_id_discod + '> ha aggiunto una reazione, aggiunta punto');
                         botModel.updatePointPresenceDayReaction(user_id_discod, function (err, res) { });
                     } else {
+                        botUtil.log('Utente <@' + user_id_discod + '> ha aggiunto una reazione, aggiunta punto');
                         botModel.insertUser(user_id_discod, function (err, res) { });
                         botModel.updatePointPresenceDayReaction(user_id_discod, function (err, res) { });
                     }
