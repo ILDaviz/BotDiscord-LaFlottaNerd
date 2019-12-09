@@ -50,14 +50,28 @@ exports.utenteSuperamentoLivello = async function (message) {
     botModel.selectUser(message.author.id, function (err, res) {
         if (res.length > 0) {
             const n_messages = res.map(a => a.messages);
-            botModel.selectLivelUser(n_messages, function (err, res) {
-                if (res.length > 0) {
-                    let result = _this.getGradoCacciatore(n_messages);
-                    bot.channels.get(message.channel.id).send("Ciao <@" + message.author.id + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " ** :kissing_heart:");
-                }
-            });
+            if (_this.users_update(n_messages)) {
+                let result = _this.getGradoCacciatore(n_messages);
+                bot.channels.get(message.channel.id).send("Ciao <@" + message.author.id + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " **");
+            }
         }
     });
+}
+
+exports.users_update = function (message) {
+    let p = 0;
+    gaps = [10,30,50,100,200,300,400,500,600,750,1000,1250,1500,1750,2000,2250,2500,2750,3000,3250,3500,3750,4000,4250,4500,4750,5000,5250,5500,5750];
+    gaps.forEach( e => {
+        if (e == message) {
+            p++;
+        }
+    });
+
+    if (p > 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 exports.getGradoCacciatore = livel => {

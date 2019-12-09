@@ -16,6 +16,7 @@ var _this = this;
  * Riporta a 0 i valori negativi nel database.
  */
 exports.zeroValoriNegativi = () => {
+    botUtil.log('Avvio processo per eliminare i punteggi sotto lo 0', 'F8E71C');
     botModel.selectUsers(function (err, res) {
         for (let i = res.length - 1; i >= 0; i--) {
             let id_discord = res[i].id_discord;
@@ -35,36 +36,35 @@ exports.zeroValoriNegativi = () => {
  * Aggiunge il timer agli utenti che non sono attivi da tot.
  */
 exports.aggiuntaTimerDiNonAttivita = () => {
+    botUtil.log('Avvio processo per l\'assegnazione di non attività', 'F8E71C');
     let guilds = bot.guilds.array();
     for (let i = 0; i < guilds.length; i++) {
-        bot.guilds.get(guilds[i].id).fetchMembers().then(r => {
-            r.members.array().forEach(r => {
+        bot.guilds.get(guilds[i].id).fetchMembers().then(guild => {
+            guild.members.array().forEach(r => {
                 const id_discord = r.user.id;
                 //Controlla se è presente in lista bianca
                 botModel.selectUserWhiteList(id_discord, function (err, res) {
                     if (res.length === 0) {
-                        if (_this.checkIfUserIsBot(id_discord)) {
-                            botModel.selectUser(id_discord, function (err, res) {
-                                if (res.length > 0) {
-                                    let presences = res[0].presences;
-                                    let last_check = res[0].last_check;
-                                    if (presences == 0) {
-                                        //Controlla l'ultimo check se non settato lo setta!
-                                        if (last_check == null) {
-                                            //Aggiungi la data del check
-                                            botUtil.log('Aggiunto timer all\'utente <@' + id_discord + '>');
-                                            botModel.updateUserLastCheck(id_discord, function (err, res) { });
-                                        }
-                                    } else {
-                                        //Resetta il clock
-                                        if (last_check !== null) {
-                                            botUtil.log('Tolto timer all\'utente <@' + id_discord + '>');
-                                            botModel.updateUserLastCheck(id_discord, function (err, res) { });
-                                        }
+                        botModel.selectUser(id_discord, function (err, res) {
+                            if (res.length > 0) {
+                                let presences = res[0].presences;
+                                let last_check = res[0].last_check;
+                                if (presences == 0) {
+                                    //Controlla l'ultimo check se non settato lo setta!
+                                    if (last_check == null) {
+                                        //Aggiungi la data del check
+                                        botUtil.log('Aggiunto timer all\'utente <@' + id_discord + '>', 'F8E71C');
+                                        botModel.updateUserLastCheck(id_discord, function (err, res) { });
+                                    }
+                                } else {
+                                    //Resetta il clock
+                                    if (last_check !== null) {
+                                        botUtil.log('Tolto timer all\'utente <@' + id_discord + '>', 'F8E71C');
+                                        botModel.updateUserLastCheck(id_discord, function (err, res) { });
                                     }
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 });
             });
@@ -75,6 +75,7 @@ exports.aggiuntaTimerDiNonAttivita = () => {
  * Invia il messaggio
  */
 exports.passaggioSeiGiorniPostConteggio = () => {
+    botUtil.log('Avvio processo per l\'invio del messaggio privato di non attività', 'F8E71C');
     botModel.selectNotifiedUsers(function (err, res) {
         if (res.length > 0) {
             for (let i = res.length - 1; i >= 0; i--) {
@@ -85,8 +86,13 @@ exports.passaggioSeiGiorniPostConteggio = () => {
                     if (last_check !== null) {
                         botModel.selectUserWhiteList(id_discord, function (err, res) {
                             if (res.length === 0) {
-                                botUtil.log('Avviso superamento 6 giorni di innattività <@' + id_discord + '>');
-                                bot.users.get(id_discord).send(estractor.getText('messaggio_exit'));
+                                botUtil.log('Avviso superamento 6 giorni di innattività <@' + id_discord + '>', 'F8E71C');
+                                let guilds = bot.guilds.array();
+                                for (let i = 0; i < guilds.length; i++) {
+                                    bot.guilds.get(guilds[i].id).fetchMembers().then(guild => {
+                                        guild.members.get(id_discord).send(estractor.getText('messaggio_exit'));
+                                    });
+                                }
                                 botModel.updateUserNotified(id_discord, function (err, res) { });
                                 botModel.updateUserLastCheck(id_discord, function (err, res) { });
                             }
@@ -101,16 +107,21 @@ exports.passaggioSeiGiorniPostConteggio = () => {
  * Elimina utenti
  */
 exports.cicloDiEspulsione = () => {
+    botUtil.log('Avvio processo per l\'espulsione degli utenti non attivi', 'F8E71C');
     botModel.selectDeadUsers(function (err, res) {
         if (res.length > 0) {
             for (let i = res.length - 1; i >= 0; i--) {
                 const id_discord = res[i].id_discord;
                 botModel.selectUserWhiteList(id_discord, function (err, res) {
                     if (res.length === 0) {
-                        botUtil.log('Utente <@' + id_discord + '> in procinto di essere eliminato');
-                        bot.channels.find(ch => ch.name === 'welcome').send('Oggi espello l\'utente <@' + id_discord + '> per inattività, mi dispiace ma sarà così.');
-                        let guild = bot.guilds.get("532184361068527646");
-                        guild.members.get(id_discord).kick();
+                        botUtil.log('Utente <@' + id_discord + '> in procinto di essere eliminato', 'F8E71C');
+                        let guilds = bot.guilds.array();
+                        for (let i = 0; i < guilds.length; i++) {
+                            bot.guilds.get(guilds[i].id).fetchMembers().then(guild => { 
+                                guild.members.get(id_discord).kick();
+                                botModel.deleteUser(id_discord, function (err, res) {});
+                            });
+                        }
                     }
                 });
             }
@@ -121,6 +132,7 @@ exports.cicloDiEspulsione = () => {
  * Resetta i contatori dei messaggi
  */
 exports.resetCountDay = () => {
+    botUtil.log('Avvio processo per il reset dei contatori giornalieri', 'F8E71C');
     botModel.selectUsers(function (err, res) {
         //Togliere i punti o le presenze
         for (let i = res.length - 1; i >= 0; i--) {
@@ -166,8 +178,6 @@ exports.resetCountDay = () => {
                 botModel.updateZeroPresence(id_discord_getUsers, function (err, res) { });
             }
         }
-
-        botUtil.log('Contatori resettati e i negativi portati a 0');
     });
 }
 

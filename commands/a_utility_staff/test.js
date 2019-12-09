@@ -1,10 +1,10 @@
 
-const botUtili = require('../../helpers/Util');
+const botUtili = require('../../helpers/espulsioni');
 
 exports.run = async (message, bot) => {
   if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
     return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-  botUtili.getServiceMessage();
+  botUtili.moderationCicle();
 };
 
 exports.conf = {

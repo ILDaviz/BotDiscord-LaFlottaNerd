@@ -12,7 +12,7 @@ bot.on('raw', event => {
             if (botUtil.checkIfUserIsBot(user_id_discod) == false) {
                 botModel.selectUser(user_id_discod, function (err, res) {
                     if (res.length > 0) {
-                        botUtil.log('Utente <@' + user_id_discod + '> si è loggato ad discord, aggiunta punto');
+                        botUtil.log('Utente <@' + user_id_discod + '> si è loggato ad discord.\nAggiunta punto; i punti totali:' + res[0].presence_day + '.','F5A623');
                         botModel.updatePointPresenceDayUpdate(user_id_discod, function (err, res) { });
                     } else {
                         botUtil.log('Utente <@' + user_id_discod + '> si è loggato ad discord inserito nel database.');
@@ -30,7 +30,7 @@ bot.on('raw', event => {
             if (botUtil.checkIfUserIsBot(user_id_discod) == false) {
                 botModel.selectUser(user_id_discod, function (err, res) {
                     if (res.length > 0) {
-                        botUtil.log('Utente <@' + user_id_discod + '> ha scritto un nuovo messaggio, aggiunta punto');
+                        botUtil.log('Utente <@' + user_id_discod + '> ha scritto un nuovo messaggio.\nAggiunta messaggio; i messaggi totali:' + res[0].messages + '.', 'F5A623');
                         botModel.updatePointMessageUser(user_id_discod, function (err, res) { });
                         botModel.updatePointPresenceDayMessage(user_id_discod, function (err, res) { });
                     } else {
@@ -50,7 +50,7 @@ bot.on('raw', event => {
             if (botUtil.checkIfUserIsBot(user_id_discod) == false) {
                 botModel.selectUser(user_id_discod, function (err, res) {
                     if (res.length > 0) {
-                        botUtil.log('Utente <@' + user_id_discod + '> ha aggiunto una reazione, aggiunta punto');
+                        botUtil.log('Utente <@' + user_id_discod + '> ha aggiunto una reazione.\nAggiunta reazione; i punti totali:' + res[0].presence_day + '.', 'F5A623');
                         botModel.updatePointPresenceDayReaction(user_id_discod, function (err, res) { });
                     } else {
                         botUtil.log('Utente <@' + user_id_discod + '> ha aggiunto una reazione, aggiunta punto e inserito nel database');

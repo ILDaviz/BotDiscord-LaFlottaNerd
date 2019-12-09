@@ -32,7 +32,7 @@ bot.on('guildMemberAdd', member => {
         }
     }
 
-    botUtil.log('Avvio messaggio di benvenuto all\'utente <@' + member.id +'>');
+    botUtil.log('Avvio messaggio di benvenuto all\'utente <@' + member.id + '>','7ED321');
 
     let embed = new Discord.RichEmbed()
     embed.setAuthor(`Benvenuto nel server Discord de LA FLOTTA NERD!`);
@@ -58,6 +58,6 @@ bot.on('guildMemberRemove', member => {
         }
     });
     if (!channel) return;
-    botUtil.log('Avvio messaggio di addio all\'utente <@' + member.id + '>');
+    botUtil.log('Avvio messaggio di addio all\'utente <@' + member.id + '>','D0021B');
     channel.send("<@" + member.id + "> ha lasciato il server");
 });

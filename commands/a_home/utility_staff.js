@@ -14,7 +14,7 @@ exports.run = async (message, bot) => {
 
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'utility_staff') {
-            msg += `\n\n**$a{bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
+            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
         }
     });
 

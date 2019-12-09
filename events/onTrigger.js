@@ -12,7 +12,7 @@ bot.on('message', (message) => {
     if (message.channel.name == "mhw") {
         if (d == true) {
             if (e == true) {
-                botUtil.log('Trigger attivato tipo dove trovare l\'id di gioco monster hunter dall\'utente: <@' + message.author.id + '>');
+                botUtil.log('Trigger attivato tipo dove trovare l\'id di gioco monster hunter dall\'utente: <@' + message.author.id + '>','BD10E0');
                 let emb = new Discord.RichEmbed()
                     .setTitle(`Ti do un suggerimento cacciatore! :loudspeaker: `)
                     .setColor('RANDOM')

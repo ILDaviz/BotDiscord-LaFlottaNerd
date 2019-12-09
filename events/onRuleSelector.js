@@ -26,10 +26,10 @@ bot.on('raw', event => {
                                 var roleObj = msg.guild.roles.find(r => r.name === role);
                                 if (event.t === "MESSAGE_REACTION_ADD") {
                                     memberObj.addRole(roleObj)
-                                    botUtil.log('Utente <@' + user.id + '> è entrante nel ruolo: ' + role + '. (via comando)');
+                                    botUtil.log('Utente <@' + user.id + '> è entrante nel ruolo: ' + role + '. (via comando)','BD10E0');
                                 } else {
                                     memberObj.removeRole(roleObj);
-                                    botUtil.log('Utente <@' + user.id + '> è uscito nel ruolo: ' + role + '. (via comando)');
+                                    botUtil.log('Utente <@' + user.id + '> è uscito nel ruolo: ' + role + '. (via comando)', 'BD10E0');
                                 }
                             }
                         }
@@ -49,10 +49,10 @@ bot.on('raw', event => {
                                 var roleObj = msg.guild.roles.find(r => r.name === role);
                                 if (event.t === "MESSAGE_REACTION_ADD") {
                                     memberObj.addRole(roleObj)
-                                    botUtil.log('Utente <@' + user.id + '> è entrante nel ruolo: ' + role + '. (via comando)');
+                                    botUtil.log('Utente <@' + user.id + '> è entrante nel ruolo: ' + role + '. (via comando)', 'BD10E0');
                                 } else {
                                     memberObj.removeRole(roleObj);
-                                    botUtil.log('Utente <@' + user.id + '> è uscito nel ruolo: ' + role + '. (via comando)');
+                                    botUtil.log('Utente <@' + user.id + '> è uscito nel ruolo: ' + role + '. (via comando)', 'BD10E0');
                                 }
                             }
                         }
@@ -73,10 +73,10 @@ bot.on('raw', event => {
                         var memberObj = msg.guild.members.get(user.id);
                         if (event.t === "MESSAGE_REACTION_ADD") {
                             memberObj.addRole(roleObj)
-                            botUtil.log('Utente <@' + user.id + '> è entrante nel ruolo: ' + role + '. (via canale)');
+                            botUtil.log('Utente <@' + user.id + '> è entrante nel ruolo: ' + role + '. (via canale)', 'BD10E0');
                         } else {
                             memberObj.removeRole(roleObj);
-                            botUtil.log('Utente <@' + user.id + '> è uscito nel ruolo: ' + role + '. (via canale)');
+                            botUtil.log('Utente <@' + user.id + '> è uscito nel ruolo: ' + role + '. (via canale)', 'BD10E0');
                         }
                     }
                 }
