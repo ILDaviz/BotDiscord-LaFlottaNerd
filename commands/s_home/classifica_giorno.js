@@ -1,7 +1,7 @@
-const cmds = require('../../helpers/loadcommands').cmdDetail;
+const cmds = require('../../helpers/loadCommands').cmdDetail;
 const Discord = require('discord.js');
-const botModel = require('../../helpers/Models');
-const texts = require("../../helpers/Json");
+const botModel = require('../../helpers/models');
+const texts = require("../../helpers/json");
 
 exports.run = async (message, bot) => {
     const m = await message.channel.send("Attendi..");
@@ -25,8 +25,8 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Class_giorno",
-    fullcmd: "class_giorno",
+    name: "Classifica_giorno",
+    fullcmd: "classifica_giorno",
     alias: "gtime",
     description: texts.getText("command_s_home_giorno_description"),
     timer: 0,

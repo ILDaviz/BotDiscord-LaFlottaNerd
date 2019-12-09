@@ -1,9 +1,6 @@
-const texts = require("../../helpers/Json");
-const role = require('../../events/onStart');
+const texts = require("../../helpers/json");
 
 exports.run = async (message, bot) => {
-
-    console.log(role);
 
     let messages = [];
     //Inizializza il messaggio di ben

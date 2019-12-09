@@ -1,6 +1,8 @@
+'user strict';
+
 const bot = require('../bot.js');
-const botModel = require('../helpers/Models');
-const botUtil = require('../helpers/Util');
+const botModel = require('../helpers/models');
+const botUtil = require('../helpers/util');
 
 bot.on('raw', event => {
     /** Update di presenza */
@@ -13,12 +15,12 @@ bot.on('raw', event => {
                         botUtil.log('Utente <@' + user_id_discod + '> si è loggato ad discord, aggiunta punto');
                         botModel.updatePointPresenceDayUpdate(user_id_discod, function (err, res) { });
                     } else {
-                        botUtil.log('Utente <@' + user_id_discod + '> si è loggato ad discord.');
+                        botUtil.log('Utente <@' + user_id_discod + '> si è loggato ad discord inserito nel database.');
                         botModel.insertUser(user_id_discod, function (err, res) { });
                         botModel.updatePointPresenceDayUpdate(user_id_discod, function (err, res) { });
                     }
-                });   
-            }        
+                });
+            }
         }
     }
     /** Creazione di un nuovo messaggio */
@@ -32,7 +34,7 @@ bot.on('raw', event => {
                         botModel.updatePointMessageUser(user_id_discod, function (err, res) { });
                         botModel.updatePointPresenceDayMessage(user_id_discod, function (err, res) { });
                     } else {
-                        botUtil.log('Utente <@' + user_id_discod + '> ha scritto un nuovo messaggio, aggiunta punto');
+                        botUtil.log('Utente <@' + user_id_discod + '> ha scritto un nuovo messaggio, aggiunta punto e inserito nel database');
                         botModel.insertUser(user_id_discod, function (err, res) { });
                         botModel.updatePointMessageUser(user_id_discod, function (err, res) { });
                         botModel.updatePointPresenceDayMessage(user_id_discod, function (err, res) { });
@@ -51,7 +53,7 @@ bot.on('raw', event => {
                         botUtil.log('Utente <@' + user_id_discod + '> ha aggiunto una reazione, aggiunta punto');
                         botModel.updatePointPresenceDayReaction(user_id_discod, function (err, res) { });
                     } else {
-                        botUtil.log('Utente <@' + user_id_discod + '> ha aggiunto una reazione, aggiunta punto');
+                        botUtil.log('Utente <@' + user_id_discod + '> ha aggiunto una reazione, aggiunta punto e inserito nel database');
                         botModel.insertUser(user_id_discod, function (err, res) { });
                         botModel.updatePointPresenceDayReaction(user_id_discod, function (err, res) { });
                     }

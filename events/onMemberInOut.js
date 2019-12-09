@@ -1,12 +1,10 @@
-const bot = require('../bot.js').default;
-const botModel = require('../helpers/Models');
-const botCache = require('../helpers/Cache');
-const botUtil = require('../helpers/Util')
+'user strict';
+
+const bot = require('../bot.js');
+const botModel = require('../helpers/models');
+const botUtil = require('../helpers/util');
 const Discord = require('discord.js');
-const emoji = ['👹', '🕹', '🖥', '🌃', '🎆', '🐲', '🐗', '🌵', '💣', '🔪', '🔋', '🔌', '🗡', '📼'];
-const toSend = botUtil.generaMessaggioSelezionaGiocoSmall(emoji);
-const role = botCache.selectCacheRole('role');
-const role_n = role.length;
+const texts = require("../helpers/json");
 
 bot.on('guildMemberAdd', member => {
     const channel = member.guild.channels.find(ch => ch.name === 'welcome');
@@ -24,26 +22,30 @@ bot.on('guildMemberAdd', member => {
     });
     if (!channel) return;
 
-    var x = '';
-    if (role.length > 0) {
-        for (var i = role.length - 1; i >= 0; i--) {
-            value = role[i];
-            x += (`${emoji[i]} = **"${value}"**\n`);
+    var roles = texts.getSetting('role_selector');
+    var string_role = '';
+    if (roles.length > 0) {
+        for (var i = roles.length - 1; i >= 0; i--) {
+            value = roles[i].role;
+            emoji = roles[i].emoji;
+            string_role += (`${emoji} = **"${value}"**\n`);
         }
     }
 
+    botUtil.log('Avvio messaggio di benvenuto all\'utente <@' + member.id +'>');
+
     let embed = new Discord.RichEmbed()
-    .setAuthor(`Benvenuto nel server Discord de LA FLOTTA NERD!`)
-    .setTitle(botCache.selectCacheText('welcome_title_message'))
-    .setColor('RANDOM');
-    embed.setDescription('Ciao' + member + ',' + botCache.selectCacheText('welcome_message'));
+    embed.setAuthor(`Benvenuto nel server Discord de LA FLOTTA NERD!`);
+    embed.setTitle(texts.getText('welcome_title_message'));
+    embed.setColor('RANDOM');
+    embed.setDescription('Ciao' + member + ',' + texts.getText('welcome_message'));
     embed.setThumbnail('https://media1.tenor.com/images/0edd53dd2110147b786329c2e24fb1d0/tenor.gif');
-    embed.addField(botCache.selectCacheText('message_comand_nickname_1'), botCache.selectCacheText('message_comand_nickname_2'));
-    embed.addField(botCache.selectCacheText('message_role_title_small'),x);
-    embed.setFooter(botCache.selectCacheText('footer_message_standard','ladyisabel'))
+    embed.addField(texts.getText('message_comand_nickname_1'), texts.getText('message_comand_nickname_2'));
+    embed.addField(texts.getText('message_role_title_small'), string_role);
+    embed.setFooter(texts.getText('footer_message_standard','ladyisabel'))
     channel.send({ embed }).then(function (message) {
-        for (let i = 0; i < role.length; i++) {
-            message.react(emoji[i]);
+        for (let i = 0; i < roles.length; i++) {
+            message.react(roles[i].emoji);
         }
     });
 });
@@ -56,5 +58,6 @@ bot.on('guildMemberRemove', member => {
         }
     });
     if (!channel) return;
-    channel.send("No Perché!!! L'utente <@" + member.id + "> ha lasciato il server..:sob:");
+    botUtil.log('Avvio messaggio di addio all\'utente <@' + member.id + '>');
+    channel.send("<@" + member.id + "> ha lasciato il server");
 });

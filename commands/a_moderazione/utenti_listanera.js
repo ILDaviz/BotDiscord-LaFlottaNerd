@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const botModel = require('../../helpers/Models');
-const texts = require("../../helpers/Json");
+const botModel = require('../../helpers/models');
+const texts = require("../../helpers/json");
 
 exports.run = async (message, bot) => {
 
@@ -9,10 +9,6 @@ exports.run = async (message, bot) => {
 
   if (!message.member.roles.some(r => ["Admin", "Developer"].includes(r.name)))
     return message.reply("Mi dispiace, ma non hai le autorizzazioni per usare questo comando.");
-
-  if (!args_1) {
-    return message.reply("Non hai indicato una pagina, se vuoi partire dalla prima pagina scrivi " + bot.conf.prefix + "grave 1.");
-  }
 
   botModel.selectUsersInToGrave(function (err, res) {
     if (err) {
@@ -23,45 +19,18 @@ exports.run = async (message, bot) => {
       return message.reply("Nessun utente in lista nera.");
     }
 
-    const lim = 10;
-    let text = '';
-    let tpage = 0;
-    let nrt = res.length;
-    tpage = nrt / lim;
-    let npr = Math.floor(tpage) + 1;
-    if (args_1 == 0) {
-      var limit_start = 0;
-      var limit_end = 10;
-    } else {
-      var limit_start = 10 * args_1;
-      var limit_end = (10 * args_1) + 10;
-    }
-
-    if (args_1 > npr) {
-      return message.reply("Il numero delle pagine è maggiore di quelle disponibili.");
-    }
-
     for (let index = 0; index < res.length; index++) {
-      const id_discord = res[index].id_discord;
-      const last_check = res[index].last_check;
-      const notified = res[index].notified;
-      if (args_1 == 0) {
-        if (index <= limit_end) {
-          text += "Rif:  [<@" + id_discord + ">]  name: **" + last_check + "**\n";
-        }
-      } else {
-        if (index >= limit_start && index <= limit_end) {
-          text += "Rif:  [<@" + id_discord + ">]  name: **" + last_check + "**\n";
-        }
-      }
-    }
+      let id_discord = res[index].id_discord;
+      let last_check = res[index].last_check;
+      let notified = res[index].notified;
 
-    let embed = new Discord.RichEmbed()
-      .setColor('RANDOM')
-      .setTitle('Lista utenti in procinto di essere espulsi:')
-      .addField("Pagina visualizzata:", "Pagina visualizzata: **" + args_1 + "**\n " + "Pagine totali: **" + npr + "**\n Elementi totali: **" + nrt + "**")
-      .addField("settings disponibili:", text)
-    message.channel.send({ embed });
+      let embed = new Discord.RichEmbed()
+        .setColor('RANDOM')
+        .setDescription('Utente <@' + id_discord + '>')
+        .addField("Ultima aggiornamento", last_check, true)
+        .addField("Notificato?", notified == 1 ? 'Notificato' : 'Non Notificato' , true)
+      message.channel.send({ embed });
+    }
   });
 };
 

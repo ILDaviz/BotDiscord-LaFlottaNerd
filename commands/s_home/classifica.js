@@ -1,7 +1,7 @@
-const cmds = require('../../helpers/loadcommands').cmdDetail;
+const cmds = require('../../helpers/loadCommands').cmdDetail;
 const Discord = require('discord.js');
-const botModel = require('../../helpers/Models');
-const texts = require("../../helpers/Json");
+const botModel = require('../../helpers/models');
+const texts = require("../../helpers/json");
 
 exports.run = async (message, bot) => {
     const m = await message.channel.send("Attendi..");
@@ -25,9 +25,9 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Class_alltime",
-    fullcmd: "class_alltime",
-    alias: "ctime",
+    name: "Classifica",
+    fullcmd: "classifica",
+    alias: "calltime",
     description: texts.getText("command_s_home_alltime_description"),
     timer: 0,
     tokenCost: 0,

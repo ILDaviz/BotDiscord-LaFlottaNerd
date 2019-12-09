@@ -1,5 +1,5 @@
 'user strict';
-const sql = require('../helpers/Db');
+const sql = require('./db');
 var Models = function () {
     //Costructor
 };

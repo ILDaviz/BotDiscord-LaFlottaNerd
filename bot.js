@@ -4,22 +4,18 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 module.exports = bot;
 
-
-const json = require("./helpers/Json");
-const Util = require('./helpers/Util');
+const json = require("./helpers/json");
 const BetaBot = true;
 
 require('./events/onStart');
 require('./events/onMessage');
 require('./events/onError');
 require('./events/onCounter');
-// require('./events/onMenzioni');
-
 require('./events/onRuleSelector');
-// require('./events/onTrigger');
-// require('./events/onMemberInOut');
-// require('./events/onSchedule');
-require('./helpers/loadcommands').load();
+require('./events/onTrigger');
+require('./events/onMemberInOut');
+require('./events/onSchedule');
+require('./helpers/loadCommands').load();
 
 if (BetaBot) {
 	bot.login('NTc0MTY3MTEyNjQyMzMwNjM0.XegmYg.Swg7Fai7x78HQf8NnFEwy3F6Dmc');

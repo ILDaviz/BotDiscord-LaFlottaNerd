@@ -1,6 +1,6 @@
-const cmds = require('../../helpers/loadcommands').cmdDetail;
+const cmds = require('../../helpers/loadCommands').cmdDetail;
 const Discord = require('discord.js');
-const texts = require("../../helpers/Json");
+const texts = require("../../helpers/json");
 
 exports.run = async (message, bot) => {
 
@@ -14,7 +14,7 @@ exports.run = async (message, bot) => {
 
     cmds.forEach((cmd) => {
         if (cmd.displayHelp === 1 && cmd.subClass === 'utility_staff') {
-            msg += `\n\n**${bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
+            msg += `\n\n**$a{bot.conf.prefix}${cmd.cmdName}** [**${bot.conf.prefix}${cmd.alias}**] - ${cmd.description}`;
         }
     });
 

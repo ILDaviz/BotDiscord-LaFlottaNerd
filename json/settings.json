@@ -50,5 +50,8 @@
       "role": "$$test_ruolo",
       "emoji": "📼"
     }
-  ]
+  ],
+  "trigger_mhw_a": "qualcuno,c'è,nessuno,sessione,party,qualche",
+  "trigger_mhw_b": "on,online,partita,assieme,giocare,caccia,cacciare,party,aperta,aperto",
+  "suggerimento_idmhw": "Per scoprire se c'è qualcuno online , entra nel canale <#569146256123887617>, se già presente troverai l'id della sessione online che ti permetterà di unirti agli altri cacciatori della Gilda , in caso contrario pubblicane tu uno come indicato nel messaggio fissato della pagina. Buona caccia!"
 }

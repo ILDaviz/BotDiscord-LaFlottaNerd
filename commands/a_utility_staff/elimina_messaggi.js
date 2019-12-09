@@ -1,4 +1,4 @@
-const texts = require("../../helpers/Json");
+const texts = require("../../helpers/json");
 
 exports.run = async (message, bot) => {
 

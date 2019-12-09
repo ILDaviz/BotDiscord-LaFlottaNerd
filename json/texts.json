@@ -23,6 +23,7 @@
     "command_settins_error_id": "Devi fornirmi un id_setting!",
     "message_error_value": "Devi fornirmi un valore!",
     "cache_reset_success": "Cache resettata con successo",
+    "command_administrator_title": "Lista comandi per lo staff della gilda.",
     "command_start_description": "Digita in chat questo comando per iniziare ad usarmi! :stuck_out_tongue_winking_eye:",
     "command_start_title": "Ciao io sono il BOT della GILDA! :heart:",
     "command_administrator_description": "Comandi per la gestione del server (Solo Staff).",
@@ -57,5 +58,6 @@
     "command_s_home_alltime_description": "Mostra la classifica totale in Gilda (rappresenta il n° di messaggi totali inviati dall'entrata sul nostro server).",
     "command_s_home_giorno_description": "Mostra la classifica giornaliera in Gilda (rappresenta il n° di messaggi inviati in una giornata).",
     "command_s_home_seleziona_gioco_description": "Scegli i videogiochi che ti interessano. Questo comando ti farà abilitare nelle sezioni a cui sei interessato, facendoti visualizzare le chat di ogni singolo gioco. Dopo 60s il messaggio sarà cancellato.",
-    "command_s_home_statistiche_description": "{@utente (Opzionale)} Per vedere le tue statistiche o quelle di un utente specifico! Dati, un sacco di dati! :nerd:"
+    "command_s_home_statistiche_description": "{@utente (Opzionale)} Per vedere le tue statistiche o quelle di un utente specifico! Dati, un sacco di dati! :nerd:",
+    "command_staff_scabio_file_desc" : "Comandi utilit per scaricare o caricare i Json che gestiscono tutto il testo del bot e altri paramenti come settaggi o i rank della gilda."
 }

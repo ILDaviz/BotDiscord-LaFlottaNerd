@@ -1,6 +1,6 @@
 const Discord  = require('discord.js');
-const botModel = require('../../helpers/Models');
-const texts = require("../../helpers/Json");
+const botModel = require('../../helpers/models');
+const texts = require("../../helpers/json");
 
 exports.run = async (message, bot) => {
   
@@ -13,13 +13,14 @@ exports.run = async (message, bot) => {
   botModel.selectSettings(args_secondo, function (err, res) {
     for (let index = 1; index < res.length; index++) {
       let id_settings = res[index].id_settings;
-      let name = res[index].name;
       let value = unescape(res[index].value);
       let value_txt = value.substring(0, 1000);
       let embed = new Discord.RichEmbed()
-        .setTitle("Settaggio id: " + id_settings + " // Tipologia: " + name + "\n")
+        .setTitle("Settaggio id: " + id_settings + "\n")
         .setColor('RANDOM')
-        .addField("Testo:", value_txt)
+        .addField("Tipo:", res[index].type, true)
+        .addField("Nome:", res[index].name, true)
+        .addField("Testo:", value_txt, true)
       message.channel.send({ embed });
     }
   });

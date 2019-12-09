@@ -1,7 +1,7 @@
 'user strict';
 
-const botModel = require('../helpers/Models');
-const estractor = require('../helpers/Json');
+const botModel = require('./models');
+const estractor = require('./json');
 const Discord = require('discord.js');
 const bot = require('../bot.js');
 
@@ -39,246 +39,89 @@ exports.cleenDatabase = function (result) {
     });
 }
 
-exports.log = function (note) {
+exports.log = function (note, color = 'RANDOM') {
     let embed = new Discord.RichEmbed()
-        .setColor('RANDOM')
+        .setColor(color)
         .setDescription(note)
     bot.channels.get(bot.conf.chanel_log).send({ embed });
 }
 
-exports.utenteSuperamentoLivello = async function(message) {
-    const mci = message.channel.id;
-    const id = message.author.id;
-    botModel.selectUser(id, function (err, res) {
+exports.utenteSuperamentoLivello = async function (message) {
+    botModel.selectUser(message.author.id, function (err, res) {
         if (res.length > 0) {
             const n_messages = res.map(a => a.messages);
             botModel.selectLivelUser(n_messages, function (err, res) {
                 if (res.length > 0) {
                     let result = _this.getGradoCacciatore(n_messages);
-                    bot.channels.get(mci).send("Ciao <@" + id + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " ** :kissing_heart:");
+                    bot.channels.get(message.channel.id).send("Ciao <@" + message.author.id + ">! Hai raggiunto un nuovo rango all'interno della nostra gilda:** " + result + " ** :kissing_heart:");
                 }
             });
         }
-    });
-}
-
-exports.zeroValoriNegativi = () => {
-    botModel.selectUsers(function (err, res) {
-        for (let i = res.length - 1; i >= 0; i--) {
-            let id_discord = res[i].id_discord;
-            let n_message_getUsers = res[i].messages;
-            if (n_message_getUsers < 0) {
-                botModel.updateZeroMessage(id_discord, function (err, res) { });
-                botModel.updateZeroPresence(id_discord, function (err, res) { });
-            }
-            let n_message_presentes = res[i].presences;
-            if (n_message_presentes < 0) {
-                botModel.updateZeroPresence(id_discord, function (err, res) { });
-            }
-        }
-    });
-}
-
-exports.aggiuntaTimerDiNonAttivita = () => {
-    let guilds = bot.guilds.array();
-    for (let i = 0; i < guilds.length; i++) {
-        bot.guilds.get(guilds[i].id).fetchMembers().then(r => {
-            r.members.array().forEach(r => {
-                const id_discord = r.user.id;
-                //Controlla se è presente in lista bianca
-                botModel.selectUserWhiteList(id_discord, function (err, res) {
-                    if (res.length === 0) {
-                        if (_this.checkIfUserIsBot(id_discord)) {
-                            botModel.selectUser(id_discord, function (err, res) {
-                                if (res.length > 0) {
-                                    let presences = res[0].presences;
-                                    let last_check = res[0].last_check;
-                                    if (presences == 0) {
-                                        //Controlla l'ultimo check se non settato lo setta!
-                                        if (last_check == null) {
-                                            //Aggiungi la data del check
-                                            _this.log('Aggiunto timer all\'utente <@' + id_discord + '>');
-                                            botModel.updateUserLastCheck(id_discord, function (err, res) { });
-                                        }
-                                    } else {
-                                        //Resetta il clock
-                                        if (last_check !== null) {
-                                            _this.log('Tolto timer all\'utente <@' + id_discord + '>');
-                                            botModel.updateUserLastCheck(id_discord, function (err, res) { });
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                    }
-                });
-            });
-        });
-    }
-}
-
-exports.passaggioSeiGiorniPostConteggio = () => {
-    botModel.selectNotifiedUsers(function (err, res) {
-        if (res.length > 0) {
-            for (let i = res.length - 1; i >= 0; i--) {
-                let notified = res[i].notified;
-                const id_discord = res[i].id_discord;
-                let last_check = res[i].last_check;
-                if (notified == 0) {
-                    if (last_check !== null) {
-                        botModel.selectUserWhiteList(id_discord, function (err, res) {
-                            if (res.length === 0) {
-                                _this.log('Avviso superamento 6 giorni di innattività <@' + id_discord + '>');
-                                bot.users.get(id_discord).send(estractor.getText('messaggio_exit'));
-                                botModel.updateUserNotified(id_discord, function (err, res) { });
-                                botModel.updateUserLastCheck(id_discord, function (err, res) { });
-                            }
-                        });
-                    }
-                }
-            }
-        }
-    });
-}
-
-exports.cicloDiEspulsione = () => {
-    botModel.selectDeadUsers(function (err, res) {
-        if (res.length > 0) {
-            for (let i = res.length - 1; i >= 0; i--) {
-                const id_discord = res[i].id_discord;
-                botModel.selectUserWhiteList(id_discord, function (err, res) {
-                    if (res.length === 0) {
-                        _this.log('Utente <@' + id_discord + '> in procinto di essere eliminato');
-                        bot.channels.find(ch => ch.name === 'welcome').send('Oggi espello l\'utente <@' + id_discord + '> per inattività, mi dispiace ma sarà così.');
-                        let guild = bot.guilds.get("532184361068527646");
-                        guild.members.get(id_discord).kick();
-                    }
-                });
-            }
-        }
-    });
-}
-
-exports.moderationCicle = () => {
-    _this.zeroValoriNegativi();
-    _this.aggiuntaTimerDiNonAttivita();
-    _this.passaggioSeiGiorniPostConteggio();
-    _this.cicloDiEspulsione();
-}
-
-exports.resetCountDay = () => {
-    botModel.selectUsers(function (err, res) {
-        //Togliere i punti o le presenze
-        for (let i = res.length - 1; i >= 0; i--) {
-
-            let id_discord = res[i].id_discord;
-            let messages = res[i].messages;
-            let messages_day = res[i].messages_day;
-
-            if (messages_day == 0) {
-                if (messages > 0) {
-                    if (messages <= 100) {
-                        botModel.updateRemoveMessageUser(id_discord, 5, function (err, res) { });
-                    } else {
-                        botModel.updateRemoveMessageUser(id_discord, 10, function (err, res) { });
-                    }
-                }
-            }
-
-            let presences = res[i].presences;
-            let presence_day = res[i].presence_day;
-
-            if (presence_day == 0) {
-                if (presences > 0) {
-                    if (presences <= 100) {
-                        botModel.updateRemovePointUser(id_discord, 5, function (err, res) { });
-                    } else {
-                        botModel.updateRemovePointUser(id_discord, 10, function (err, res) { });
-                    }
-                }
-            }
-        }
-
-        botModel.updateResetPresenceCount(function (err, res) { });
-
-        for (let i = res.length - 1; i >= 0; i--) {
-            let id_discord_getUsers = res[i].id_discord;
-            let n_message_getUsers = res[i].messages;
-            if (n_message_getUsers < 0) {
-                botModel.updateZeroMessage(id_discord_getUsers, function (err, res) { });
-            }
-            let n_message_presentes = res[i].presences;
-            if (n_message_presentes < 0) {
-                botModel.updateZeroPresence(id_discord_getUsers, function (err, res) { });
-            }
-        }
-
-        _this.log('Contatori resettati e i negativi portati a 0');
     });
 }
 
 exports.getGradoCacciatore = livel => {
     var name = "";
     if (livel >= 10 && livel < 30) {
-        name = "Novizio LIV I";
+        name = estractor.getRanke('ranks_1');
     } else if (livel >= 30 && livel < 50) {
-        name = "Novizio LIV II";
+        name = estractor.getRanke('ranks_2');
     } else if (livel >= 50 && livel < 100) {
-        name = "Novizio LIV III";
+        name = estractor.getRanke('ranks_3');
     } else if (livel >= 100 && livel < 200) {
-        name = "Apprendista LIV I";
+        name = estractor.getRanke('ranks_4');
     } else if (livel >= 200 && livel < 300) {
-        name = "Apprendista LIV II";
+        name = estractor.getRanke('ranks_5');
     } else if (livel >= 300 && livel < 400) {
-        name = "Apprendista LIV III";
+        name = estractor.getRanke('ranks_6');
     } else if (livel >= 400 && livel < 500) {
-        name = "Felyne Lavapiatti LIV I";
+        name = estractor.getRanke('ranks_7');
     } else if (livel >= 500 && livel < 600) {
-        name = "Felyne Lavapiatti LIV II";
+        name = estractor.getRanke('ranks_8');
     } else if (livel >= 600 && livel < 750) {
-        name = "Felyne Lavapiatti LIV III";
+        name = estractor.getRanke('ranks_9');
     } else if (livel >= 750 && livel < 1000) {
-        name = "Felyne Alchimista";
+        name = estractor.getRanke('ranks_10');
     } else if (livel >= 1000 && livel < 1250) {
-        name = "Felyne Guaritore";
+        name = estractor.getRanke('ranks_11');
     } else if (livel >= 1250 && livel < 1500) {
-        name = "Mercante di ossa";
+        name = estractor.getRanke('ranks_12');
     } else if (livel >= 1500 && livel < 1750) {
-        name = "Mercante di spezie";
+        name = estractor.getRanke('ranks_13');
     } else if (livel >= 1750 && livel < 2000) {
-        name = "Mercante di gemme";
+        name = estractor.getRanke('ranks_14');
     } else if (livel >= 2000 && livel < 2250) {
-        name = "Forgiatore Novizio";
+        name = estractor.getRanke('ranks_15');
     } else if (livel >= 2250 && livel < 2500) {
-        name = "Forgiatore Apprendista";
+        name = estractor.getRanke('ranks_16');
     } else if (livel >= 2500 && livel < 2750) {
-        name = "Forgiatore Mastro";
+        name = estractor.getRanke('ranks_17');
     } else if (livel >= 2750 && livel < 3000) {
-        name = "Assistente Incapace";
+        name = estractor.getRanke('ranks_18');
     } else if (livel >= 3000 && livel < 3250) {
-        name = "Assistente Esperto";
+        name = estractor.getRanke('ranks_19');
     } else if (livel >= 3250 && livel < 3500) {
-        name = "Soldato Imbranato";
+        name = estractor.getRanke('ranks_20');
     } else if (livel >= 3500 && livel < 3750) {
-        name = "Soldato Spavaldo";
+        name = estractor.getRanke('ranks_21');
     } else if (livel >= 3750 && livel < 4000) {
-        name = "Soldato Romantico";
+        name = estractor.getRanke('ranks_22');
     } else if (livel >= 4000 && livel < 4250) {
-        name = "Soldato Elite";
+        name = estractor.getRanke('ranks_23');
     } else if (livel >= 4250 && livel < 4500) {
-        name = "Amico della quinta";
+        name = estractor.getRanke('ranks_24');
     } else if (livel >= 4500 && livel < 4750) {
-        name = "Baby Drago";
+        name = estractor.getRanke('ranks_25');
     } else if (livel >= 4750 && livel < 5000) {
-        name = "Drago Spavaldo";
+        name = estractor.getRanke('ranks_26');
     } else if (livel >= 5000 && livel < 5250) {
-        name = "Drago Imperatore";
+        name = estractor.getRanke('ranks_27');
     } else if (livel >= 5250 && livel < 5500) {
-        name = "Spacca Draghi";
+        name = estractor.getRanke('ranks_28');
     } else if (livel >= 5500 && livel < 5750) {
-        name = "Sterminatore di draghi";
+        name = estractor.getRanke('ranks_29');
     } else if (livel >= 5750) {
-        name = "Stella di zaffiro";
+        name = estractor.getRanke('ranks_30');
     }
     return name;
 };
@@ -296,52 +139,6 @@ exports.censure = str => {
         return true;
     } else {
         return false;
-    }
-};
-exports.getRispose = () => {
-    let id = Math.floor(Math.random() * 20) + 1;
-    if (id == 1) {
-        return "Per quanto posso vedere, sì";
-    } else if (id == 2) {
-        return "È certo";
-    } else if (id == 3) {
-        return "È decisamente così";
-    } else if (id == 4) {
-        return "Molto probabilmente";
-    } else if (id == 5) {
-        return "Le prospettive sono buone";
-    } else if (id == 6) {
-        return "Le mie fonti indicano di sì";
-    } else if (id == 7) {
-        return "Senza alcun dubbio";
-    } else if (id == 8) {
-        return "Sì";
-    } else if (id == 9) {
-        return "Sì, senza dubbio";
-    } else if (id == 10) {
-        return "Ci puoi contare";
-    } else if (id == 11) {
-        return "È difficile rispondere, prova di nuovo";
-    } else if (id == 12) {
-        return "Rifai la domanda più tardi";
-    } else if (id == 13) {
-        return "Meglio non risponderti adesso";
-    } else if (id == 14) {
-        return "Non posso predirlo ora";
-    } else if (id == 15) {
-        return "Concentrati e rifai la domanda";
-    } else if (id == 16) {
-        return "Non ci contare";
-    } else if (id == 17) {
-        return "La mia risposta è no";
-    } else if (id == 18) {
-        return "Le mie fonti dicono di no";
-    } else if (id == 19) {
-        return "Le prospettive non sono buone";
-    } else if (id == 20) {
-        return "Molto incerto";
-    } else {
-        return "Mi puoi rifare la domanda, non ho capito..";
     }
 };
 
@@ -369,17 +166,17 @@ exports.getServiceMessage = function () {
         const n = c[i].name;
         const t = c[i].type;
         if (t == 'text') {
-            var it = _this.checkdata(n, b); 
+            var it = _this.checkdata(n, b);
             if (it == true) {
                 bot.channels.find(ch => ch.name === n).send({ embed })
                     .then()
                     .catch();
-            } 
-        }    
+            }
+        }
     }
 }
 
-exports.checkdata = function(string, array){
+exports.checkdata = function (string, array) {
     var x = 0;
     for (let i = 0; i < array.length; i++) {
         const erif = array[i];
@@ -397,6 +194,6 @@ exports.checkdata = function(string, array){
 }
 
 /** Crea un periodo di pausa */
-exports.sleep = function(ms) {
+exports.sleep = function (ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

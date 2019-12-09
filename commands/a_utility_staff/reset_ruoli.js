@@ -1,6 +1,6 @@
 
 const botUtili = require('../../helpers/Util');
-const json = require('../../helpers/Json');
+const json = require('../../helpers/json');
 const Discord = require('discord.js');
 
 exports.run = async (message, bot) => {

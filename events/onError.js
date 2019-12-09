@@ -1,3 +1,5 @@
+'user strict';
+
 const bot = require('../bot.js');
 
 bot.on('error', (err) => {

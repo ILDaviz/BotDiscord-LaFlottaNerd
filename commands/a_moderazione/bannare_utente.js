@@ -1,4 +1,4 @@
-const texts = require("../../helpers/Json");
+const texts = require("../../helpers/json");
 
 exports.run = async (message, bot) => {
     const args = message.content.slice(bot.conf.prefix.length).trim().split(/ +/g);

@@ -1,7 +1,9 @@
+'user strict';
+
 const bot = require('../bot.js');
 const Discord = require('discord.js');
-const cmds = require('../helpers/loadcommands').getCmds();
-const botUtil = require('../helpers/Util');
+const cmds = require('../helpers/loadCommands').getCmds();
+const botUtil = require('../helpers/util');
 
 let extendMessage = require('../structs/Message');
 let lastMessageUnix = new Date().getTime();

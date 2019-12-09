@@ -1,6 +1,6 @@
-const cmds = require('../../helpers/loadcommands').cmdDetail;
+const cmds = require('../../helpers/loadCommands').cmdDetail;
 const Discord = require('discord.js');
-const texts = require("../../helpers/Json");
+const texts = require("../../helpers/json");
 
 exports.run = async (message, bot) => {
 

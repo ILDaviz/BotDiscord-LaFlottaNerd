@@ -1,5 +1,5 @@
-const botModel = require('../../helpers/Models');
-const texts = require("../../helpers/Json");
+const botModel = require('../../helpers/models');
+const texts = require("../../helpers/json");
 
 exports.run = async (message, bot) => {
 

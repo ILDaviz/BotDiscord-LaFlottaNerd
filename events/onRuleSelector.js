@@ -1,6 +1,8 @@
+'user strict';
+
 const bot = require('../bot.js');
-const botUtil = require('../helpers/Util');
-const texts = require("../helpers/Json");
+const botUtil = require('../helpers/util');
+const texts = require("../helpers/json");
 
 bot.on('raw', event => {
     if (event.t === 'MESSAGE_REACTION_ADD' || event.t == "MESSAGE_REACTION_REMOVE") {

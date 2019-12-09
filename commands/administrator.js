@@ -1,6 +1,6 @@
-const cmds = require('../helpers/loadcommands').cmdDetail;
+const cmds = require('../helpers/loadCommands').cmdDetail;
 const Discord = require('discord.js');
-const texts = require("../helpers/Json");
+const texts = require("../helpers/json");
 
 exports.run = async (message, bot) => {
 
@@ -28,8 +28,8 @@ exports.run = async (message, bot) => {
 };
 
 exports.conf = {
-    name: "Administrator",
-    fullcmd: "administrator",
+    name: "Admin",
+    fullcmd: "admin",
     alias: "admin",
     description: texts.getText('command_administrator_description'),
     timer: 0,
