@@ -2,7 +2,7 @@
 
 const bot = require('../bot.js');
 const Discord = require('discord.js');
-const cmds = require('../helpers/loadCommands').getCmds();
+const cmds = require('../helpers/loadcommands').getCmds();
 const botUtil = require('../helpers/util');
 
 let extendMessage = require('../structs/Message');

@@ -4,7 +4,7 @@
  * Ciclo di espulsione.
  */
 
-const botUtil = require('../helpers/util');
+const botUtil = require('./util');
 const botModel = require('./models');
 const estractor = require('./json');
 const Discord = require('discord.js');

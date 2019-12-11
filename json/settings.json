@@ -15,40 +15,60 @@
     "🔋",
     "🔌",
     "🗡",
-    "📼"
+    "📼",
+    "🐵",
+    "🦍",
+    "🐧",
+    "🐺",
+    "🐻",
+    "🐼",
+    "🐿",
+    "🦔",
+    "🐀",
+    "🌎",
+    "🌝",
+    "🌞",
+    "💥",
+    "🔥",
+    "☀",
+    "🐱"
   ],
   "role_selector": [
     {
-      "role": "$$Anthem",
-      "emoji": "🖥"
-    },
-    {
-      "role": "$$BattleRoyale",
-      "emoji": "🌃"
-    },
-    {
-      "role": "$$Diablo3",
-      "emoji": "🎆"
-    },
-    {
-      "role": "$$ForHonor",
-      "emoji": "🐲"
-    },
-    {
-      "role": "$$MonsterHunterWorld",
+      "role": "$$Monster Hunter World",
       "emoji": "🐗"
     },
     {
-      "role": "$$NSwitch",
+      "role": "$$Nintendo Switch",
       "emoji": "🌵"
     },
     {
-      "role": "$$ruoloinseritosolocomenome",
-      "emoji": "🔋"
+      "role": "$$Pc Master Race",
+      "emoji": "💣"
     },
     {
-      "role": "$$test_ruolo",
-      "emoji": "📼"
+      "role": "$$The division",
+      "emoji": "🔪"
+    },
+    {
+      "role": "$$Ghost recon",
+      "emoji": "🔌"
+    },
+    {
+      "role": "$$Black Desert",
+      "emoji": "🗡"
+    },
+    {
+      "role": "$$Path of exile"
+    },
+    {
+      "role": "$$Call of duty"
+    },
+    {
+      "role": "$$Red dead redemption"
+    },
+    {
+      "role": "$$warframe"
     }
   ],
   "trigger_mhw_a": "qualcuno,c'è,nessuno,sessione,party,qualche",

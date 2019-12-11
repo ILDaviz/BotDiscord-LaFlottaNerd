@@ -1,6 +1,6 @@
 "use strict";
 const json = require("./helpers/json");
-const BetaBot = true;
+const BetaBot = false;
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
@@ -32,7 +32,7 @@ if (BetaBot) {
 		guild_lfn_id: '532184361068527646',
 		host: 'localhost',
 		user: 'root',
-		password: '',
+		password: 'laflottanerd',
 		database: 'bot_discord'
 	};
 }
@@ -45,4 +45,4 @@ require('./events/onRuleSelector');
 require('./events/onTrigger');
 require('./events/onMemberInOut');
 require('./events/onSchedule');
-require('./helpers/loadCommands').load();
+require('./helpers/loadcommands').load();

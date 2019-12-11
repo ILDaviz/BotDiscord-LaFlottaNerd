@@ -1,4 +1,4 @@
-const cmds = require('../../helpers/loadCommands').cmdDetail;
+const cmds = require('../../helpers/loadcommands').cmdDetail;
 const Discord = require('discord.js');
 const texts = require("../../helpers/json");
 
