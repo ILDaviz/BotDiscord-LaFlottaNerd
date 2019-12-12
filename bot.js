@@ -1,6 +1,6 @@
 "use strict";
 const json = require("./helpers/json");
-const BetaBot = false;
+const BetaBot = true;
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
