@@ -25,7 +25,7 @@ exports.run = async (message, bot) => {
 exports.conf = {
     name: "Elimina_messaggi",
     fullcmd: "elimina_messaggi",
-    alias: "purge",
+    alias: "elimina",
     description: texts.getText('command_utility_elimina_messaggio_description'),
     timer: 0,
     tokenCost: 0,
