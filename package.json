@@ -1,0 +1,22 @@
+{
+    "name": "Bot di LAFLOTTANERD DISCORDJS",
+    "version": "1.0.5",
+    "description": "DiscordBOT",
+    "main": "/bot.js",
+    "scripts": {
+        "start": "node bot.js"
+    },
+    "keywords": [],
+    "author": "ILDaviz <david_ev@icloud.com> (https://github.com/ILDaviz)",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ILDaviz/BotDiscord-LaFlottaNerd"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        
+    },
+    "dependencies": {
+        
+    }
+}

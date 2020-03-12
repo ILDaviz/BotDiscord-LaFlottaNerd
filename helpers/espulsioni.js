@@ -12,18 +12,6 @@ const bot = require('../bot.js');
 
 var _this = this;
 
-/** Controlla se il id_discord è un bot
- * @returns Bolean
- */
-exports.checkBotUsers = function (id_discord) {
-    let guilds = bot.guilds.array();
-    for (let i = 0; i < guilds.length; i++) {
-        bot.guilds.get(guilds[i].id).fetchMembers().then(guild => {
-            return guild.members.get(id_discord).user.bot;
-        });
-    }
-}
-
 /**
  * Riporta a 0 i valori negativi nel database.
  */
@@ -44,7 +32,6 @@ exports.zeroValoriNegativi = () => {
         }
     });
 }
-
 /**
  * Aggiunge il timer agli utenti che non sono attivi da tot.
  */
@@ -84,7 +71,6 @@ exports.aggiuntaTimerDiNonAttivita = () => {
         });
     }
 }
-
 /**
  * Invia il messaggio
  */
@@ -117,7 +103,6 @@ exports.passaggioSeiGiorniPostConteggio = () => {
         }
     });
 }
-
 /**
  * Elimina utenti
  */
@@ -143,7 +128,6 @@ exports.cicloDiEspulsione = () => {
         }
     });
 }
-
 /**
  * Resetta i contatori dei messaggi
  */

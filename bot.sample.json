@@ -1,10 +1,3 @@
-# BOT DISCORD DI LAFLOTTANERD 🤖🤘 https://discord.gg/brGzMuJ
-```
-npm install
-npm start
-```
-Creare il file "bot.json" per le impostazioni del bot
-```
 {
     "token_bot_online": "",
     "token_bot_develop": "",
@@ -31,7 +24,3 @@ Creare il file "bot.json" per le impostazioni del bot
 		"database": ""
     }
 }
-```
-
-## Come si usa 🐱‍🏍🤖
-Usa il comando "/start".
