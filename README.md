@@ -1,4 +1,4 @@
-# BOT DISCORD DI LAFLOTTANERD 🤖🤘 https://discord.gg/brGzMuJ
+# BOT LADYISABEL DISCORD DI LAFLOTTANERD 🤖🤘 https://discord.gg/brGzMuJ
 
 I comandi necessari per avviare il bot
 ```
