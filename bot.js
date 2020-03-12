@@ -1,39 +1,38 @@
 "use strict";
 const json = require("./helpers/json");
+const bot_json = require("./bot.json");
 const BetaBot = false;
-
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 module.exports = bot;
 
-
 if (BetaBot) {
-	bot.login('NTc0MTY3MTEyNjQyMzMwNjM0.XegmYg.Swg7Fai7x78HQf8NnFEwy3F6Dmc');
+	bot.login(bot_json.token_bot_develop);
 	bot.conf = {
-		prefix: '!',
-		claimTimeout: '15',
+		prefix: bot_json.develop.prefix,
+		claimTimeout: bot_json.develop.claimTimeout,
 		footer_standard: json.getText('footer_standard'),
-		id_bot: '574167112642330634',
-		chanel_log: '651915252396589066',
-		guild_lfn_id: '539030917121966085',
-		host: 'localhost',
-		user: 'root',
-		password: '',
-		database: 'bot_discord'
+		id_bot: bot_json.develop.id_bot,
+		chanel_log: bot_json.develop.chanel_log,
+		guild_lfn_id: bot_json.develop.guild_lfn_id,
+		host: bot_json.develop.host,
+		user: bot_json.develop.user,
+		password: bot_json.develop.password,
+		database: bot_json.develop.database
 	};
 } else {
-	bot.login('NTM1NzY4MDE5NzIxMjU2OTYx.XamGxg.2nqM3F3lap2_Advn6IS2R-hYzcQ');
+	bot.login(bot_json.token_bot_online);
 	bot.conf = {
-		prefix: '!',
-		claimTimeout: '15',
+		prefix: bot_json.online.prefix,
+		claimTimeout: bot_json.online.claimTimeout,
 		footer_standard: json.getText('footer_standard'),
-		id_bot: '535768019721256961',
-		chanel_log: '631754254092206110',
-		guild_lfn_id: '532184361068527646',
-		host: 'localhost',
-		user: 'root',
-		password: 'laflottanerd',
-		database: 'bot_discord'
+		id_bot: bot_json.online.id_bot,
+		chanel_log: bot_json.online.chanel_log,
+		guild_lfn_id: bot_json.online.guild_lfn_id,
+		host: bot_json.online.host,
+		user: bot_json.online.user,
+		password: bot_json.online.password,
+		database: bot_json.online.database
 	};
 }
 

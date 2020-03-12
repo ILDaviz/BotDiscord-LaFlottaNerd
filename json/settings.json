@@ -47,11 +47,11 @@
       "emoji": "💣"
     },
     {
-      "role": "$$The division",
+      "role": "$$The Division",
       "emoji": "🔪"
     },
     {
-      "role": "$$Ghost recon",
+      "role": "$$Ghost Recon",
       "emoji": "🔌"
     },
     {
@@ -59,16 +59,16 @@
       "emoji": "🗡"
     },
     {
-      "role": "$$Path of exile"
+      "role": "$$Path of Exile",
+      "emoji": "🦍"
     },
     {
-      "role": "$$Call of duty"
+      "role": "$$Warframe",
+      "emoji": "🐀"
     },
     {
-      "role": "$$Red dead redemption"
-    },
-    {
-      "role": "$$warframe"
+      "role": "$$Tera",
+      "emoji": "🐱"
     }
   ],
   "trigger_mhw_a": "qualcuno,c'è,nessuno,sessione,party,qualche",
